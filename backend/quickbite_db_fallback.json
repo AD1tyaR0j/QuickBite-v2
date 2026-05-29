@@ -1,0 +1,1355 @@
+{
+  "users": [
+    {
+      "id": "usr-aditya",
+      "name": "Aditya Raj",
+      "email": "aditya@quickbite.com",
+      "phone": "9876543210",
+      "password": "$2a$08$y7azKTfe.lPMXYWpyprVO.67EAvRmO8Sm4.Sng8/b5Z.Wk9WC9Lni",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+      "collegeId": "COL-2026-089",
+      "createdAt": "2026-05-29T10:37:46.679Z"
+    },
+    {
+      "id": "usr-smriti",
+      "name": "Smriti",
+      "email": "smriti@quickbite.com",
+      "phone": "9876543211",
+      "password": "$2a$08$tbl2BTW7nurPQdpeZILARud6W6b8cMGKoI7EWXkXmApwKQ4A3Y3xe",
+      "avatarUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+      "collegeId": "COL-2026-001",
+      "createdAt": "2026-05-29T10:37:46.701Z"
+    },
+    {
+      "id": "usr-muskan",
+      "name": "muskan",
+      "email": "muskan@quickbite.com",
+      "phone": "9876543212",
+      "password": "$2a$08$Q/X.tmjUILCS8JqrblgXE.xVapIUY5AAqqtb1x/JES/NRbG5YtkRm",
+      "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80",
+      "collegeId": "COL-2026-002",
+      "createdAt": "2026-05-29T10:37:46.722Z"
+    },
+    {
+      "id": "usr-aditi",
+      "name": "aditi",
+      "email": "aditi@quickbite.com",
+      "phone": "9876543213",
+      "password": "$2a$08$r7I14cqcB/hZrBz0p8KwZe417H2zQcO1z7m3Nm0XgDWlm9FmZmLlm",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80",
+      "collegeId": "COL-2026-003",
+      "createdAt": "2026-05-29T10:37:46.742Z"
+    },
+    {
+      "id": "usr-divyesh",
+      "name": "divyesh",
+      "email": "divyesh@quickbite.com",
+      "phone": "9876543214",
+      "password": "$2a$08$faoLP.pjSUPyso/xLPh8pOdvx5f/wN3j1G6h0CxM7Y3aWKrIVLo0C",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+      "collegeId": "COL-2026-004",
+      "createdAt": "2026-05-29T10:37:46.763Z"
+    }
+  ],
+  "vendors": [
+    {
+      "id": "vend-1",
+      "shopId": "kitchen-kukkries",
+      "username": "kukkries",
+      "password": "$2a$08$r6gzr/ay4NfzDSqRSzX/POgoiQe3M0.WxGf9pCosYaBnkQAJwN6y.",
+      "createdAt": "2026-05-29T10:37:46.781Z"
+    },
+    {
+      "id": "vend-2",
+      "shopId": "kunj-burger-point",
+      "username": "burgerpoint",
+      "password": "$2a$08$5yz24niI3phhia2XEXgK5.Uy9Dl1gHiNdm7K8Uv1SqyOFFI06Fjay",
+      "createdAt": "2026-05-29T10:37:46.804Z"
+    },
+    {
+      "id": "vend-3",
+      "shopId": "doctor-dosa",
+      "username": "doctordosa",
+      "password": "$2a$08$yVy3gy3hdsOCaokyj4fxNuQptbyhPlD04By/LrUFCG34ZRajKDX3q",
+      "createdAt": "2026-05-29T10:37:46.822Z"
+    },
+    {
+      "id": "vend-4",
+      "shopId": "millennials-cafe",
+      "username": "millennials",
+      "password": "$2a$08$E2Y8.w.dCb9ZZIDHpBNDe.wnLfhdeiCuZHpDwsnjmHBW3OnRFW3ie",
+      "createdAt": "2026-05-29T10:37:46.843Z"
+    },
+    {
+      "id": "vend-5",
+      "shopId": "momo-shakes-corner",
+      "username": "momoshakes",
+      "password": "$2a$08$Ls40YXH7SiBYHP3CXZqwfubVugBf6Kwg43K1J6lv45zcD4LJm9TAG",
+      "createdAt": "2026-05-29T10:37:46.870Z"
+    },
+    {
+      "id": "vend-6",
+      "shopId": "shree-balaji",
+      "username": "balaji",
+      "password": "$2a$08$bArbBuX2iH/CMM5Merp1A.RY/TOp.2oSWbJdffQgYGtrdORhqxGGG",
+      "createdAt": "2026-05-29T10:37:46.892Z"
+    },
+    {
+      "id": "vend-7",
+      "shopId": "kathi-roll-co",
+      "username": "kathiroll",
+      "password": "$2a$08$EP1C0fSaBZu.17kLb2KrD.ZcQSPb4egSbeioDpnUElHsvkWfxJWIO",
+      "createdAt": "2026-05-29T10:37:46.915Z"
+    }
+  ],
+  "shops": [
+    {
+      "id": "kitchen-kukkries",
+      "name": "Kitchen Kukkries",
+      "rating": 4.5,
+      "tags": [
+        "Momos",
+        "Chinese",
+        "Popular"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/kitchen_kukkries.png",
+      "isOpen": true,
+      "logoUrl": "/images/kitchen_kukkries.png",
+      "bannerUrl": "/images/kitchen_kukkries.png",
+      "description": "Authentic momos and Chinese street food freshly prepared for campus foodies."
+    },
+    {
+      "id": "kunj-burger-point",
+      "name": "Kunj Burger Point",
+      "rating": 4.3,
+      "tags": [
+        "Burgers",
+        "Fast Food",
+        "Shakes"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/kunj_burger_point.png",
+      "isOpen": true,
+      "logoUrl": "/images/kunj_burger_point.png",
+      "bannerUrl": "/images/kunj_burger_point.png",
+      "description": "Sizzling hot burgers, crispy fries, and premium thick milkshakes."
+    },
+    {
+      "id": "doctor-dosa",
+      "name": "Doctor Dosa",
+      "rating": 5,
+      "tags": [
+        "South Indian",
+        "Dosa",
+        "Healthy"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/doctor_dosa.png",
+      "isOpen": true,
+      "logoUrl": "/images/doctor_dosa.png",
+      "bannerUrl": "/images/doctor_dosa.png",
+      "description": "Healthy and South Indian breakfasts, traditional filter coffee, and paper dosas."
+    },
+    {
+      "id": "millennials-cafe",
+      "name": "Millennials Cafe",
+      "rating": 4.4,
+      "tags": [
+        "Cafe",
+        "Sandwiches",
+        "Pizza"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/millennials_cafe.png",
+      "isOpen": true,
+      "logoUrl": "/images/millennials_cafe.png",
+      "bannerUrl": "/images/millennials_cafe.png",
+      "description": "Gourmet sandwiches, hot espresso coffees, and stone-baked pizzas for millennials."
+    },
+    {
+      "id": "momo-shakes-corner",
+      "name": "Momo & Shakes Corner",
+      "rating": 4.2,
+      "tags": [
+        "Momos",
+        "Shakes",
+        "Quick"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/momo_shakes_corner.png",
+      "isOpen": true,
+      "logoUrl": "/images/momo_shakes_corner.png",
+      "bannerUrl": "/images/momo_shakes_corner.png",
+      "description": "Express quick snacks, momo combos, and chilled shakes on the go."
+    },
+    {
+      "id": "shree-balaji",
+      "name": "Shree Balaji Cafeteria",
+      "rating": 4.7,
+      "tags": [
+        "North Indian",
+        "Chaat",
+        "Thalis"
+      ],
+      "cookCount": 3,
+      "imageUrl": "/images/shree_balaji.png",
+      "isOpen": true,
+      "logoUrl": "/images/shree_balaji.png",
+      "bannerUrl": "/images/shree_balaji.png",
+      "description": "Delightful North Indian curries, butter naans, special thalis, and spicy street chaat."
+    },
+    {
+      "id": "kathi-roll-co",
+      "name": "The Kathi Roll Co.",
+      "rating": 4.4,
+      "tags": [
+        "Rolls",
+        "Wraps",
+        "Snacks"
+      ],
+      "cookCount": 2,
+      "imageUrl": "/images/kathi_roll.png",
+      "isOpen": true,
+      "logoUrl": "/images/kathi_roll.png",
+      "bannerUrl": "/images/kathi_roll.png",
+      "description": "Spicy paneer tikka rolls, classic aloo wraps, and hot, flakey paratha rolls."
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "mi001",
+      "shopId": "kitchen-kukkries",
+      "name": "Veg Momos",
+      "price": 40,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi002",
+      "shopId": "kitchen-kukkries",
+      "name": "Paneer Momos",
+      "price": 50,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi003",
+      "shopId": "kitchen-kukkries",
+      "name": "Veg Fried Rice",
+      "price": 60,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi004",
+      "shopId": "kitchen-kukkries",
+      "name": "Paneer Fried Rice",
+      "price": 80,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1536489885071-87983c3e2859?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi005",
+      "shopId": "kitchen-kukkries",
+      "name": "Veg Noodles",
+      "price": 70,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi006",
+      "shopId": "kitchen-kukkries",
+      "name": "Chilli Paneer",
+      "price": 100,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi007",
+      "shopId": "kitchen-kukkries",
+      "name": "Spring Rolls",
+      "price": 50,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi008",
+      "shopId": "kitchen-kukkries",
+      "name": "Veg Manchurian",
+      "price": 90,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi009",
+      "shopId": "kitchen-kukkries",
+      "name": "Kurkuri Momo",
+      "price": 70,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi010",
+      "shopId": "kunj-burger-point",
+      "name": "Veg Burger",
+      "price": 60,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1550317138-10000687a72b?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi011",
+      "shopId": "kunj-burger-point",
+      "name": "Cheese Burger",
+      "price": 80,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi012",
+      "shopId": "kunj-burger-point",
+      "name": "Paneer Burger",
+      "price": 90,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi013",
+      "shopId": "kunj-burger-point",
+      "name": "French Fries",
+      "price": 70,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi014",
+      "shopId": "kunj-burger-point",
+      "name": "Cold Coffee",
+      "price": 70,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi015",
+      "shopId": "kunj-burger-point",
+      "name": "Chocolate Shake",
+      "price": 80,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi016",
+      "shopId": "kunj-burger-point",
+      "name": "Aloo Tikki Burger",
+      "price": 45,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1582196016295-f8c894d37922?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi017",
+      "shopId": "kunj-burger-point",
+      "name": "Cheese Fries",
+      "price": 95,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1576107232684-1279f390859f?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi018",
+      "shopId": "kunj-burger-point",
+      "name": "Onion Rings",
+      "price": 60,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi020",
+      "shopId": "doctor-dosa",
+      "name": "Masala Dosa",
+      "price": 80,
+      "prepTime": 12,
+      "imageUrl": "/images/masala_dosa.png",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi021",
+      "shopId": "doctor-dosa",
+      "name": "Butter Dosa",
+      "price": 90,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi022",
+      "shopId": "doctor-dosa",
+      "name": "Plain Dosa",
+      "price": 70,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi023",
+      "shopId": "doctor-dosa",
+      "name": "Idli Sambhar",
+      "price": 70,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi024",
+      "shopId": "doctor-dosa",
+      "name": "Vada Sambhar",
+      "price": 80,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi025",
+      "shopId": "doctor-dosa",
+      "name": "Onion Rava Dosa",
+      "price": 100,
+      "prepTime": 14,
+      "imageUrl": "/images/masala_dosa.png",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi026",
+      "shopId": "doctor-dosa",
+      "name": "Rava Dosa",
+      "price": 90,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi027",
+      "shopId": "doctor-dosa",
+      "name": "Filter Coffee",
+      "price": 30,
+      "prepTime": 4,
+      "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi028",
+      "shopId": "doctor-dosa",
+      "name": "Onion Uttapam",
+      "price": 80,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi030",
+      "shopId": "millennials-cafe",
+      "name": "Veg Sandwich",
+      "price": 80,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi031",
+      "shopId": "millennials-cafe",
+      "name": "Cheese Sandwich",
+      "price": 90,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi032",
+      "shopId": "millennials-cafe",
+      "name": "Pasta",
+      "price": 55,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi033",
+      "shopId": "millennials-cafe",
+      "name": "Pizza",
+      "price": 60,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi034",
+      "shopId": "millennials-cafe",
+      "name": "Cake Slice",
+      "price": 70,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi035",
+      "shopId": "millennials-cafe",
+      "name": "Garlic Bread",
+      "price": 70,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1573145959956-e9fae6b8bd4f?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi036",
+      "shopId": "millennials-cafe",
+      "name": "Paneer Tikka Pizza",
+      "price": 120,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi037",
+      "shopId": "millennials-cafe",
+      "name": "Cappuccino",
+      "price": 60,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi038",
+      "shopId": "millennials-cafe",
+      "name": "Hot Chocolate",
+      "price": 75,
+      "prepTime": 6,
+      "imageUrl": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi040",
+      "shopId": "momo-shakes-corner",
+      "name": "Veg Momos",
+      "price": 40,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi041",
+      "shopId": "momo-shakes-corner",
+      "name": "Paneer Momos",
+      "price": 60,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi042",
+      "shopId": "momo-shakes-corner",
+      "name": "Chocolate Shake",
+      "price": 70,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi043",
+      "shopId": "momo-shakes-corner",
+      "name": "Maggi",
+      "price": 50,
+      "prepTime": 7,
+      "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi044",
+      "shopId": "momo-shakes-corner",
+      "name": "French Fries",
+      "price": 70,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi045",
+      "shopId": "momo-shakes-corner",
+      "name": "Cheese Maggi",
+      "price": 65,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi046",
+      "shopId": "momo-shakes-corner",
+      "name": "Oreo Shake",
+      "price": 90,
+      "prepTime": 6,
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi047",
+      "shopId": "momo-shakes-corner",
+      "name": "Paneer Kurkuri Momo",
+      "price": 85,
+      "prepTime": 12,
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi048",
+      "shopId": "momo-shakes-corner",
+      "name": "Mango Shake",
+      "price": 80,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi050",
+      "shopId": "shree-balaji",
+      "name": "Paneer Butter Masala & Naan Combo",
+      "price": 150,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi051",
+      "shopId": "shree-balaji",
+      "name": "Chole Bhature Platter",
+      "price": 90,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi052",
+      "shopId": "shree-balaji",
+      "name": "Delhi Samosa Chaat",
+      "price": 60,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi053",
+      "shopId": "shree-balaji",
+      "name": "Executive Veg Thali",
+      "price": 180,
+      "prepTime": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi054",
+      "shopId": "shree-balaji",
+      "name": "Punjabi Rajma Chawal",
+      "price": 80,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi055",
+      "shopId": "shree-balaji",
+      "name": "Sweet Kulhad Lassi",
+      "price": 50,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi056",
+      "shopId": "shree-balaji",
+      "name": "Gulab Jamun (2 Pcs)",
+      "price": 40,
+      "prepTime": 4,
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi060",
+      "shopId": "kathi-roll-co",
+      "name": "Double Paneer Tikka Roll",
+      "price": 90,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi061",
+      "shopId": "kathi-roll-co",
+      "name": "Spicy Soya Chaap Roll",
+      "price": 80,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": true,
+      "isAvailable": true
+    },
+    {
+      "id": "mi062",
+      "shopId": "kathi-roll-co",
+      "name": "Masala Aloo Roll",
+      "price": 60,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi063",
+      "shopId": "kathi-roll-co",
+      "name": "Cheese Corn Wrap",
+      "price": 90,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi064",
+      "shopId": "kathi-roll-co",
+      "name": "Paneer Bhurji Roll",
+      "price": 100,
+      "prepTime": 10,
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi065",
+      "shopId": "kathi-roll-co",
+      "name": "Lemon Mint Cooler",
+      "price": 60,
+      "prepTime": 5,
+      "imageUrl": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    },
+    {
+      "id": "mi066",
+      "shopId": "kathi-roll-co",
+      "name": "Spicy Peri Peri Fries",
+      "price": 80,
+      "prepTime": 8,
+      "imageUrl": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80",
+      "isFeatured": false,
+      "isAvailable": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-a3f2",
+      "displayId": "#A3F2",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "itemName": "Veg Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "itemPrice": 40,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi001",
+          "itemName": "Veg Momos",
+          "itemPrice": 40,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Preparing",
+      "ept": 10,
+      "createdAt": "2026-05-29T10:32:46.915Z",
+      "updatedAt": "2026-05-29T10:32:46.915Z"
+    },
+    {
+      "id": "ord-b7k1",
+      "displayId": "#B7K1",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "itemName": "Veg Noodles",
+      "imageUrl": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Preparing",
+      "ept": 12,
+      "createdAt": "2026-05-29T10:35:46.915Z",
+      "updatedAt": "2026-05-29T10:35:46.915Z"
+    },
+    {
+      "id": "ord-c9r4",
+      "displayId": "#C9R4",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 50,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Ready",
+      "ept": 0,
+      "createdAt": "2026-05-29T10:25:46.915Z",
+      "updatedAt": "2026-05-29T10:36:46.915Z"
+    },
+    {
+      "id": "7ed40ba6-40fd-46b9-acac-bba3a8610371",
+      "displayId": "#WTPC",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi023",
+      "itemName": "Idli Sambhar",
+      "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:41:57.123Z",
+      "updatedAt": "2026-05-29T10:44:31.334Z"
+    },
+    {
+      "id": "7ece3939-9b63-461d-bd83-96a8c900dc4b",
+      "displayId": "#QP4O",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi024",
+      "itemName": "Vada Sambhar",
+      "imageUrl": "https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?w=300&q=80",
+      "itemPrice": 80,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi024",
+          "itemName": "Vada Sambhar",
+          "itemPrice": 80,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:41:59.074Z",
+      "updatedAt": "2026-05-29T10:44:31.795Z"
+    },
+    {
+      "id": "27ad3233-9109-4c26-a6b7-6bdc5b3ec2a1",
+      "displayId": "#OR24",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi020",
+      "itemName": "Masala Dosa",
+      "imageUrl": "/images/masala_dosa.png",
+      "itemPrice": 80,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi020",
+          "itemName": "Masala Dosa",
+          "itemPrice": 80,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 12,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:00.760Z",
+      "updatedAt": "2026-05-29T10:44:31.942Z"
+    },
+    {
+      "id": "7124201a-157d-482b-ab53-8ae3aa4ee6a4",
+      "displayId": "#EMF0",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi022",
+      "itemName": "Plain Dosa",
+      "imageUrl": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:02.860Z",
+      "updatedAt": "2026-05-29T10:44:32.089Z"
+    },
+    {
+      "id": "248c932c-55d2-476a-b748-0dfb7dc2c559",
+      "displayId": "#OLC0",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi023",
+      "itemName": "Idli Sambhar",
+      "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:04.678Z",
+      "updatedAt": "2026-05-29T10:44:32.252Z"
+    },
+    {
+      "id": "0d53f78a-69a2-4a06-97b8-1be5becbeebd",
+      "displayId": "#UCH1",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi025",
+      "itemName": "Onion Rava Dosa",
+      "imageUrl": "/images/masala_dosa.png",
+      "itemPrice": 100,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi025",
+          "itemName": "Onion Rava Dosa",
+          "itemPrice": 100,
+          "prepTime": 14,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 14,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:07.756Z",
+      "updatedAt": "2026-05-29T10:44:32.405Z"
+    },
+    {
+      "id": "2fcf0c64-ce26-434f-bf8d-288eabf2c65a",
+      "displayId": "#24QP",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi027",
+      "itemName": "Filter Coffee",
+      "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&q=80",
+      "itemPrice": 30,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi027",
+          "itemName": "Filter Coffee",
+          "itemPrice": 30,
+          "prepTime": 4,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 4,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:10.064Z",
+      "updatedAt": "2026-05-29T10:44:32.556Z"
+    },
+    {
+      "id": "81e35e36-cbd7-43bc-88bf-cd585f3f3894",
+      "displayId": "#CHEB",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi027",
+      "itemName": "Filter Coffee",
+      "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&q=80",
+      "itemPrice": 30,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi027",
+          "itemName": "Filter Coffee",
+          "itemPrice": 30,
+          "prepTime": 4,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 4,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:12.305Z",
+      "updatedAt": "2026-05-29T10:44:32.728Z"
+    },
+    {
+      "id": "8d5a5aa7-534b-48af-b6fe-176e671dec9d",
+      "displayId": "#J1PB",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi028",
+      "itemName": "Onion Uttapam",
+      "imageUrl": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=300&q=80",
+      "itemPrice": 80,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi028",
+          "itemName": "Onion Uttapam",
+          "itemPrice": 80,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-29T10:42:15.847Z",
+      "updatedAt": "2026-05-29T10:44:32.880Z"
+    },
+    {
+      "id": "5866fd74-0f2d-44c4-9362-04f23a16b699",
+      "displayId": "#W7UE",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi021",
+      "itemName": "Butter Dosa + 3 more",
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "itemPrice": 1340,
+      "qty": 18,
+      "items": [
+        {
+          "menuItemId": "mi021",
+          "itemName": "Butter Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi026",
+          "itemName": "Rava Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi027",
+          "itemName": "Filter Coffee",
+          "itemPrice": 30,
+          "prepTime": 4,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 50,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-83766568-QB",
+      "createdAt": "2026-05-29T10:43:44.957Z",
+      "updatedAt": "2026-05-29T10:44:33.767Z"
+    },
+    {
+      "id": "7c5f2603-ffa0-4a23-bc1b-6843aed2428f",
+      "displayId": "#SBJM",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi021",
+      "itemName": "Butter Dosa + 3 more",
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "itemPrice": 1340,
+      "qty": 18,
+      "items": [
+        {
+          "menuItemId": "mi021",
+          "itemName": "Butter Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi026",
+          "itemName": "Rava Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi027",
+          "itemName": "Filter Coffee",
+          "itemPrice": 30,
+          "prepTime": 4,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 50,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-31390005-QB",
+      "createdAt": "2026-05-29T10:43:44.959Z",
+      "updatedAt": "2026-05-29T10:44:34.307Z"
+    },
+    {
+      "id": "75452a86-f117-4110-8abe-3aaec8979692",
+      "displayId": "#XZYA",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi021",
+      "itemName": "Butter Dosa + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "itemPrice": 1010,
+      "qty": 13,
+      "items": [
+        {
+          "menuItemId": "mi021",
+          "itemName": "Butter Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 4
+        },
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 4
+        }
+      ],
+      "status": "Completed",
+      "ept": 39,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-70043611-QB",
+      "createdAt": "2026-05-29T10:50:41.958Z",
+      "updatedAt": "2026-05-29T10:51:04.347Z"
+    },
+    {
+      "id": "48fc1cc5-91ac-47f9-9bd0-b494a65d1d24",
+      "displayId": "#W3DX",
+      "shopId": "doctor-dosa",
+      "userId": null,
+      "menuItemId": "mi021",
+      "itemName": "Butter Dosa + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "itemPrice": 1010,
+      "qty": 13,
+      "items": [
+        {
+          "menuItemId": "mi021",
+          "itemName": "Butter Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 5
+        },
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 4
+        },
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 4
+        }
+      ],
+      "status": "Completed",
+      "ept": 39,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-60612910-QB",
+      "createdAt": "2026-05-29T10:50:41.961Z",
+      "updatedAt": "2026-05-29T10:51:04.648Z"
+    }
+  ],
+  "favorites": [],
+  "addresses": [
+    {
+      "id": "addr-1",
+      "userId": "usr-aditya",
+      "addressLine": "Room 304, Hostel A, Campus North",
+      "isDefault": true
+    },
+    {
+      "id": "addr-2",
+      "userId": "usr-aditya",
+      "addressLine": "Computer Lab 2, Library Block",
+      "isDefault": false
+    },
+    {
+      "id": "addr-3",
+      "userId": "usr-smriti",
+      "addressLine": "Hostel B, Room 102, Campus East",
+      "isDefault": true
+    },
+    {
+      "id": "addr-4",
+      "userId": "usr-muskan",
+      "addressLine": "Girls Hostel, Room 405, Campus West",
+      "isDefault": true
+    },
+    {
+      "id": "addr-5",
+      "userId": "usr-aditi",
+      "addressLine": "Room 215, Hostel C, Campus South",
+      "isDefault": true
+    },
+    {
+      "id": "addr-6",
+      "userId": "usr-divyesh",
+      "addressLine": "Girls Hostel, Room 112, Campus West",
+      "isDefault": true
+    }
+  ],
+  "offlineLoads": [],
+  "reviews": [
+    {
+      "id": "rev-1780051872017",
+      "userId": "usr-aditya",
+      "shopId": "doctor-dosa",
+      "menuItemId": "mi021",
+      "ratingFood": 5,
+      "ratingShop": 5,
+      "reviewText": "",
+      "createdAt": "2026-05-29T10:51:12.017Z"
+    }
+  ]
+}
