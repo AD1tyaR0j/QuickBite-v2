@@ -185,7 +185,7 @@ export default function Menu() {
           <button
             id="menu-back-btn"
             onClick={() => navigate('/customer/home')}
-            className="hover:opacity-85 transition-opacity active:scale-95 duration-150 text-orange-600 dark:text-orange-400"
+            className="hover:opacity-85 transition-opacity active:scale-95 duration-150 text-yellow-500 dark:text-yellow-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
@@ -269,14 +269,14 @@ export default function Menu() {
               <button
                 type="button"
                 onClick={() => setActiveTab('items')}
-                className={`flex-1 py-3 text-xs font-bold rounded-xl transition-all ${activeTab === 'items' ? 'bg-primary text-white shadow-md' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'}`}
+                className={`flex-1 py-3 text-xs font-bold rounded-xl transition-all ${activeTab === 'items' ? 'bg-primary text-slate-900 font-extrabold shadow-md' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'}`}
               >
                 Food Items
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('reviews')}
-                className={`flex-1 py-3 text-xs font-bold rounded-xl transition-all ${activeTab === 'reviews' ? 'bg-primary text-white shadow-md' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'}`}
+                className={`flex-1 py-3 text-xs font-bold rounded-xl transition-all ${activeTab === 'reviews' ? 'bg-primary text-slate-900 font-extrabold shadow-md' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'}`}
               >
                 Reviews & Ratings
               </button>
@@ -292,7 +292,7 @@ export default function Menu() {
                 {featuredItem && (
                   <div className="bg-white dark:bg-[#16213E] rounded-3xl p-4 shadow-sm border border-slate-100 dark:border-slate-800/40 relative overflow-hidden flex justify-between items-center group">
                     <div className="space-y-2 relative z-10 flex-1 pr-4">
-                      <span className="bg-orange-100 text-orange-700 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md">
+                      <span className="bg-yellow-100 text-yellow-800 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md">
                         Today's Special
                       </span>
                       <h4 className="font-headline font-bold text-lg text-on-surface dark:text-white leading-tight">
@@ -301,7 +301,7 @@ export default function Menu() {
                       <p className="text-xl font-black text-primary">₹{featuredItem.price}</p>
                       <button
                         onClick={() => handleAdd(featuredItem)}
-                        className="bg-primary-gradient text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md active:scale-95 transition-all flex items-center gap-1.5"
+                        className="bg-primary-gradient text-slate-900 text-xs font-black px-4 py-2 rounded-xl shadow-md active:scale-95 transition-all flex items-center gap-1.5"
                       >
                         Add to Cart
                         <span className="material-symbols-outlined text-[14px]">shopping_cart</span>
@@ -482,7 +482,7 @@ export default function Menu() {
               <div className="fixed bottom-4 left-0 right-0 max-w-md mx-auto px-4 z-40">
                 <button
                   onClick={() => navigate(`/customer/confirm/${shopId}/cart`)}
-                  className="w-full bg-primary-gradient text-white flex items-center justify-between px-5 py-4 rounded-full shadow-[0_10px_30px_rgba(178,34,0,0.35)] active:scale-95 transition-transform"
+                  className="w-full bg-primary-gradient text-slate-900 flex items-center justify-between px-5 py-4 rounded-full shadow-lg shadow-primary/20 active:scale-95 transition-transform"
                 >
                   <div className="flex flex-col items-start text-left">
                     <span className="text-sm font-headline font-bold">

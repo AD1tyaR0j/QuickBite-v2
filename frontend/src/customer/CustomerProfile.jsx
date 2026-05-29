@@ -130,8 +130,8 @@ export default function CustomerProfile() {
       <header className="fixed top-0 left-0 right-0 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40">
         <div className="flex justify-between items-center px-6 h-16 w-full">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-orange-600 dark:text-orange-500">restaurant</span>
-            <h1 className="font-headline font-black text-xl text-orange-600 dark:text-orange-500 italic">
+            <span className="material-symbols-outlined text-yellow-500 dark:text-yellow-400">restaurant</span>
+            <h1 className="font-headline font-black text-xl text-yellow-500 dark:text-yellow-400 italic">
               QuickBite
             </h1>
           </div>
@@ -159,7 +159,7 @@ export default function CustomerProfile() {
                     />
                   </div>
                   <button
-                    className="absolute bottom-0 right-0 bg-primary p-1.5 rounded-full text-white shadow-md active:scale-90 transition-transform"
+                    className="absolute bottom-0 right-0 bg-primary p-1.5 rounded-full text-slate-900 shadow-md active:scale-90 transition-transform font-bold"
                     onClick={() => setShowEditProfile(true)}
                   >
                     <span className="material-symbols-outlined text-[12px] font-bold">edit</span>
@@ -415,10 +415,10 @@ export default function CustomerProfile() {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="flex-[2] py-3 rounded-xl font-bold text-white bg-primary-gradient shadow-lg shadow-primary/20 active:scale-95 transition-all text-xs flex items-center justify-center gap-1.5"
+                    className="flex-[2] py-3 rounded-xl font-black text-slate-900 bg-primary-gradient shadow-lg shadow-primary/20 active:scale-95 transition-all text-xs flex items-center justify-center gap-1.5"
                   >
                     {saving ? (
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       'Save Changes'
                     )}
@@ -481,10 +481,10 @@ export default function CustomerProfile() {
                   <button
                     type="submit"
                     disabled={addingAddress}
-                    className="flex-[2] py-3 rounded-xl font-bold text-white bg-primary-gradient shadow-lg shadow-primary/20 active:scale-95 transition-all text-xs flex items-center justify-center gap-1.5"
+                    className="flex-[2] py-3 rounded-xl font-black text-slate-900 bg-primary-gradient shadow-lg shadow-primary/20 active:scale-95 transition-all text-xs flex items-center justify-center gap-1.5"
                   >
                     {addingAddress ? (
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       'Save Address'
                     )}

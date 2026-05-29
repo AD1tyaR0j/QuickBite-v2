@@ -84,10 +84,17 @@ try {
       transactionId TEXT,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL,
+      prepStartedAt TEXT,
       FOREIGN KEY(shopId) REFERENCES shops(id),
       FOREIGN KEY(userId) REFERENCES users(id)
     )
   `);
+
+  try {
+    db.exec(`ALTER TABLE orders ADD COLUMN prepStartedAt TEXT`);
+  } catch (e) {
+    // Column might already exist
+  }
 
   // Favorites
   db.exec(`
@@ -417,8 +424,8 @@ try {
     const orderId3 = 'ord-c9r4';
 
     const insertOrder = db.prepare(`
-      INSERT INTO orders (id, displayId, shopId, userId, itemName, imageUrl, itemPrice, qty, itemsJson, status, ept, paymentMethod, paymentStatus, transactionId, createdAt, updatedAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO orders (id, displayId, shopId, userId, itemName, imageUrl, itemPrice, qty, itemsJson, status, ept, paymentMethod, paymentStatus, transactionId, createdAt, updatedAt, prepStartedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     insertOrder.run(
@@ -436,6 +443,7 @@ try {
       'UPI',
       'Paid',
       'TXN-A3F2-TEST',
+      new Date(Date.now() - 5 * 60000).toISOString(),
       new Date(Date.now() - 5 * 60000).toISOString(),
       new Date(Date.now() - 5 * 60000).toISOString()
     );
@@ -456,6 +464,7 @@ try {
       'Paid',
       'TXN-B7K1-TEST',
       new Date(Date.now() - 2 * 60000).toISOString(),
+      new Date(Date.now() - 2 * 60000).toISOString(),
       new Date(Date.now() - 2 * 60000).toISOString()
     );
 
@@ -475,7 +484,8 @@ try {
       'Paid',
       'TXN-C9R4-TEST',
       new Date(Date.now() - 12 * 60000).toISOString(),
-      new Date(Date.now() - 1 * 60000).toISOString()
+      new Date(Date.now() - 1 * 60000).toISOString(),
+      new Date(Date.now() - 12 * 60000).toISOString()
     );
 
     console.log('✅ QuickBite Database Seeded Successfully!');

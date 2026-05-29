@@ -40,11 +40,11 @@ export default function CustomerOrderHistory() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-orange-600 dark:text-orange-400"
+            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-yellow-600 dark:text-yellow-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-orange-600 dark:text-orange-400">
+          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-yellow-600 dark:text-yellow-400">
             Order History
           </h1>
         </div>

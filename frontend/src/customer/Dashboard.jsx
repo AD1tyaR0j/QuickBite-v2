@@ -135,7 +135,7 @@ export default function Dashboard() {
       <header className="fixed top-0 left-0 right-0 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
         <div className="flex flex-col">
           <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Welcome to Campus Hub</span>
-          <h1 className="font-headline font-black text-xl text-orange-600 dark:text-orange-500 italic">
+          <h1 className="font-headline font-black text-xl text-yellow-500 dark:text-yellow-400 italic">
             QuickBite
           </h1>
         </div>
@@ -146,7 +146,7 @@ export default function Dashboard() {
           >
             <span className="material-symbols-outlined text-xl">notifications</span>
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-white text-[9px] font-black rounded-full flex items-center justify-center animate-bounce">
+              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-slate-900 text-[9px] font-black rounded-full flex items-center justify-center animate-bounce">
                 {unreadCount}
               </span>
             )}
@@ -154,7 +154,7 @@ export default function Dashboard() {
           {!token && (
             <button 
               onClick={() => navigate('/login')}
-              className="px-4 py-2 bg-primary text-white font-bold rounded-xl text-xs shadow-md shadow-primary/20 active:scale-95 transition-transform"
+              className="px-4 py-2 bg-primary text-slate-900 font-black rounded-xl text-xs shadow-md shadow-primary/20 active:scale-95 transition-transform"
             >
               Login
             </button>
@@ -201,7 +201,7 @@ export default function Dashboard() {
               onClick={() => setSelectedTag(tag)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 ${
                 selectedTag === tag
-                  ? 'bg-primary text-white shadow-md shadow-primary/20'
+                  ? 'bg-primary text-slate-900 font-extrabold shadow-md shadow-primary/20'
                   : 'bg-white dark:bg-[#16213E] text-zinc-500 dark:text-zinc-400 border border-slate-100 dark:border-slate-800/40'
               }`}
             >
@@ -406,7 +406,7 @@ export default function Dashboard() {
                   notifications.map(n => {
                     const iconColors = {
                       success: 'bg-green-100 text-green-600 dark:bg-green-950/20 dark:text-green-400',
-                      info: 'bg-orange-100 text-orange-600 dark:bg-orange-950/20 dark:text-orange-400',
+                      info: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950/20 dark:text-yellow-400',
                       error: 'bg-red-100 text-red-600 dark:bg-red-950/20 dark:text-red-400',
                     };
                     const icons = {

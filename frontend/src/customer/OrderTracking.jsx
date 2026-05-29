@@ -34,11 +34,8 @@ export default function OrderTracking() {
   }, []);
 
   // 6 Tracking stages mapping
-  const getStepIndex = (status, createdAt) => {
-    if (status === 'Pending') {
-      const elapsed = Date.now() - new Date(createdAt).getTime();
-      return elapsed < 15000 ? 0 : 1; // 15s Order Received, then Vendor Accepted
-    }
+  const getStepIndex = (status) => {
+    if (status === 'Pending') return 0;
     if (status === 'Preparing') return 2;
     if (status === 'Almost Ready') return 3;
     if (status === 'Ready') return 4;
@@ -62,7 +59,7 @@ export default function OrderTracking() {
       const json = await res.json();
       if (json.success) {
         setOrder(json.data);
-        const step = getStepIndex(json.data.status, json.data.createdAt);
+        const step = getStepIndex(json.data.status);
         setCurrentStep(step);
 
         // Simulated notification on status transition
@@ -73,13 +70,18 @@ export default function OrderTracking() {
         }
         lastStatusRef.current = json.data.status;
 
-        if (json.data.ept && json.data.createdAt) {
-          const created = new Date(json.data.createdAt).getTime();
-          const deadline = created + json.data.ept * 60000;
-          deadlineRef.current = deadline;
-          const remainingMs = deadline - Date.now();
-          const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000));
-          setTimeLeft(remainingSeconds);
+        if (json.data.ept) {
+          if (json.data.status === 'Pending') {
+            deadlineRef.current = null;
+            setTimeLeft(json.data.ept * 60);
+          } else {
+            const start = json.data.prepStartedAt ? new Date(json.data.prepStartedAt).getTime() : new Date(json.data.createdAt).getTime();
+            const deadline = start + json.data.ept * 60000;
+            deadlineRef.current = deadline;
+            const remainingMs = deadline - Date.now();
+            const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000));
+            setTimeLeft(remainingSeconds);
+          }
         }
 
         // Stop polling when terminal status reached
@@ -145,8 +147,9 @@ export default function OrderTracking() {
   };
 
   const getEstCompletionTime = () => {
-    if (!order || !order.createdAt) return '';
-    const start = new Date(order.createdAt).getTime();
+    if (!order) return '';
+    if (order.status === 'Pending') return 'Awaiting acceptance';
+    const start = order.prepStartedAt ? new Date(order.prepStartedAt).getTime() : new Date(order.createdAt).getTime();
     const wait = (order.ept || 10) * 60000;
     const est = new Date(start + wait);
     return est.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -211,11 +214,11 @@ export default function OrderTracking() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/customer/home')}
-              className="text-orange-600 dark:text-orange-400 active:scale-95 transition-transform"
+              className="text-yellow-600 dark:text-yellow-400 active:scale-95 transition-transform"
             >
               <span className="material-symbols-outlined">home</span>
             </button>
-            <h1 className="font-headline font-bold text-lg text-orange-600 dark:text-orange-400">
+            <h1 className="font-headline font-bold text-lg text-yellow-600 dark:text-yellow-400">
               Track Order
             </h1>
           </div>
@@ -238,7 +241,7 @@ export default function OrderTracking() {
           <div className="p-6 space-y-6 flex-grow overflow-y-auto no-scrollbar">
             
             {/* COUNTDOWN / STATUS CARD */}
-            <div className="bg-gradient-to-br from-primary to-orange-500 rounded-3xl p-6 text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-primary to-yellow-500 rounded-3xl p-6 text-slate-900 shadow-lg shadow-primary/20 relative overflow-hidden">
               <div className="absolute right-[-20px] bottom-[-20px] w-40 h-40 opacity-10 pointer-events-none">
                 <span className="material-symbols-outlined text-[160px]">restaurant</span>
               </div>
@@ -249,7 +252,7 @@ export default function OrderTracking() {
                     <span className="text-[10px] font-bold uppercase tracking-wider opacity-75">Order from</span>
                     <h3 className="font-headline font-black text-xl leading-none mt-1">{order.itemName}</h3>
                   </div>
-                  <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold">
+                  <span className="bg-slate-900/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold">
                     {order.status}
                   </span>
                 </div>
@@ -268,12 +271,14 @@ export default function OrderTracking() {
                   ) : (
                     <div className="flex items-end justify-between">
                       <div>
-                        <p className="text-xs opacity-90 mb-0.5">Estimated Prep Wait</p>
+                        <p className="text-xs opacity-90 mb-0.5">
+                          {order.status === 'Pending' ? 'Prep Time (Awaiting Acceptance)' : 'Estimated Prep Wait'}
+                        </p>
                         <div className="flex items-baseline gap-1.5">
                           <span id="countdown-timer" className="text-5xl font-black font-headline tracking-tighter">
                             {formatTime(timeLeft)}
                           </span>
-                          <span className="text-sm font-bold opacity-80">min</span>
+                          <span className="text-sm font-bold opacity-80 font-headline">min</span>
                         </div>
                       </div>
                       <div className="text-right">
@@ -338,7 +343,7 @@ export default function OrderTracking() {
                         <p 
                           className={`text-xs ${
                             isActive 
-                              ? 'text-orange-500 font-semibold' 
+                              ? 'text-yellow-600 dark:text-yellow-400 font-semibold' 
                               : isCompleted 
                               ? 'text-zinc-500/80 dark:text-zinc-400/80' 
                               : 'text-zinc-400/60'

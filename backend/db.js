@@ -217,7 +217,8 @@ function initFallbackData() {
       status: 'Preparing',
       ept: 10,
       createdAt: new Date(Date.now() - 5 * 60000).toISOString(),
-      updatedAt: new Date(Date.now() - 5 * 60000).toISOString()
+      updatedAt: new Date(Date.now() - 5 * 60000).toISOString(),
+      prepStartedAt: new Date(Date.now() - 5 * 60000).toISOString()
     },
     {
       id: 'ord-b7k1',
@@ -232,7 +233,8 @@ function initFallbackData() {
       status: 'Preparing',
       ept: 12,
       createdAt: new Date(Date.now() - 2 * 60000).toISOString(),
-      updatedAt: new Date(Date.now() - 2 * 60000).toISOString()
+      updatedAt: new Date(Date.now() - 2 * 60000).toISOString(),
+      prepStartedAt: new Date(Date.now() - 2 * 60000).toISOString()
     },
     {
       id: 'ord-c9r4',
@@ -247,7 +249,8 @@ function initFallbackData() {
       status: 'Ready',
       ept: 0,
       createdAt: new Date(Date.now() - 12 * 60000).toISOString(),
-      updatedAt: new Date(Date.now() - 1 * 60000).toISOString()
+      updatedAt: new Date(Date.now() - 1 * 60000).toISOString(),
+      prepStartedAt: new Date(Date.now() - 12 * 60000).toISOString()
     }
   ];
 
@@ -550,12 +553,13 @@ function createOrder(data) {
     transactionId: data.transactionId || null,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    prepStartedAt: data.prepStartedAt || null,
   };
 
   if (useSQLite) {
     sqliteDb.prepare(`
-      INSERT INTO orders (id, displayId, shopId, userId, itemName, imageUrl, itemPrice, qty, itemsJson, status, ept, paymentMethod, paymentStatus, transactionId, createdAt, updatedAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO orders (id, displayId, shopId, userId, itemName, imageUrl, itemPrice, qty, itemsJson, status, ept, paymentMethod, paymentStatus, transactionId, createdAt, updatedAt, prepStartedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       order.id,
       order.displayId,
@@ -572,7 +576,8 @@ function createOrder(data) {
       order.paymentStatus,
       order.transactionId,
       order.createdAt,
-      order.updatedAt
+      order.updatedAt,
+      order.prepStartedAt
     );
   } else {
     fallbackData.orders.push(order);
@@ -584,11 +589,20 @@ function createOrder(data) {
 function updateOrderStatus(id, newStatus) {
   const time = new Date().toISOString();
   if (useSQLite) {
-    sqliteDb.prepare('UPDATE orders SET status = ?, updatedAt = ? WHERE id = ?').run(newStatus, time, id);
+    const currentOrder = getOrderById(id);
+    if (!currentOrder) return null;
+    let prepStartedAt = currentOrder.prepStartedAt;
+    if (newStatus === 'Preparing' && !prepStartedAt) {
+      prepStartedAt = time;
+    }
+    sqliteDb.prepare('UPDATE orders SET status = ?, updatedAt = ?, prepStartedAt = ? WHERE id = ?').run(newStatus, time, prepStartedAt, id);
     return getOrderById(id);
   } else {
     const order = fallbackData.orders.find(o => o.id === id);
     if (!order) return null;
+    if (newStatus === 'Preparing' && !order.prepStartedAt) {
+      order.prepStartedAt = time;
+    }
     order.status = newStatus;
     order.updatedAt = time;
     saveFallback();

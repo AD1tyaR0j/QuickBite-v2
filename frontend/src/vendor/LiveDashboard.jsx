@@ -102,13 +102,13 @@ export default function LiveDashboard() {
       {/* ── Top Bar ──────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant</span>
-          <span className="text-xl font-extrabold text-orange-600 dark:text-orange-400 font-['Plus_Jakarta_Sans']">
+          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400">restaurant</span>
+          <span className="text-xl font-extrabold text-yellow-600 dark:text-yellow-400 font-['Plus_Jakarta_Sans']">
             QuickBite Vendor
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400 cursor-pointer hover:opacity-80">
+          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 cursor-pointer hover:opacity-80">
             notifications
           </span>
           <div className="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
@@ -296,7 +296,7 @@ export default function LiveDashboard() {
                     </p>
                     <div className="w-full bg-on-tertiary-fixed-variant h-2 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-tertiary shadow-[0_0_12px_rgba(220,149,251,0.5)] transition-all duration-500"
+                        className="h-full bg-primary shadow-[0_0_12px_rgba(255,165,0,0.5)] transition-all duration-500"
                         style={{ width: `${Math.min((activeOrders.length / 10) * 100, 100)}%` }}
                       />
                     </div>
@@ -355,9 +355,9 @@ function OrderCard({ order, onAction, relativeTime }) {
             {relativeTime(order.createdAt)}
           </span>
           {order.status === 'Pending' && (
-            <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
-              <span className="text-[10px] font-bold text-yellow-600 uppercase">Pending</span>
+            <div className="flex items-center gap-1 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 px-2.5 py-1 rounded-full border border-yellow-500/20 shadow-sm mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+              <span className="text-[9px] font-black uppercase tracking-wider">Awaiting Acceptance</span>
             </div>
           )}
         </div>

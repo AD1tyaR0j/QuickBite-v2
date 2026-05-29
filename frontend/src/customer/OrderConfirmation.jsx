@@ -132,11 +132,11 @@ export default function OrderConfirmation() {
           <button
             id="confirm-back-btn"
             onClick={() => navigate(`/customer/menu/${shopId}`)}
-            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-orange-600 dark:text-orange-400"
+            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-yellow-600 dark:text-yellow-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-orange-600 dark:text-orange-400">
+          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-yellow-600 dark:text-yellow-400">
             Confirm Order
           </h1>
         </div>
@@ -303,7 +303,7 @@ export default function OrderConfirmation() {
                 id="confirm-order-btn"
                 onClick={handleConfirm}
                 disabled={confirming}
-                className="w-full bg-gradient-to-br from-primary to-primary-fixed text-white font-headline text-lg font-extrabold py-5 rounded-full shadow-[0_8px_30px_rgb(178,34,0,0.3)] hover:opacity-90 active:scale-95 transition-all duration-200 disabled:opacity-60"
+                className="w-full bg-gradient-to-br from-primary to-primary-fixed text-slate-900 font-headline text-lg font-black py-5 rounded-full shadow-lg shadow-primary/20 hover:opacity-90 active:scale-95 transition-all duration-200 disabled:opacity-60"
               >
                 {confirming ? (
                   <span className="flex items-center justify-center gap-2">

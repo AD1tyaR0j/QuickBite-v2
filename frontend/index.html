@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="QuickBite — Queue-Aware Predictive Food Ordering. Order ahead, skip the queue, get accurate pickup times." />
     <title>QuickBite — Order Smarter</title>
     <!-- Tailwind CSS -->
@@ -23,11 +23,11 @@
               'surface-container-lowest': '#ffffff',
               'tertiary-fixed-dim': '#cd88ec',
               'secondary-fixed': '#dde4e6',
-              'on-primary': '#ffefec',
+              'on-primary': '#0f172a',
               'on-secondary': '#edf4f6',
-              'surface': '#f5f6f7',
+              'surface': '#e6f0fa',
               'secondary-fixed-dim': '#cfd6d8',
-              'surface-container': '#e6e8ea',
+              'surface-container': '#dfecfa',
               'on-secondary-container': '#4c5355',
               'outline-variant': '#abadae',
               'on-primary-fixed': '#000000',
@@ -36,47 +36,47 @@
               'on-background': '#2c2f30',
               'outline': '#757778',
               'tertiary-container': '#dc95fb',
-              'surface-container-highest': '#dadddf',
-              'primary': '#b22200',
-              'primary-fixed': '#ff785a',
-              'on-primary-fixed-variant': '#5b0c00',
+              'surface-container-highest': '#c8def4',
+              'primary': '#facc15',
+              'primary-fixed': '#fef08a',
+              'on-primary-fixed-variant': '#422006',
               'error': '#b41340',
               'on-tertiary': '#feeeff',
-              'inverse-primary': '#fe5733',
+              'inverse-primary': '#eab308',
               'on-secondary-fixed': '#394043',
-              'surface-dim': '#d1d5d7',
+              'surface-dim': '#cbdcf0',
               'secondary-dim': '#4a5153',
-              'on-primary-container': '#4a0800',
+              'on-primary-container': '#713f12',
               'error-dim': '#a70138',
               'error-container': '#f74b6d',
-              'surface-container-low': '#eff1f2',
+              'surface-container-low': '#ebf3fc',
               'on-surface-variant': '#595c5d',
-              'background': '#f5f6f7',
-              'surface-tint': '#b22200',
-              'surface-bright': '#f5f6f7',
-              'surface-container-high': '#e0e3e4',
+              'background': '#f0f5fa',
+              'surface-tint': '#facc15',
+              'surface-bright': '#f0f5fa',
+              'surface-container-high': '#d4e5f7',
               'on-error': '#ffefef',
               'tertiary': '#7f3f9e',
               'inverse-surface': '#0c0f10',
-              'primary-fixed-dim': '#ff5c39',
-              'primary-dim': '#9c1c00',
+              'primary-fixed-dim': '#eab308',
+              'primary-dim': '#ca8a04',
               'on-tertiary-fixed-variant': '#591779',
               'on-error-container': '#510017',
-              'surface-variant': '#dadddf',
-              'primary-container': '#ff785a',
+              'surface-variant': '#dfecfa',
+              'primary-container': '#fef08a',
               'tertiary-fixed': '#dc95fb',
               'secondary': '#565d5f',
               'on-tertiary-container': '#50086f',
               'on-secondary-fixed-variant': '#565d5f',
               'tertiary-dim': '#723291',
-              // Dark mode surfaces
-              'dark-bg': '#0D0D1A',
-              'dark-surface': '#1A1A2E',
-              'dark-card': '#16213E',
-              'dark-border': '#2E2E5E',
-              'dark-text': '#E8E8FF',
-              'dark-text-secondary': '#6666AA',
-              'dark-accent': '#4F4FFF',
+              // Dark mode surfaces - Premium Midnight Blue Theme
+              'dark-bg': '#0a1128',
+              'dark-surface': '#101f42',
+              'dark-card': '#1a2d5a',
+              'dark-border': '#2e4374',
+              'dark-text': '#f1f5f9',
+              'dark-text-secondary': '#94a3b8',
+              'dark-accent': '#38bdf8',
             },
             fontFamily: {
               headline: ['Plus Jakarta Sans', 'sans-serif'],
@@ -144,7 +144,10 @@
     </style>
   </head>
   <body class="bg-slate-100 dark:bg-slate-950 font-body text-on-background min-h-screen">
-    <div id="root" class="w-full min-h-screen bg-surface dark:bg-dark-bg relative"></div>
+    <!-- Responsive container ensures proper scaling on all devices -->
+    <div class="max-w-screen-lg mx-auto p-4 w-full min-h-screen bg-surface dark:bg-dark-bg relative">
+      <div id="root" class="w-full min-h-screen"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

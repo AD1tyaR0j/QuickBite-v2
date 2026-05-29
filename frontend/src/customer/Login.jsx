@@ -105,7 +105,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] flex flex-col justify-center px-6 py-12 relative overflow-hidden font-body">
       {/* Background gradients */}
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-yellow-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
@@ -131,13 +131,13 @@ export default function Login() {
           <div className="flex p-1 bg-slate-100 dark:bg-[#0D0D1A] rounded-2xl mb-8">
             <button
               onClick={() => { setIsVendorTab(false); setPassword(''); setErrorMsg(''); }}
-              className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${!isVendorTab ? 'bg-primary text-white shadow-md' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700'}`}
+              className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${!isVendorTab ? 'bg-primary text-slate-900 font-extrabold shadow-md' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700'}`}
             >
               Customer
             </button>
             <button
               onClick={() => { setIsVendorTab(true); setPassword(''); setErrorMsg(''); }}
-              className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${isVendorTab ? 'bg-orange-600 text-white shadow-md' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700'}`}
+              className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${isVendorTab ? 'bg-primary text-slate-900 font-extrabold shadow-md' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700'}`}
             >
               Vendor
             </button>
@@ -183,7 +183,7 @@ export default function Login() {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl pl-11 pr-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-orange-600/50 transition-all placeholder-zinc-400"
+                    className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl pl-11 pr-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 transition-all placeholder-zinc-400"
                     placeholder="e.g. kukkries"
                   />
                 </div>
@@ -233,9 +233,9 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-4 rounded-xl font-headline font-bold text-white shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
+              className={`w-full py-4 rounded-xl font-headline font-bold text-slate-900 shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
                 isVendorTab 
-                  ? 'bg-gradient-to-br from-orange-600 to-amber-500 hover:opacity-95 shadow-orange-600/20' 
+                  ? 'bg-gradient-to-br from-primary to-amber-500 hover:opacity-95 shadow-primary/20' 
                   : 'bg-primary-gradient hover:opacity-95 shadow-primary/20'
               }`}
             >

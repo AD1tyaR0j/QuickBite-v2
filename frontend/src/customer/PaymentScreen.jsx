@@ -12,6 +12,7 @@ export default function PaymentScreen() {
   const [menuItem, setMenuItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [ept, setEpt] = useState(15);
+  const [prepTimeLeft, setPrepTimeLeft] = useState(15);
   const [loadingDetails, setLoadingDetails] = useState(true);
 
   // Payment Selection State
@@ -23,6 +24,7 @@ export default function PaymentScreen() {
   const [cardCvv, setCardCvv] = useState('');
   const [cardName, setCardName] = useState('');
   const [walletProvider, setWalletProvider] = useState('Paytm Wallet');
+  const [showFakeBank, setShowFakeBank] = useState(false);
 
   // Processing States
   const [paymentStatus, setPaymentStatus] = useState('editing'); // 'editing' | 'processing' | 'success' | 'failed'
@@ -64,7 +66,10 @@ export default function PaymentScreen() {
             body: JSON.stringify({ shopId, items: itemsPayload }),
           });
           const eptJson = await eptRes.json();
-          if (eptJson.success) setEpt(eptJson.data.ept);
+          if (eptJson.success) {
+            setEpt(eptJson.data.ept);
+            setPrepTimeLeft(eptJson.data.ept);
+          }
         } else {
           const menuRes = await fetch(`/api/shops/${shopId}/menu`);
           const menuJson = await menuRes.json();
@@ -74,7 +79,10 @@ export default function PaymentScreen() {
           }
           const eptRes = await fetch(`/api/ept?shopId=${shopId}&menuItemId=${itemId}`);
           const eptJson = await eptRes.json();
-          if (eptJson.success) setEpt(eptJson.data.ept);
+          if (eptJson.success) {
+            setEpt(eptJson.data.ept);
+            setPrepTimeLeft(eptJson.data.ept);
+          }
         }
       } catch (e) {
         console.error(e);
@@ -84,6 +92,8 @@ export default function PaymentScreen() {
     };
     loadDetails();
   }, [shopId, itemId, isCartMode, cartByShop]);
+
+  // Countdown effect removed (prep timer handles tracking on tracking screen once active)
 
   // Payment Processing Step Animation Loop
   useEffect(() => {
@@ -110,6 +120,7 @@ export default function PaymentScreen() {
     : menuItem
     ? menuItem.price
     : 0;
+  // Preparation countdown after vendor acceptance
   const total = totalBase + platformFee;
 
   const handleCardNumberChange = (e) => {
@@ -139,6 +150,19 @@ export default function PaymentScreen() {
     }
   };
 
+  // Simulate vendor acceptance for UPI payments
+  // Show fake bank UI during awaiting state
+  useEffect(() => {
+    if (paymentStatus === 'awaiting') {
+      setShowFakeBank(true);
+      const timer = setTimeout(() => {
+        setShowFakeBank(false);
+        setPaymentStatus('processing');
+      }, 5000); // wait 5 seconds before processing
+      return () => clearTimeout(timer);
+    }
+  }, [paymentStatus]);
+
   const triggerPayment = (e) => {
     e.preventDefault();
 
@@ -167,7 +191,15 @@ export default function PaymentScreen() {
     }
 
     setProcessingStep(0);
-    setPaymentStatus('processing');
+    // For UPI, show waiting for vendor acceptance first
+    if (paymentMethod === 'UPI') {
+      setPaymentStatus('awaiting');
+    } else {
+      setPaymentStatus('processing');
+      // For other methods, directly finalize after processing simulation
+      // (processing overlay will handle steps; for demo we directly call finalize)
+      finalizeOrder();
+    }
   };
 
   const finalizeOrder = async () => {
@@ -212,6 +244,8 @@ export default function PaymentScreen() {
           clearCart(shopId);
         }
         setPaymentStatus('success');
+        // Reset prep time left when order placed
+        setPrepTimeLeft(ept);
       } else {
         setPaymentStatus('failed');
       }
@@ -223,28 +257,44 @@ export default function PaymentScreen() {
 
   const trackOrder = () => {
     if (placedOrder) {
-      setActiveOrder(placedOrder);
+          setActiveOrder(placedOrder);
       navigate(`/customer/track/${placedOrder.id}`);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background flex justify-center">
-      <div className="w-full max-w-md bg-white dark:bg-[#16213E] min-h-screen shadow-2xl relative flex flex-col justify-between overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center flex-1 w-full min-h-screen bg-slate-50 dark:bg-[#16213E] font-body text-on-background p-4 overflow-y-auto">
+      <div className="w-full max-w-md md:max-w-lg lg:max-w-xl bg-white dark:bg-[#16213E] rounded-xl shadow-2xl flex flex-col p-6 mx-auto">
+
         
         {/* HEADER */}
         <header className="px-6 py-4 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800/40 flex items-center gap-3">
           <button 
             disabled={paymentStatus === 'processing'}
             onClick={() => navigate(-1)} 
-            className="text-orange-600 dark:text-orange-400 active:scale-95 transition-transform disabled:opacity-50"
+            className="text-yellow-600 dark:text-yellow-400 active:scale-95 transition-transform disabled:opacity-50"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-headline font-bold text-lg text-orange-600 dark:text-orange-400">
+          <h1 className="font-headline font-bold text-lg text-yellow-600 dark:text-yellow-400">
             Secure Payment
           </h1>
         </header>
+
+        {showFakeBank && (
+            <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-[#16213E] rounded-xl shadow-2xl mx-auto w-full max-w-md md:max-w-lg lg:max-w-xl">
+              <h3 className="font-headline text-xl font-bold mb-4 text-center text-on-surface dark:text-white">
+                Demo UPI Payment
+              </h3>
+              {/* Placeholder for QR code */}
+              <div className="w-48 h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-md mb-4">
+                <span className="material-symbols-outlined text-4xl text-gray-500 dark:text-gray-300">qr_code</span>
+              </div>
+              <p className="text-sm text-center text-zinc-500 dark:text-zinc-400">
+                This is a simulated bank detail screen. The QR code is for demo purposes only and will disappear after 5 seconds.
+              </p>
+            </div>
+          )}
 
         {/* LOADING SCREEN */}
         {loadingDetails && (
@@ -254,7 +304,8 @@ export default function PaymentScreen() {
           </div>
         )}
 
-        {/* PAYMENT FORMS */}
+          {/* PAYMENT FORMS */}
+
         {!loadingDetails && paymentStatus === 'editing' && (
           <div className="flex-1 p-6 space-y-6">
             <div>
@@ -392,10 +443,10 @@ export default function PaymentScreen() {
 
               {/* CASH ON PICKUP PANEL */}
               {paymentMethod === 'Cash' && (
-                <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 p-5 rounded-2xl text-center space-y-2">
-                  <span className="material-symbols-outlined text-orange-600 dark:text-orange-400 text-3xl">payments</span>
-                  <h4 className="font-headline font-bold text-orange-800 dark:text-orange-300">Cash On Pickup</h4>
-                  <p className="text-xs text-orange-700/80 dark:text-orange-400/80 leading-relaxed">
+                <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/40 p-5 rounded-2xl text-center space-y-2">
+                  <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-3xl">payments</span>
+                  <h4 className="font-headline font-bold text-yellow-800 dark:text-yellow-300">Cash On Pickup</h4>
+                  <p className="text-xs text-yellow-800/80 dark:text-yellow-400/80 leading-relaxed">
                     Confirm your order now. You will pay in cash or via QR code directly at the cafeteria counter during pickup.
                   </p>
                 </div>
@@ -421,13 +472,17 @@ export default function PaymentScreen() {
               <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin" />
               <span className="material-symbols-outlined absolute top-7 left-7 text-4xl text-primary animate-pulse">lock</span>
             </div>
-
-            <h3 className="font-headline text-xl font-bold text-on-surface dark:text-white mb-2">
-              Processing Payment
-            </h3>
+            <h3 className="font-headline text-xl font-bold text-on-surface dark:text-white mb-2">Processing Payment</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 min-h-[3rem] font-medium max-w-xs mx-auto animate-pulse">
               {steps[processingStep]}
             </p>
+          </div>
+        )}
+        {paymentStatus === 'awaiting' && (
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white dark:bg-[#16213E]">
+            <div className="w-12 h-12 border-4 border-primary rounded-full animate-spin mb-4" />
+            <h3 className="font-headline text-xl font-bold mb-2 text-on-surface dark:text-white">Waiting for vendor to accept...</h3>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Your order is being reviewed by the vendor.</p>
           </div>
         )}
 
@@ -444,6 +499,16 @@ export default function PaymentScreen() {
               <div>
                 <h3 className="font-headline text-2xl font-black text-green-600">Payment Successful</h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Thank you! Your order has been placed.</p>
+                {/* Awaiting Acceptance indicator */}
+                <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/40 rounded-xl inline-flex items-center gap-2">
+                  <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-lg animate-pulse">hourglass_empty</span>
+                  <span className="text-xs font-semibold text-yellow-800 dark:text-yellow-300">
+                    Awaiting vendor acceptance...
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 font-medium">
+                  Estimated prep time: <span className="text-primary font-bold">{ept} mins</span> (will start once preparation begins)
+                </p>
               </div>
 
               {/* TRANSACTION INFO CARD */}
