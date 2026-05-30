@@ -25,8 +25,12 @@ It provides an unparalleled, mobile-first **Customer Application** for students/
 - **Capacity-Aware Parallel Cooking:** Multiple different items are summed and divided by cook count — reflecting how a real kitchen shares capacity across dishes.
 - **Dual-Sided Architecture:** A single frontend React application logically partitioned for Customers (`/customer/*`) and Vendors (`/vendor/*`).
 - **Offline Sync:** Vendors can inject physical walk-in orders to organically scale up the digital EPT for incoming online customers.
-- **Mobile-App Native Design:** Developed with strict max-width formatting so it presents exactly like a downloaded mobile-app natively on desktop web browsers.
-- **Dynamic Theming:** Instant, fully-integrated Dark and Light mode.
+- **Interactive Ratings & Feedback:** Customers can submit reviews with interactive star ratings for cafeteria/food quality once an order is marked as `Completed`.
+- **UPI QR Code Payment portal:** Secure payment screen featuring an actual QR scan code mockup for simulated transactions.
+- **Order Cancellation Support:** Real-time order cancellation directly from the Customer Order History for active orders (supported when order status is `Pending` or `Preparing`).
+- **Responsive Hybrid Scaling:** Engineered with custom max-width bounds (`max-w-5xl` for customer views, `max-w-7xl` for vendor views, and a `max-w-7xl` global wrapper) ensuring the app centers and scales beautifully on wide desktop screens while collapsing cleanly to full-width on mobile.
+- **Premium Orange Theming:** Rebranded the entire application styling from a yellow design palette to a modern, vibrant orange color system.
+- **Dynamic Mode:** Instant, fully-integrated Dark and Light mode.
 
 ---
 

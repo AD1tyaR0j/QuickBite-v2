@@ -22,7 +22,7 @@ export default function VendorLayout() {
       <Outlet />
 
       {/* ── Vendor Bottom Nav (4 tabs) ─────────────────────── */}
-      <nav className="fixed bottom-0 md:bottom-4 left-0 right-0 max-w-md mx-auto w-full h-20 flex justify-around items-center px-4 pb-safe bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl z-50 rounded-t-3xl md:rounded-2xl shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] md:shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:border md:border-slate-100 dark:md:border-slate-800">
+      <nav className="fixed bottom-0 md:bottom-4 left-0 right-0 max-w-7xl mx-auto w-full h-20 flex justify-around items-center px-4 pb-safe bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl z-50 rounded-t-3xl md:rounded-2xl shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] md:shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:border md:border-slate-100 dark:md:border-slate-800">
         {tabs.map(tab => {
           const active = isActive(tab);
           return (
@@ -32,7 +32,7 @@ export default function VendorLayout() {
               onClick={() => navigate(`/vendor/${shopId}/${tab.path}`)}
               className={`flex flex-col items-center justify-center px-5 py-2 rounded-2xl transition-all duration-200 active:scale-95 ${
                 active
-                  ? 'bg-yellow-100 dark:bg-yellow-950/30 text-yellow-800 dark:text-yellow-300'
+                  ? 'bg-orange-100 dark:bg-orange-950/30 text-orange-800 dark:text-orange-300'
                   : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800/50'
               }`}
             >

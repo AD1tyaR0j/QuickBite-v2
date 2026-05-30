@@ -105,7 +105,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] flex flex-col justify-center px-6 py-12 relative overflow-hidden font-body">
       {/* Background gradients */}
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-yellow-500/10 blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
@@ -235,7 +235,7 @@ export default function Login() {
               disabled={loading}
               className={`w-full py-4 rounded-xl font-headline font-bold text-slate-900 shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
                 isVendorTab 
-                  ? 'bg-gradient-to-br from-primary to-amber-500 hover:opacity-95 shadow-primary/20' 
+                  ? 'bg-gradient-to-br from-primary to-orange-500 hover:opacity-95 shadow-primary/20' 
                   : 'bg-primary-gradient hover:opacity-95 shadow-primary/20'
               }`}
             >

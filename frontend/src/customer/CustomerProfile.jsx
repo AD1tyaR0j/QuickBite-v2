@@ -15,7 +15,8 @@ export default function CustomerProfile() {
     addAddressLine,
     removeAddressLine,
     favoriteShops,
-    addToast
+    addToast,
+    fetchApi
   } = useApp();
 
   const [shops, setShops] = useState([]);
@@ -41,7 +42,7 @@ export default function CustomerProfile() {
       .catch(console.error);
 
     // Fetch user order history to calculate count
-    fetch('/api/orders')
+    fetchApi('/api/orders')
       .then(res => res.json())
       .then(json => { if (json.success) setOrders(json.data); })
       .catch(console.error);
@@ -127,11 +128,11 @@ export default function CustomerProfile() {
     <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-surface pb-32">
       
       {/* ── Top App Bar ──────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40">
+      <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full z-50 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40">
         <div className="flex justify-between items-center px-6 h-16 w-full">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-yellow-500 dark:text-yellow-400">restaurant</span>
-            <h1 className="font-headline font-black text-xl text-yellow-500 dark:text-yellow-400 italic">
+            <span className="material-symbols-outlined text-orange-500 dark:text-orange-400">restaurant</span>
+            <h1 className="font-headline font-black text-xl text-orange-500 dark:text-orange-400 italic">
               QuickBite
             </h1>
           </div>
@@ -142,7 +143,7 @@ export default function CustomerProfile() {
       </header>
 
       {currentUser && (
-        <main className="pt-28 px-6 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto space-y-6">
+        <main className="pt-28 px-6 max-w-5xl mx-auto space-y-6">
           
           <div className="flex flex-col md:flex-row gap-6 items-start w-full">
             {/* Left Column: Profile card + Stats + App Configs + Logout */}

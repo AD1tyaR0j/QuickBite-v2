@@ -63,8 +63,8 @@ export default function VendorOrders() {
       {/* ── Top Custom Bar ───────────────────────────────────── */}
       <header className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl shadow-sm border-b border-slate-100 dark:border-slate-800/40 h-16 flex items-center justify-between px-6">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400">restaurant_menu</span>
-          <h1 className="text-lg font-black text-yellow-600 dark:text-yellow-400 tracking-tight font-headline">QuickBite Vendor</h1>
+          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant_menu</span>
+          <h1 className="text-lg font-black text-orange-600 dark:text-orange-400 tracking-tight font-headline">QuickBite Vendor</h1>
         </div>
         <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 duration-200">
           <span className="material-symbols-outlined text-slate-500">notifications</span>
@@ -104,7 +104,7 @@ export default function VendorOrders() {
           <div className="grid grid-cols-2 gap-4">
             
             {/* Revenue Widget */}
-            <div className="col-span-2 bg-gradient-to-br from-primary to-yellow-500 p-5 rounded-3xl text-slate-900 shadow-lg shadow-primary/20 relative overflow-hidden group">
+            <div className="col-span-2 bg-gradient-to-br from-primary to-orange-500 p-5 rounded-3xl text-slate-900 shadow-lg shadow-primary/20 relative overflow-hidden group">
               <div className="relative z-10 space-y-3">
                 <p className="text-slate-800 font-label text-[10px] uppercase tracking-widest">Total Sales Earnings</p>
                 <h3 className="text-3xl font-black font-headline tracking-tighter">₹{analytics.revenue.toLocaleString()}</h3>
@@ -130,7 +130,7 @@ export default function VendorOrders() {
             {/* Average Preparation Time Widget */}
             <div className="bg-white dark:bg-[#16213E] p-4 rounded-3xl border border-slate-100 dark:border-slate-800/40 shadow-sm space-y-1">
               <div className="flex items-center gap-2 text-zinc-400">
-                <span className="material-symbols-outlined text-yellow-500 text-lg">timer</span>
+                <span className="material-symbols-outlined text-orange-500 text-lg">timer</span>
                 <p className="text-[9px] font-bold uppercase tracking-wider">Avg Prep</p>
               </div>
               <h4 className="text-xl font-black text-on-surface dark:text-white font-headline">{analytics.averageEpt}m</h4>

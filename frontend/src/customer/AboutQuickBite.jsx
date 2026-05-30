@@ -6,21 +6,21 @@ export default function AboutQuickBite() {
 
   return (
     <div className="min-h-screen bg-surface dark:bg-dark-bg font-body text-on-background animate-fade-in">
-      <header className="fixed top-0 left-0 right-0 max-w-md mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm z-50">
+      <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm z-50">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-yellow-600 dark:text-yellow-400"
+            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-orange-600 dark:text-orange-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-yellow-600 dark:text-yellow-400">
+          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-orange-600 dark:text-orange-400">
             About QuickBite
           </h1>
         </div>
       </header>
 
-      <main className="pt-24 pb-12 px-6 max-w-2xl mx-auto space-y-6">
+      <main className="pt-24 pb-12 px-6 max-w-5xl mx-auto space-y-6">
         <section>
           <h2 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface dark:text-dark-text mb-2">
             Queue-aware food ordering

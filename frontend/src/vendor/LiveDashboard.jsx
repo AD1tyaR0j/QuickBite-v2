@@ -18,6 +18,20 @@ export default function LiveDashboard() {
   const [addingOffline, setAddingOffline] = useState(false);
   const [toast, setToast] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dismissedOrders, setDismissedOrders] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('quickbite-dismissed-orders') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  const handleDismissOrder = (id) => {
+    const next = [...dismissedOrders, id];
+    setDismissedOrders(next);
+    localStorage.setItem('quickbite-dismissed-orders', JSON.stringify(next));
+  };
+
 
   const fetchOrders = useCallback(async () => {
     try {
@@ -92,7 +106,10 @@ export default function LiveDashboard() {
     return `${diff} mins ago`;
   };
 
-  const activeOrders = orders.filter(o => ['Pending', 'Preparing', 'Almost Ready'].includes(o.status));
+  const activeOrders = orders.filter(o => 
+    (['Pending', 'Preparing', 'Almost Ready'].includes(o.status) || o.status === 'Cancelled') &&
+    !dismissedOrders.includes(o.id)
+  );
   const readyOrders = orders.filter(o => o.status === 'Ready');
   const completedToday = orders.filter(o => o.status === 'Completed').length;
   const preparingCount = orders.filter(o => o.status === 'Preparing' || o.status === 'Almost Ready').length;
@@ -102,13 +119,13 @@ export default function LiveDashboard() {
       {/* ── Top Bar ──────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400">restaurant</span>
-          <span className="text-xl font-extrabold text-yellow-600 dark:text-yellow-400 font-['Plus_Jakarta_Sans']">
+          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant</span>
+          <span className="text-xl font-extrabold text-orange-600 dark:text-orange-400 font-['Plus_Jakarta_Sans']">
             QuickBite Vendor
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 cursor-pointer hover:opacity-80">
+          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400 cursor-pointer hover:opacity-80">
             notifications
           </span>
           <div className="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
@@ -240,7 +257,7 @@ export default function LiveDashboard() {
               ) : (
                 <div className="grid grid-cols-1 gap-4">
                   {activeOrders.map(order => (
-                    <OrderCard key={order.id} order={order} onAction={updateStatus} relativeTime={relativeTime} />
+                    <OrderCard key={order.id} order={order} onAction={updateStatus} relativeTime={relativeTime} onDismiss={handleDismissOrder} />
                   ))}
                 </div>
               )}
@@ -327,7 +344,7 @@ export default function LiveDashboard() {
 }
 
 // ── Order Card Component ──────────────────────────────────────
-function OrderCard({ order, onAction, relativeTime }) {
+function OrderCard({ order, onAction, relativeTime, onDismiss }) {
   const getActionButton = () => {
     if (order.status === 'Pending') {
       return { label: 'Start Prep', nextStatus: 'Preparing', icon: 'play_arrow' };
@@ -342,9 +359,24 @@ function OrderCard({ order, onAction, relativeTime }) {
   };
 
   const action = getActionButton();
+  const isCancelled = order.status === 'Cancelled';
 
   return (
-    <div className="bg-surface-container-lowest dark:bg-dark-card rounded-xl p-5 premium-shadow border border-outline-variant/10 relative overflow-hidden">
+    <div className={`rounded-xl p-5 premium-shadow border relative overflow-hidden transition-all duration-300 ${isCancelled ? 'bg-red-500/10 border-red-500/40 dark:bg-red-950/20' : 'bg-surface-container-lowest dark:bg-dark-card border-outline-variant/10'}`}>
+      
+      {isCancelled && (
+        <div className="absolute inset-0 bg-red-600/10 dark:bg-red-950/30 backdrop-blur-[1.5px] z-20 flex flex-col items-center justify-center p-4 text-center">
+          <span className="material-symbols-outlined text-red-500 text-3xl font-bold animate-bounce mb-1">cancel</span>
+          <h4 className="font-headline font-black text-red-600 dark:text-red-400 text-sm uppercase tracking-wider">Order Cancelled</h4>
+          <p className="text-[10px] text-zinc-500 dark:text-zinc-400 max-w-[200px] mt-0.5 font-semibold">Cancelled by customer. Stop kitchen preparation.</p>
+          <button
+            onClick={() => onDismiss(order.id)}
+            className="mt-3 px-4 py-1.5 bg-red-600 text-white rounded-lg text-xs font-bold shadow-md hover:bg-red-700 active:scale-95 transition-all cursor-pointer pointer-events-auto"
+          >
+            Acknowledge
+          </button>
+        </div>
+      )}
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="font-bold text-lg text-on-surface dark:text-dark-text">{order.displayId}</h3>
@@ -355,8 +387,8 @@ function OrderCard({ order, onAction, relativeTime }) {
             {relativeTime(order.createdAt)}
           </span>
           {order.status === 'Pending' && (
-            <div className="flex items-center gap-1 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 px-2.5 py-1 rounded-full border border-yellow-500/20 shadow-sm mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+            <div className="flex items-center gap-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 px-2.5 py-1 rounded-full border border-orange-500/20 shadow-sm mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
               <span className="text-[9px] font-black uppercase tracking-wider">Awaiting Acceptance</span>
             </div>
           )}

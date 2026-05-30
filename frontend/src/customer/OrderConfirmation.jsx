@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useApp } from '../store/AppContext.jsx';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // ── Order Confirmation Screen ─────────────────────────────────
 // Route: /customer/confirm/:shopId/:itemId
@@ -125,24 +126,30 @@ export default function OrderConfirmation() {
   };
 
   return (
-    <div className="min-h-screen bg-surface dark:bg-dark-bg font-body text-on-background animate-fade-in">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-surface dark:bg-dark-bg font-body text-on-background"
+    >
       {/* ── Top App Bar ──────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 max-w-md mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm z-50">
+      <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm z-50">
         <div className="flex items-center gap-3">
           <button
             id="confirm-back-btn"
             onClick={() => navigate(`/customer/menu/${shopId}`)}
-            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-yellow-600 dark:text-yellow-400"
+            className="hover:opacity-80 transition-opacity active:scale-95 duration-150 text-orange-600 dark:text-orange-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-yellow-600 dark:text-yellow-400">
+          <h1 className="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-lg text-orange-600 dark:text-orange-400">
             Confirm Order
           </h1>
         </div>
       </header>
 
-      <main className="pt-24 pb-10 px-6 max-w-2xl mx-auto">
+      <main className="pt-24 pb-10 px-4 sm:px-6 max-w-5xl mx-auto">
         {loading && (
           <div className="flex items-center justify-center py-20">
             <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -159,7 +166,12 @@ export default function OrderConfirmation() {
             </header>
 
             {/* ── Item Card ─────────────────────────────────── */}
-            <div className="relative overflow-visible mb-8">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22, delay: 0.1 }}
+              className="relative overflow-visible mb-8"
+            >
               <div className="bg-surface-container-lowest dark:bg-dark-card rounded-xl p-6 shadow-[0px_12px_32px_rgba(44,47,48,0.06)] flex flex-col md:flex-row items-center gap-6 border border-outline-variant/10">
                 <div className="relative -mt-10 md:-mt-0 w-36 h-36 flex-shrink-0">
                   <img
@@ -187,7 +199,7 @@ export default function OrderConfirmation() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {isCartMode && (
               <div className="bg-surface-container-lowest dark:bg-dark-card rounded-xl p-4 premium-shadow space-y-3">
@@ -322,6 +334,6 @@ export default function OrderConfirmation() {
           </section>
         )}
       </main>
-    </div>
+    </motion.div>
   );
 }

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function OrderTracking() {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const { activeOrder, setActiveOrder, addToast, addNotification } = useApp();
+  const { activeOrder, setActiveOrder, addToast, addNotification, fetchApi } = useApp();
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,6 +19,30 @@ export default function OrderTracking() {
   const [reviewText, setReviewText] = useState('');
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [submittingReview, setSubmittingReview] = useState(false);
+
+  const [activeOrdersCount, setActiveOrdersCount] = useState(0);
+  const [activeOrderIds, setActiveOrderIds] = useState([]);
+
+  // Cancel Modal states
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelList, setCancelList] = useState([]);
+  const [checkedIds, setCheckedIds] = useState([]);
+  const [cancellingAll, setCancellingAll] = useState(false);
+
+  const openCancelModal = async () => {
+    try {
+      const res = await fetchApi('/api/orders');
+      const json = await res.json();
+      if (json.success) {
+        const active = json.data.filter(o => !['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(o.status));
+        setCancelList(active);
+        setCheckedIds(active.map(o => o.id));
+        setShowCancelModal(true);
+      }
+    } catch (e) {
+      console.error("Failed to load active list for modal:", e);
+    }
+  };
 
   const timerRef = useRef(null);
   const pollRef = useRef(null);
@@ -85,7 +109,7 @@ export default function OrderTracking() {
         }
 
         // Stop polling when terminal status reached
-        if (json.data.status === 'Completed') {
+        if (json.data.status === 'Completed' || json.data.status === 'Cancelled') {
           clearInterval(pollRef.current);
           clearInterval(timerRef.current);
           setTimeLeft(0);
@@ -121,9 +145,26 @@ export default function OrderTracking() {
     };
   }, [resolvedOrderId, fetchOrder]);
 
+  useEffect(() => {
+    const fetchActiveOrdersCount = async () => {
+      try {
+        const res = await fetchApi('/api/orders');
+        const json = await res.json();
+        if (json.success) {
+          const active = json.data.filter(o => !['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(o.status));
+          setActiveOrdersCount(active.length);
+          setActiveOrderIds(active.map(o => o.id));
+        }
+      } catch (e) {
+        console.error("Failed to load active orders count:", e);
+      }
+    };
+    fetchActiveOrdersCount();
+  }, [fetchApi, order]);
+
   // Countdown timer clock
   useEffect(() => {
-    if (!order || !order.ept || order.status === 'Ready' || order.status === 'Completed') return;
+    if (!order || !order.ept || order.status === 'Ready' || order.status === 'Completed' || order.status === 'Cancelled') return;
     if (!deadlineRef.current) return;
 
     timerRef.current = setInterval(() => {
@@ -205,27 +246,48 @@ export default function OrderTracking() {
     );
   }
 
+  const totalSeconds = (order?.ept || 15) * 60;
+  const strokeDashoffset = totalSeconds > 0 ? 251.2 * (1 - Math.min(totalSeconds, timeLeft) / totalSeconds) : 0;
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background flex justify-center">
-      <div className="w-full max-w-md bg-white dark:bg-[#16213E] min-h-screen shadow-2xl relative flex flex-col pb-28">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background flex justify-center"
+    >
+      <div className="w-full max-w-5xl bg-white dark:bg-[#16213E] min-h-screen shadow-2xl relative flex flex-col pb-28">
         
         {/* HEADER */}
         <header className="px-6 py-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/customer/home')}
-              className="text-yellow-600 dark:text-yellow-400 active:scale-95 transition-transform"
+              className="text-orange-600 dark:text-orange-400 active:scale-95 transition-transform"
             >
               <span className="material-symbols-outlined">home</span>
             </button>
-            <h1 className="font-headline font-bold text-lg text-yellow-600 dark:text-yellow-400">
+            <h1 className="font-headline font-bold text-lg text-orange-600 dark:text-orange-400">
               Track Order
             </h1>
           </div>
           {order && (
-            <span className="bg-slate-100 dark:bg-zinc-800 px-3 py-1 rounded-full text-[10px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">
-              {order.displayId}
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="bg-slate-100 dark:bg-zinc-800 px-3 py-1 rounded-full text-[10px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">
+                {order.displayId}
+              </span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(order.displayId);
+                  addToast('ID Copied', 'Order ID copied to clipboard.', 'success');
+                }}
+                className="w-7 h-7 rounded-full bg-slate-100 dark:bg-zinc-800 text-zinc-500 hover:text-orange-500 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+                title="Copy Order ID"
+              >
+                <span className="material-symbols-outlined text-[14px]">content_copy</span>
+              </button>
+            </div>
           )}
         </header>
 
@@ -241,7 +303,7 @@ export default function OrderTracking() {
           <div className="p-6 space-y-6 flex-grow overflow-y-auto no-scrollbar">
             
             {/* COUNTDOWN / STATUS CARD */}
-            <div className="bg-gradient-to-br from-primary to-yellow-500 rounded-3xl p-6 text-slate-900 shadow-lg shadow-primary/20 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-primary to-orange-500 rounded-3xl p-6 text-slate-900 shadow-lg shadow-primary/20 relative overflow-hidden">
               <div className="absolute right-[-20px] bottom-[-20px] w-40 h-40 opacity-10 pointer-events-none">
                 <span className="material-symbols-outlined text-[160px]">restaurant</span>
               </div>
@@ -263,27 +325,65 @@ export default function OrderTracking() {
                       <p className="text-xs opacity-90 mb-1">Delivered Successfully!</p>
                       <h2 className="text-3xl font-black font-headline">Order Collected</h2>
                     </div>
+                  ) : order.status === 'Cancelled' ? (
+                    <div>
+                      <p className="text-xs opacity-90 mb-1">This order was cancelled.</p>
+                      <h2 className="text-3xl font-black font-headline text-red-100">Cancelled</h2>
+                    </div>
                   ) : order.status === 'Ready' ? (
                     <div>
                       <p className="text-xs opacity-90 mb-1">Hot & Ready to Collect!</p>
                       <h2 className="text-3xl font-black font-headline animate-bounce">At Counter</h2>
                     </div>
                   ) : (
-                    <div className="flex items-end justify-between">
-                      <div>
+                    <div className="flex items-center gap-6">
+                      {/* Circular SVG Timer Gauge */}
+                      <div className="relative w-20 h-20 flex-shrink-0">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          {/* Background circle */}
+                          <circle
+                            className="text-white/20"
+                            strokeWidth="6"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                          />
+                          {/* Foreground circle with dash-offset */}
+                          <motion.circle
+                            className="text-white"
+                            strokeWidth="6"
+                            strokeDasharray="251.2"
+                            animate={{ strokeDashoffset }}
+                            transition={{ duration: 0.5 }}
+                            strokeLinecap="round"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                          />
+                        </svg>
+                        {/* Inner Text */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                          <span className="text-lg font-black font-headline tracking-tighter">
+                            {Math.ceil(timeLeft / 60)}
+                          </span>
+                          <span className="text-[8px] font-black uppercase opacity-80">min</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex-grow">
                         <p className="text-xs opacity-90 mb-0.5">
                           {order.status === 'Pending' ? 'Prep Time (Awaiting Acceptance)' : 'Estimated Prep Wait'}
                         </p>
-                        <div className="flex items-baseline gap-1.5">
-                          <span id="countdown-timer" className="text-5xl font-black font-headline tracking-tighter">
-                            {formatTime(timeLeft)}
-                          </span>
-                          <span className="text-sm font-bold opacity-80 font-headline">min</span>
+                        <p id="countdown-timer" className="text-3xl font-black font-headline">
+                          {formatTime(timeLeft)}
+                        </p>
+                        <div className="mt-1">
+                          <span className="text-[10px] opacity-75 uppercase font-bold tracking-wider">Ready Around: {getEstCompletionTime()}</span>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[10px] opacity-75 uppercase font-bold tracking-wider">Ready Around</p>
-                        <p className="font-headline font-bold text-sm">{getEstCompletionTime()}</p>
                       </div>
                     </div>
                   )}
@@ -313,18 +413,23 @@ export default function OrderTracking() {
                       )}
 
                       {/* Timeline Dot Icon */}
-                      <div 
-                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 z-10 transition-all ${
-                          isCompleted 
-                            ? 'bg-primary text-white shadow-md' 
-                            : isActive 
-                            ? 'bg-primary-container text-white ring-4 ring-primary/20 pulse-indicator' 
-                            : 'bg-slate-200 dark:bg-slate-800 text-zinc-400'
-                        }`}
-                      >
-                        <span className="material-symbols-outlined text-sm font-bold">
-                          {isCompleted ? 'check' : step.icon}
-                        </span>
+                      <div className="relative flex-shrink-0 z-10">
+                        {isActive && (
+                          <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping pointer-events-none" />
+                        )}
+                        <div 
+                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all relative ${
+                            isCompleted 
+                              ? 'bg-primary text-white shadow-md' 
+                              : isActive 
+                              ? 'bg-primary-gradient text-white shadow-lg shadow-primary/20' 
+                              : 'bg-slate-200 dark:bg-slate-800 text-zinc-400'
+                          }`}
+                        >
+                          <span className="material-symbols-outlined text-sm font-bold">
+                            {isCompleted ? 'check' : step.icon}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Description texts */}
@@ -343,7 +448,7 @@ export default function OrderTracking() {
                         <p 
                           className={`text-xs ${
                             isActive 
-                              ? 'text-yellow-600 dark:text-yellow-400 font-semibold' 
+                              ? 'text-orange-600 dark:text-orange-400 font-semibold' 
                               : isCompleted 
                               ? 'text-zinc-500/80 dark:text-zinc-400/80' 
                               : 'text-zinc-400/60'
@@ -359,6 +464,42 @@ export default function OrderTracking() {
 
               </div>
             </div>
+
+            {/* CANCEL ORDER BUTTON */}
+            {order && !['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(order.status) && (
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await fetchApi(`/api/orders/${order.id}/cancel`, {
+                      method: 'PATCH',
+                    });
+                    const json = await res.json();
+                    if (json.success) {
+                      setOrder(json.data);
+                      addToast('Order Cancelled', 'Your order has been cancelled.', 'success');
+                    } else {
+                      addToast('Error', json.error || 'Failed to cancel order.', 'error');
+                    }
+                  } catch (e) {
+                    console.error("Cancel Order error:", e);
+                    addToast('Error', `Unable to cancel order: ${e.message}`, 'error');
+                  }
+                }}
+                className="w-full bg-red-50 dark:bg-red-950/20 text-red-500 hover:bg-red-500 hover:text-white dark:text-red-400 dark:hover:bg-red-950/40 border border-red-500/20 py-4 rounded-2xl font-headline font-extrabold active:scale-[0.98] transition-all cursor-pointer"
+              >
+                Cancel Order
+              </button>
+            )}
+
+            {activeOrdersCount > 1 && (
+              <button
+                onClick={openCancelModal}
+                className="w-full mt-3 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-headline font-extrabold active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-red-500/10 text-xs"
+              >
+                <span className="material-symbols-outlined text-[16px]">cancel</span>
+                Cancel All Active Orders ({activeOrdersCount})
+              </button>
+            )}
 
             {/* ORDER COMPLETED FEEDBACK SYSTEM */}
             {order.status === 'Completed' && (
@@ -380,7 +521,7 @@ export default function OrderTracking() {
                     {/* Star Rating Shop */}
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-zinc-500">Rate Cafeteria</span>
-                      <div className="flex gap-1 text-yellow-500">
+                      <div className="flex gap-1 text-orange-500">
                         {[1, 2, 3, 4, 5].map(star => (
                           <button
                             key={star}
@@ -389,7 +530,7 @@ export default function OrderTracking() {
                             className="hover:scale-110 active:scale-95 transition-transform"
                           >
                             <span className="material-symbols-outlined text-xl" style={star <= ratingShop ? { fontVariationSettings: "'FILL' 1" } : {}}>
-                              star
+                              {star <= ratingShop ? 'star' : 'star_border'}
                             </span>
                           </button>
                         ))}
@@ -399,7 +540,7 @@ export default function OrderTracking() {
                     {/* Star Rating Food */}
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-zinc-500">Rate Food Quality</span>
-                      <div className="flex gap-1 text-yellow-500">
+                      <div className="flex gap-1 text-orange-500">
                         {[1, 2, 3, 4, 5].map(star => (
                           <button
                             key={star}
@@ -408,7 +549,7 @@ export default function OrderTracking() {
                             className="hover:scale-110 active:scale-95 transition-transform"
                           >
                             <span className="material-symbols-outlined text-xl" style={star <= ratingFood ? { fontVariationSettings: "'FILL' 1" } : {}}>
-                              star
+                              {star <= ratingFood ? 'star' : 'star_border'}
                             </span>
                           </button>
                         ))}
@@ -458,6 +599,131 @@ export default function OrderTracking() {
           </div>
         )}
       </div>
-    </div>
+      <AnimatePresence>
+        {showCancelModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowCancelModal(false)}
+              className="absolute inset-0 bg-zinc-950/60 backdrop-blur-sm"
+            />
+            
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 15 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="bg-white dark:bg-[#16213E] rounded-3xl p-6 w-full max-w-md relative z-10 border border-slate-100 dark:border-slate-800/40 shadow-2xl flex flex-col max-h-[80vh]"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-headline font-black text-xl text-on-surface dark:text-white">Cancel Orders</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Select which orders you want to cancel</p>
+                </div>
+                <button
+                  onClick={() => setShowCancelModal(false)}
+                  className="w-8 h-8 rounded-full bg-slate-50 dark:bg-zinc-800 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[20px]">close</span>
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto space-y-3 pr-1 py-1 max-h-[45vh]">
+                {cancelList.map(order => {
+                  const isChecked = checkedIds.includes(order.id);
+                  return (
+                    <div
+                      key={order.id}
+                      onClick={() => {
+                        if (isChecked) {
+                          setCheckedIds(checkedIds.filter(id => id !== order.id));
+                        } else {
+                          setCheckedIds([...checkedIds, order.id]);
+                        }
+                      }}
+                      className={`p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer flex items-center justify-between ${
+                        isChecked 
+                          ? 'border-red-500/30 bg-red-50/10 dark:bg-red-950/10' 
+                          : 'border-slate-100 dark:border-slate-800/40 bg-slate-50/30 dark:bg-zinc-900/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 flex-1 min-w-0 pr-3">
+                        <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+                          isChecked 
+                            ? 'bg-red-500 border-red-500 text-white' 
+                            : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-zinc-950'
+                        }`}>
+                          {isChecked && <span className="material-symbols-outlined text-[14px] font-bold">check</span>}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-headline font-black text-xs text-orange-600 dark:text-orange-400">{order.displayId}</span>
+                            <span className="bg-slate-100 dark:bg-zinc-800 px-2 py-0.5 rounded text-[9px] font-bold text-zinc-500 dark:text-zinc-400 uppercase">
+                              {order.status}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold text-on-surface dark:text-white mt-1 truncate">{order.itemName}</p>
+                          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">₹{order.itemPrice || 0}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="space-y-3 pt-6 border-t border-slate-100 dark:border-slate-800/40 mt-4">
+                <button
+                  disabled={checkedIds.length === 0 || cancellingAll}
+                  onClick={async () => {
+                    if (checkedIds.length === 0) return;
+                    setCancellingAll(true);
+                    try {
+                      const res = await fetchApi('/api/orders/cancel-all', {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderIds: checkedIds })
+                      });
+                      const json = await res.json();
+                      if (json.success) {
+                        const currentUpdated = json.data.find(u => u.id === order?.id);
+                        if (currentUpdated) {
+                          setOrder(currentUpdated);
+                        } else {
+                          fetchOrder(resolvedOrderId);
+                        }
+                        addToast('Orders Updated', `${checkedIds.length} order(s) cancelled successfully.`, 'success');
+                        setShowCancelModal(false);
+                      } else {
+                        addToast('Error', json.error || 'Failed to cancel orders.', 'error');
+                      }
+                    } catch (e) {
+                      addToast('Error', `Unable to cancel orders: ${e.message}`, 'error');
+                    } finally {
+                      setCancellingAll(false);
+                    }
+                  }}
+                  className={`w-full font-headline font-extrabold py-3.5 rounded-xl transition-all cursor-pointer text-xs flex items-center justify-center gap-2 ${
+                    checkedIds.length === 0 
+                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-400 cursor-not-allowed' 
+                      : 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/10 active:scale-95'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[16px]">cancel</span>
+                  {cancellingAll ? 'Cancelling...' : `Cancel Checked Orders (${checkedIds.length})`}
+                </button>
+                <button
+                  onClick={() => setShowCancelModal(false)}
+                  className="w-full bg-slate-50 hover:bg-slate-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-300 font-bold py-3 rounded-xl text-xs active:scale-95 transition-all cursor-pointer"
+                >
+                  Keep All & Go Back
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }

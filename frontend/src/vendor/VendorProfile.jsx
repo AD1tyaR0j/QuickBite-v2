@@ -117,8 +117,8 @@ export default function VendorProfile() {
       {/* ── Top Custom Bar ───────────────────────────────────── */}
       <header className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl shadow-sm border-b border-slate-100 dark:border-slate-800/40 h-16 flex items-center justify-between px-6">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400">restaurant_menu</span>
-          <h1 className="font-headline font-black text-lg text-yellow-600 dark:text-yellow-400">
+          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant_menu</span>
+          <h1 className="font-headline font-black text-lg text-orange-600 dark:text-orange-400">
             QuickBite Vendor
           </h1>
         </div>
@@ -175,7 +175,7 @@ export default function VendorProfile() {
             <section className="grid grid-cols-3 gap-3">
               <div className="bg-white dark:bg-[#16213E] p-4 rounded-3xl border border-slate-100 dark:border-slate-800/40 shadow-sm text-center">
                 <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Shop Rating</p>
-                <p className="font-headline font-bold text-lg text-yellow-600 dark:text-yellow-400 mt-1">★ {shop.rating}</p>
+                <p className="font-headline font-bold text-lg text-orange-600 dark:text-orange-400 mt-1">★ {shop.rating}</p>
               </div>
               <div className="bg-white dark:bg-[#16213E] p-4 rounded-3xl border border-slate-100 dark:border-slate-800/40 shadow-sm text-center">
                 <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Cook Count</p>
@@ -221,8 +221,8 @@ export default function VendorProfile() {
                 {/* Kitchen push notifications */}
                 <div className="p-4 flex items-center justify-between border-b border-slate-100 dark:border-slate-800/40">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-950/20 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-yellow-600">campaign</span>
+                    <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-950/20 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-orange-600">campaign</span>
                     </div>
                     <div>
                       <span className="font-semibold text-xs text-on-surface dark:text-white">Kitchen Alerts</span>

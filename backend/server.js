@@ -324,6 +324,66 @@ app.patch('/api/orders/:id/status', requireAuth, requireRole('vendor'), (req, re
   res.json(ok(order));
 });
 
+// PATCH /api/orders/:id/cancel — Customer cancels their own order
+app.patch('/api/orders/:id/cancel', requireAuth, requireRole('customer'), (req, res) => {
+  const order = db.getOrderById(req.params.id);
+  if (!order) return res.status(404).json(err('Order not found', 404));
+  if (order.userId && order.userId !== req.user.id) {
+    return res.status(403).json(err('Access denied: You can only cancel your own orders.'));
+  }
+  // Only allow cancellation if order is not already Completed or Ready
+  const nonCancellable = ['Completed', 'Ready', 'Almost Ready'];
+  if (nonCancellable.includes(order.status)) {
+    return res.status(400).json(err('Cannot cancel an order that is already in progress or completed.'));
+  }
+  const cancelledOrder = db.updateOrderStatus(req.params.id, 'Cancelled');
+
+  // Proactive duplicate cleanup:
+  try {
+    const cancelTime = new Date(order.createdAt).getTime();
+    const allOrders = db.getAllOrders();
+    allOrders.forEach(o => {
+      if (o.id !== order.id && o.shopId === order.shopId && o.itemPrice === order.itemPrice && o.userId === order.userId) {
+        const oTime = new Date(o.createdAt).getTime();
+        if (Math.abs(cancelTime - oTime) < 5000) {
+          if (!['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(o.status)) {
+            db.updateOrderStatus(o.id, 'Cancelled');
+          }
+        }
+      }
+    });
+  } catch (err) {
+    console.error("Failed to cleanup duplicate orders:", err);
+  }
+
+  res.json(ok(cancelledOrder));
+});
+
+// PATCH /api/orders/cancel-all — Customer cancels all specified active orders
+app.patch('/api/orders/cancel-all', requireAuth, requireRole('customer'), (req, res) => {
+  const { orderIds } = req.body;
+  if (!Array.isArray(orderIds) || orderIds.length === 0) {
+    return res.status(400).json(err('orderIds array is required'));
+  }
+
+  const updatedOrders = [];
+  for (const id of orderIds) {
+    const order = db.getOrderById(id);
+    if (order) {
+      if (order.userId && order.userId !== req.user.id) {
+        continue;
+      }
+      if (!['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(order.status)) {
+        const cancelled = db.updateOrderStatus(id, 'Cancelled');
+        if (cancelled) {
+          updatedOrders.push(cancelled);
+        }
+      }
+    }
+  }
+  res.json(ok(updatedOrders));
+});
+
 // GET /api/orders — Retrieve active orders (Customer lists self, Vendor lists shop)
 app.get('/api/orders', (req, res) => {
   const { shopId } = req.query;
@@ -518,6 +578,18 @@ Sitemap: http://localhost:3001/sitemap.xml`);
 // ─────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
   res.json(ok({ status: 'QuickBite API running', timestamp: new Date().toISOString() }));
+});
+
+// ─────────────────────────────────────────────────────────────
+// Serve Frontend static assets in Production Monolith mode
+// ─────────────────────────────────────────────────────────────
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ success: false, error: 'Endpoint not found' });
+  }
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 // ─────────────────────────────────────────────────────────────

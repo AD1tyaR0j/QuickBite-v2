@@ -27,6 +27,38 @@ export default function Menu() {
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [cartEpt, setCartEpt] = useState(null);
   const [cartLoading, setCartLoading] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 24 
+      } 
+    }
+  };
 
   // Tabs: 'items' or 'reviews'
   const [activeTab, setActiveTab] = useState('items');
@@ -177,15 +209,21 @@ export default function Menu() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background pb-32 relative">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background pb-32 relative"
+    >
       
       {/* ── Top App Bar with Back & Favorite Heart ──────────── */}
-      <header className="fixed top-0 left-0 right-0 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
+      <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
         <div className="flex items-center gap-3">
           <button
             id="menu-back-btn"
             onClick={() => navigate('/customer/home')}
-            className="hover:opacity-85 transition-opacity active:scale-95 duration-150 text-yellow-500 dark:text-yellow-400"
+            className="hover:opacity-85 transition-opacity active:scale-95 duration-150 text-orange-500 dark:text-orange-400"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
@@ -194,23 +232,62 @@ export default function Menu() {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <button
+          <motion.button
             onClick={handleToggleFavorite}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-90 ${isFavorite ? 'bg-red-50 text-red-500 dark:bg-red-950/20' : 'text-zinc-400'}`}
+            animate={{ scale: isFavorite ? [1, 1.25, 1] : 1 }}
+            transition={{ duration: 0.3 }}
+            whileTap={{ scale: 0.85 }}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${isFavorite ? 'bg-red-50 text-red-500 dark:bg-red-950/20' : 'text-zinc-400'}`}
           >
             <span className="material-symbols-outlined" style={isFavorite ? { fontVariationSettings: "'FILL' 1" } : {}}>
               favorite
-            </span>
-          </button>
+            </span >
+          </motion.button>
         </div>
       </header>
 
       {/* ── Menu Main Container ─────────────────────────────── */}
-      <main className="pt-28 px-6 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto space-y-6">
+      <main className="pt-28 px-6 max-w-5xl mx-auto space-y-6">
         
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="flex flex-col md:flex-row gap-6 items-start w-full animate-pulse">
+            {/* Left Column Skeleton */}
+            <div className="w-full md:w-[38%] space-y-6 flex-shrink-0">
+              <div className="bg-white dark:bg-[#16213E] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800/40 space-y-4">
+                <div className="h-40 rounded-2xl shimmer" />
+                <div className="space-y-2">
+                  <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4 shimmer" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2 shimmer" />
+                  <div className="h-16 bg-slate-200 dark:bg-slate-700 rounded w-full shimmer" />
+                </div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl shimmer" />
+                  <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded-2xl shimmer" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Column Skeleton */}
+            <div className="w-full md:w-[62%] space-y-6">
+              <div className="bg-white dark:bg-[#16213E] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800/40 space-y-4">
+                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/4 shimmer pb-2" />
+                <div className="divide-y divide-slate-100 dark:divide-slate-800/40">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="py-4 flex justify-between items-center gap-4">
+                      <div className="flex items-center gap-3 flex-1">
+                        <div className="w-14 h-14 rounded-xl shimmer flex-shrink-0" />
+                        <div className="flex-1 space-y-2">
+                          <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3 shimmer" />
+                          <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/3 shimmer" />
+                          <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/4 shimmer" />
+                        </div>
+                      </div>
+                      <div className="w-16 h-8 rounded-full bg-slate-200 dark:bg-slate-700 shimmer" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -233,7 +310,7 @@ export default function Menu() {
               <div>
                 <div className="flex justify-between items-start">
                   <h2 className="font-headline text-2xl font-black text-on-surface dark:text-white tracking-tight">{shop.name}</h2>
-                  <div className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-950/20 px-2 py-0.5 rounded-md font-bold text-xs">
+                  <div className="flex items-center gap-1 text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/20 px-2 py-0.5 rounded-md font-bold text-xs">
                     ★ {shop.rating}
                   </div>
                 </div>
@@ -292,7 +369,7 @@ export default function Menu() {
                 {featuredItem && (
                   <div className="bg-white dark:bg-[#16213E] rounded-3xl p-4 shadow-sm border border-slate-100 dark:border-slate-800/40 relative overflow-hidden flex justify-between items-center group">
                     <div className="space-y-2 relative z-10 flex-1 pr-4">
-                      <span className="bg-yellow-100 text-yellow-800 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md">
+                      <span className="bg-orange-100 text-orange-800 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md">
                         Today's Special
                       </span>
                       <h4 className="font-headline font-bold text-lg text-on-surface dark:text-white leading-tight">
@@ -322,21 +399,34 @@ export default function Menu() {
                 {/* Regular menu listing */}
                 <div className="bg-white dark:bg-[#16213E] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800/40 space-y-4">
                   <h3 className="font-headline font-bold text-sm text-zinc-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800/40 pb-2">Full Menu</h3>
-                  <div className="divide-y divide-slate-100 dark:divide-slate-800/40">
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show"
+                    className="divide-y divide-slate-100 dark:divide-slate-800/40"
+                  >
                     {regularItems.map((item) => {
                       const entry = cartForShop.items[item.id];
                       const qty = entry?.qty || 0;
                       return (
-                        <div key={item.id} className="py-4 flex justify-between items-center gap-4">
+                        <motion.div
+                          variants={itemVariants}
+                          key={item.id}
+                          className="py-4 flex justify-between items-center gap-4"
+                        >
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 relative bg-slate-50 dark:bg-[#0D0D1A]">
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.2 }}
+                              className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 relative bg-slate-50 dark:bg-[#0D0D1A]"
+                            >
                               <img
                                 src={getFoodImage(item.name, item.imageUrl)}
                                 alt={item.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80'; }}
                               />
-                            </div>
+                            </motion.div>
                             <div className="min-w-0">
                               <h5 className="font-bold text-sm text-on-surface dark:text-white truncate">{item.name}</h5>
                               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold mt-0.5">₹{item.price}</p>
@@ -347,34 +437,44 @@ export default function Menu() {
                           {/* Cart Add / Qty modifier */}
                           {qty > 0 ? (
                             <div className="flex items-center bg-primary/10 rounded-full px-1.5 py-0.5 gap-1 flex-shrink-0">
-                              <button
+                              <motion.button
+                                whileTap={{ scale: 0.8 }}
                                 onClick={() => handleDecrement(item, qty)}
-                                className="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold active:scale-95 transition-transform"
+                                className="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-bold cursor-pointer"
                               >
                                 −
-                              </button>
-                              <span className="min-w-[1.5rem] text-center text-xs font-semibold text-on-surface dark:text-white">
+                              </motion.button>
+                              <motion.span
+                                key={qty}
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: [1, 1.25, 1], opacity: 1 }}
+                                transition={{ duration: 0.2 }}
+                                className="min-w-[1.5rem] text-center text-xs font-semibold text-on-surface dark:text-white inline-block"
+                              >
                                 {qty}
-                              </span>
-                              <button
+                              </motion.span>
+                              <motion.button
+                                whileTap={{ scale: 0.8 }}
                                 onClick={() => handleIncrement(item, qty)}
-                                className="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-sm font-bold active:scale-95 transition-transform"
+                                className="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-sm font-bold cursor-pointer"
                               >
                                 +
-                              </button>
+                              </motion.button>
                             </div>
                           ) : (
-                            <button
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
                               onClick={() => handleAdd(item)}
-                              className="bg-slate-100 dark:bg-slate-800 text-zinc-600 dark:text-zinc-300 hover:bg-primary hover:text-white dark:hover:bg-primary px-4 py-1.5 rounded-full font-bold text-xs transition-all active:scale-95 flex-shrink-0"
+                              className="bg-slate-100 dark:bg-slate-800 text-zinc-600 dark:text-zinc-300 hover:bg-primary hover:text-white dark:hover:bg-primary px-4 py-1.5 rounded-full font-bold text-xs transition-all flex-shrink-0 cursor-pointer"
                             >
                               + Add
-                            </button>
+                            </motion.button>
                           )}
-                        </div>
+                        </motion.div>
                       );
                     })}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             )}
@@ -387,7 +487,7 @@ export default function Menu() {
                 <div className="bg-white dark:bg-[#16213E] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800/40 flex gap-6 items-center">
                   <div className="text-center space-y-1 pr-6 border-r border-slate-100 dark:border-slate-800/40">
                     <h4 className="text-4xl font-headline font-black text-gradient">{ratingsAnalytics.avg}</h4>
-                    <div className="flex justify-center text-yellow-500">
+                    <div className="flex justify-center text-orange-500">
                       {[1, 2, 3, 4, 5].map(star => (
                         <span key={star} className="material-symbols-outlined text-xs" style={{ fontVariationSettings: "'FILL' 1" }}>
                           star
@@ -407,7 +507,7 @@ export default function Menu() {
                           <span className="w-2">{starRating}</span>
                           <span className="material-symbols-outlined text-[10px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                           <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                            <div className="h-full bg-yellow-500 rounded-full" style={{ width: `${percentage}%` }} />
+                            <div className="h-full bg-orange-500 rounded-full" style={{ width: `${percentage}%` }} />
                           </div>
                           <span className="w-4 text-right">{cnt}</span>
                         </div>
@@ -452,7 +552,7 @@ export default function Menu() {
                             </div>
 
                             {/* Review Stars */}
-                            <div className="flex text-yellow-500">
+                            <div className="flex text-orange-500">
                               {[1, 2, 3, 4, 5].map(star => (
                                 <span 
                                   key={star} 
@@ -478,32 +578,66 @@ export default function Menu() {
             )}
 
             {/* Persistent Cart Button */}
-            {cartSummary.count > 0 && (
-              <div className="fixed bottom-4 left-0 right-0 max-w-md mx-auto px-4 z-40">
-                <button
-                  onClick={() => navigate(`/customer/confirm/${shopId}/cart`)}
-                  className="w-full bg-primary-gradient text-slate-900 flex items-center justify-between px-5 py-4 rounded-full shadow-lg shadow-primary/20 active:scale-95 transition-transform"
+            <AnimatePresence>
+              {cartSummary.count > 0 && (
+                <motion.div
+                  initial={{ y: 100, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 100, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  className="fixed bottom-4 left-0 right-0 max-w-5xl mx-auto px-4 z-40"
                 >
-                  <div className="flex flex-col items-start text-left">
-                    <span className="text-sm font-headline font-bold">
-                      {cartSummary.count} item{cartSummary.count > 1 ? 's' : ''} in cart
-                    </span>
-                    <span className="text-[11px] opacity-90">
-                      ₹{cartSummary.totalPrice} · {cartLoading || cartEpt == null ? 'Calculating EPT...' : `Est. ${cartEpt} min pickup`}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-sm font-bold">
-                    <span>View Cart</span>
-                    <span className="material-symbols-outlined text-[18px]">chevron_right</span>
-                  </div>
-                </button>
-              </div>
-            )}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => navigate(`/customer/confirm/${shopId}/cart`)}
+                    className="w-full bg-primary-gradient text-slate-900 flex items-center justify-between px-5 py-4 rounded-full shadow-lg shadow-primary/20 cursor-pointer"
+                  >
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-sm font-headline font-bold flex items-center gap-1.5">
+                        <motion.span
+                          key={cartSummary.count}
+                          initial={{ scale: 0.7, opacity: 0 }}
+                          animate={{ scale: [1, 1.25, 1], opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {cartSummary.count}
+                        </motion.span>
+                        item{cartSummary.count > 1 ? 's' : ''} in cart
+                      </span>
+                      <span className="text-[11px] opacity-90">
+                        ₹{cartSummary.totalPrice} · {cartLoading || cartEpt == null ? 'Calculating EPT...' : `Est. ${cartEpt} min pickup`}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-sm font-bold">
+                      <span>View Cart</span>
+                      <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+                    </div>
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             </div> {/* End Right Column */}
           </div>
         )}
       </main>
-    </div>
+
+      {/* ── Scroll To Top Button ──────────────────────────────── */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-primary-gradient text-white flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-transform cursor-pointer pointer-events-auto"
+          >
+            <span className="material-symbols-outlined text-2xl font-bold">arrow_upward</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+    </motion.div>
   );
 }

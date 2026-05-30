@@ -68,6 +68,33 @@ export default function Dashboard() {
     }
   };
 
+  const [recentShops, setRecentShops] = useState([]);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    try {
+      const recentIds = JSON.parse(localStorage.getItem('quickbite-recent-shops') || '[]');
+      if (recentIds.length > 0 && shops.length > 0) {
+        const matched = recentIds
+          .map(id => shops.find(s => s.id === id))
+          .filter(Boolean);
+        setRecentShops(matched);
+      } else {
+        setRecentShops([]);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [shops]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     fetchShops();
     const interval = setInterval(fetchShops, 15000); // Poll faster for reactive updates
@@ -104,7 +131,7 @@ export default function Dashboard() {
     crowdColorClass = 'text-red-600 bg-red-50 dark:bg-red-950/20';
   } else if (activeOrdersInFoodCourt > 3) {
     crowdStatus = 'Medium';
-    crowdColorClass = 'text-yellow-600 bg-yellow-50 dark:bg-yellow-950/20';
+    crowdColorClass = 'text-orange-600 bg-orange-50 dark:bg-orange-950/20';
   }
 
   // Recommended list (highest rated)
@@ -129,13 +156,19 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background pb-28 relative">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background pb-28 relative"
+    >
       
       {/* ── Top Custom App Bar ───────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
+      <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
         <div className="flex flex-col">
           <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Welcome to Campus Hub</span>
-          <h1 className="font-headline font-black text-xl text-yellow-500 dark:text-yellow-400 italic">
+          <h1 className="font-headline font-black text-xl text-orange-500 dark:text-orange-400 italic">
             QuickBite
           </h1>
         </div>
@@ -163,7 +196,7 @@ export default function Dashboard() {
       </header>
 
       {/* ── Main Scroll Container ────────────────────────────── */}
-      <main className="pt-28 px-6 max-w-md md:max-w-5xl lg:max-w-7xl mx-auto space-y-6">
+      <main className="pt-28 px-6 max-w-5xl mx-auto space-y-6">
         
         {/* Greetings Section */}
         <div className="flex justify-between items-center">
@@ -233,11 +266,41 @@ export default function Dashboard() {
                   : 'border-slate-200 dark:border-slate-800/40 text-zinc-500 dark:text-zinc-400'
               }`}
             >
-              <span className="material-symbols-outlined text-xs text-yellow-500">star</span>
+              <span className="material-symbols-outlined text-xs text-orange-500">star</span>
               Popularity
             </button>
           </div>
         </div>
+
+        {/* ── BENTO 0: Recently Visited ─────────────────────────── */}
+        {recentShops.length > 0 && !searchQuery && selectedTag === 'All' && (
+          <section className="space-y-3 animate-fade-in">
+            <h3 className="font-headline font-black text-base text-on-surface dark:text-white px-0.5 flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-orange-500 text-lg">history</span>
+              Recently Visited
+            </h3>
+            <div className="flex md:grid gap-4 overflow-x-auto md:overflow-x-visible no-scrollbar md:grid-cols-3 pb-3">
+              {recentShops.map(shop => (
+                <motion.div
+                  key={`recent-${shop.id}`}
+                  onClick={() => navigate(`/customer/menu/${shop.id}`)}
+                  whileHover={{ y: -3, scale: 1.02, boxShadow: "0 8px 20px -5px rgba(249, 115, 22, 0.1)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-48 md:w-auto bg-white dark:bg-[#1a2542] rounded-2xl p-3 flex-shrink-0 cursor-pointer shadow-sm border border-slate-100 dark:border-[#2e4374]/40 hover:shadow-md transition-shadow flex items-center gap-3"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 relative">
+                    <img src={shop.imageUrl} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-xs truncate text-on-surface dark:text-white">{shop.name}</h4>
+                    <p className="text-[10px] text-zinc-400 mt-0.5 truncate">★ {shop.rating} · {shop.ept}m wait</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ── BENTO 1: Recommended For You ─────────────────────── */}
         {!searchQuery && selectedTag === 'All' && (
@@ -247,10 +310,20 @@ export default function Dashboard() {
             </h3>
             <div className="flex md:grid gap-4 overflow-x-auto md:overflow-x-visible no-scrollbar md:grid-cols-3 pb-3">
               {recommendedShops.map(shop => (
-                <div
+                <motion.div
                   key={shop.id}
-                  onClick={() => navigate(`/customer/menu/${shop.id}`)}
-                  className="w-48 md:w-auto bg-white dark:bg-[#16213E] rounded-2xl p-3 flex-shrink-0 cursor-pointer shadow-sm border border-slate-100 dark:border-slate-800/40 hover:shadow-md transition-shadow active:scale-98"
+                  onClick={() => {
+                    try {
+                      const recents = JSON.parse(localStorage.getItem('quickbite-recent-shops') || '[]');
+                      const nextRecents = [shop.id, ...recents.filter(id => id !== shop.id)].slice(0, 3);
+                      localStorage.setItem('quickbite-recent-shops', JSON.stringify(nextRecents));
+                    } catch (e) {}
+                    navigate(`/customer/menu/${shop.id}`);
+                  }}
+                  whileHover={{ y: -4, scale: 1.02, boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.1), 0 8px 10px -6px rgba(249, 115, 22, 0.1)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-48 md:w-auto bg-white dark:bg-[#1a2542] rounded-2xl p-3 flex-shrink-0 cursor-pointer shadow-sm border border-slate-100 dark:border-[#2e4374]/40 hover:shadow-md transition-shadow"
                 >
                   <div className="h-28 rounded-xl overflow-hidden mb-2.5">
                     <img src={shop.imageUrl} alt={shop.name} className="w-full h-full object-cover" />
@@ -260,7 +333,7 @@ export default function Dashboard() {
                     <span className="text-[10px] text-zinc-400">★ {shop.rating}</span>
                     <span className="text-[10px] font-bold text-primary">{shop.ept} mins wait</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </section>
@@ -274,10 +347,13 @@ export default function Dashboard() {
             </h3>
             <div className="flex md:grid gap-4 overflow-x-auto md:overflow-x-visible no-scrollbar md:grid-cols-2 lg:grid-cols-4 pb-3">
               {trendingItems.map((item, idx) => (
-                <div
+                <motion.div
                   key={idx}
                   onClick={() => navigate(`/customer/menu/${item.shopId}`)}
-                  className="w-40 md:w-auto bg-white dark:bg-[#16213E] rounded-2xl p-2.5 flex-shrink-0 cursor-pointer shadow-sm border border-slate-100 dark:border-slate-800/40 hover:shadow-md transition-shadow active:scale-98 flex items-center gap-3"
+                  whileHover={{ y: -3, scale: 1.02, boxShadow: "0 8px 20px -5px rgba(249, 115, 22, 0.1)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="w-40 md:w-auto bg-white dark:bg-[#1a2542] rounded-2xl p-2.5 flex-shrink-0 cursor-pointer shadow-sm border border-slate-100 dark:border-[#2e4374]/40 hover:shadow-md transition-shadow flex items-center gap-3"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
                     <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
@@ -287,7 +363,7 @@ export default function Dashboard() {
                     <p className="text-[9px] text-zinc-400 truncate">{item.shopName}</p>
                     <p className="text-[10px] font-black text-primary mt-0.5">₹{item.price}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </section>
@@ -300,8 +376,20 @@ export default function Dashboard() {
           </h3>
           
           {loading && (
-            <div className="flex items-center justify-center py-20">
-              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="bg-white dark:bg-[#1a2542] p-4 rounded-2xl flex items-center gap-4 border border-slate-100 dark:border-[#2e4374]/40 shadow-sm animate-pulse">
+                  <div className="w-16 h-16 rounded-xl shimmer flex-shrink-0" />
+                  <div className="flex-1 space-y-2.5 min-w-0">
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3 shimmer" />
+                    <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/2 shimmer" />
+                    <div className="flex justify-between items-center pt-2">
+                      <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/3 shimmer" />
+                      <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/4 shimmer" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
@@ -309,20 +397,30 @@ export default function Dashboard() {
             {filteredAndSortedShops.map(shop => {
               const crowdColors = {
                 Low: 'bg-green-500',
-                Medium: 'bg-yellow-500',
+                Medium: 'bg-orange-500',
                 High: 'bg-red-500',
               };
               const crowdBgs = {
                 Low: 'bg-green-50 text-green-700 border-green-100 dark:bg-green-950/20 dark:text-green-300 dark:border-green-900/40',
-                Medium: 'bg-yellow-50 text-yellow-700 border-yellow-100 dark:bg-yellow-950/20 dark:text-yellow-300 dark:border-yellow-900/40',
+                Medium: 'bg-orange-50 text-orange-700 border-orange-100 dark:bg-orange-950/20 dark:text-orange-300 dark:border-orange-900/40',
                 High: 'bg-red-50 text-red-700 border-red-100 dark:bg-red-950/20 dark:text-red-300 dark:border-red-900/40',
               };
 
               return (
-                <div
+                <motion.div
                   key={shop.id}
-                  onClick={() => navigate(`/customer/menu/${shop.id}`)}
-                  className="bg-white dark:bg-[#16213E] p-4 rounded-2xl flex items-center gap-4 cursor-pointer shadow-sm border border-slate-100 dark:border-slate-800/40 hover:shadow-md transition-shadow active:scale-98 group"
+                  onClick={() => {
+                    try {
+                      const recents = JSON.parse(localStorage.getItem('quickbite-recent-shops') || '[]');
+                      const nextRecents = [shop.id, ...recents.filter(id => id !== shop.id)].slice(0, 3);
+                      localStorage.setItem('quickbite-recent-shops', JSON.stringify(nextRecents));
+                    } catch (e) {}
+                    navigate(`/customer/menu/${shop.id}`);
+                  }}
+                  whileHover={{ y: -4, scale: 1.02, boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.1), 0 8px 10px -6px rgba(249, 115, 22, 0.1)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="bg-white dark:bg-[#1a2542] p-4 rounded-2xl flex items-center gap-4 cursor-pointer shadow-sm border border-slate-100 dark:border-[#2e4374]/40 group"
                 >
                   <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 relative">
                     <img src={shop.imageUrl} alt={shop.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -330,7 +428,7 @@ export default function Dashboard() {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">
                       <h4 className="font-bold text-sm text-on-surface dark:text-white truncate pr-2">{shop.name}</h4>
-                      <span className="text-[10px] font-bold text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-950/20 px-2 py-0.5 rounded-md flex items-center gap-0.5">
+                      <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/20 px-2 py-0.5 rounded-md flex items-center gap-0.5">
                         ★ {shop.rating}
                       </span>
                     </div>
@@ -346,7 +444,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
 
@@ -406,7 +504,7 @@ export default function Dashboard() {
                   notifications.map(n => {
                     const iconColors = {
                       success: 'bg-green-100 text-green-600 dark:bg-green-950/20 dark:text-green-400',
-                      info: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950/20 dark:text-yellow-400',
+                      info: 'bg-orange-100 text-orange-800 dark:bg-orange-950/20 dark:text-orange-400',
                       error: 'bg-red-100 text-red-600 dark:bg-red-950/20 dark:text-red-400',
                     };
                     const icons = {
@@ -433,6 +531,21 @@ export default function Dashboard() {
           </div>
         )}
       </AnimatePresence>
-    </div>
+      {/* ── Scroll To Top Button ──────────────────────────────── */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-primary-gradient text-white flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-transform cursor-pointer pointer-events-auto"
+          >
+            <span className="material-symbols-outlined text-2xl font-bold">arrow_upward</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+    </motion.div>
   );
 }

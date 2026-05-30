@@ -30,7 +30,7 @@ export default function CustomerLayout() {
       </div>
 
       {/* Bottom Nav Bar */}
-      <nav className="fixed bottom-0 md:bottom-4 left-0 right-0 max-w-md mx-auto w-full z-50 flex justify-around items-center px-4 pb-6 md:pb-3 pt-3 bg-white/95 dark:bg-[#101f42]/95 backdrop-blur-xl shadow-[0_-4px_30px_rgba(0,0,0,0.1)] md:shadow-[0_10px_30px_rgba(0,0,0,0.15)] rounded-t-3xl md:rounded-2xl border-t md:border border-slate-200/50 dark:border-[#2e4374]/40">
+      <nav className="fixed bottom-0 md:bottom-4 left-0 right-0 max-w-5xl mx-auto w-full z-50 flex justify-around items-center px-4 pb-6 md:pb-3 pt-3 bg-white/95 dark:bg-[#101f42]/95 backdrop-blur-xl shadow-[0_-4px_30px_rgba(0,0,0,0.1)] md:shadow-[0_10px_30px_rgba(0,0,0,0.15)] rounded-t-3xl md:rounded-2xl border-t md:border border-slate-200/50 dark:border-[#2e4374]/40">
         {tabs.map(tab => {
           const active = isActive(tab);
           return (
@@ -40,8 +40,8 @@ export default function CustomerLayout() {
               onClick={() => navigate(tab.to)}
               className={`flex flex-col items-center justify-center px-4 py-2 rounded-2xl transition-all duration-200 active:scale-90 ${
                 active
-                  ? 'bg-primary/20 dark:bg-primary/10 text-yellow-600 dark:text-primary font-bold'
-                  : 'text-zinc-500 dark:text-zinc-400 hover:text-yellow-500'
+                  ? 'bg-primary/20 dark:bg-primary/10 text-orange-600 dark:text-primary font-bold'
+                  : 'text-zinc-500 dark:text-zinc-400 hover:text-orange-500'
               }`}
             >
               <span

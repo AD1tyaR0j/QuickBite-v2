@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function PaymentScreen() {
   const { shopId, itemId } = useParams();
   const navigate = useNavigate();
-  const { cartByShop, clearCart, setActiveOrder, addToast } = useApp();
+  const { cartByShop, clearCart, setActiveOrder, addToast, fetchApi } = useApp();
 
   const [shop, setShop] = useState(null);
   const [menuItem, setMenuItem] = useState(null);
@@ -165,6 +165,7 @@ export default function PaymentScreen() {
 
   const triggerPayment = (e) => {
     e.preventDefault();
+    if (paymentStatus !== 'editing') return;
 
     // Validation
     if (paymentMethod === 'UPI' && upiProvider === 'Custom' && !upiId.includes('@')) {
@@ -231,7 +232,7 @@ export default function PaymentScreen() {
             transactionId: paymentMethod === 'Cash' ? null : generatedTxnId 
           };
 
-      const res = await fetch('/api/orders', {
+      const res = await fetchApi('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderPayload),
@@ -263,8 +264,19 @@ export default function PaymentScreen() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 w-full min-h-screen bg-slate-50 dark:bg-[#16213E] font-body text-on-background p-4 overflow-y-auto">
-      <div className="w-full max-w-md md:max-w-lg lg:max-w-xl bg-white dark:bg-[#16213E] rounded-xl shadow-2xl flex flex-col p-6 mx-auto">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col items-center justify-center flex-1 w-full min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background p-4 overflow-y-auto"
+    >
+      <motion.div
+        initial={{ scale: 0.96, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="w-full max-w-5xl bg-white dark:bg-[#1a2542] rounded-3xl border border-slate-100 dark:border-[#2e4374]/60 shadow-2xl flex flex-col p-6 mx-auto"
+      >
 
         
         {/* HEADER */}
@@ -272,23 +284,23 @@ export default function PaymentScreen() {
           <button 
             disabled={paymentStatus === 'processing'}
             onClick={() => navigate(-1)} 
-            className="text-yellow-600 dark:text-yellow-400 active:scale-95 transition-transform disabled:opacity-50"
+            className="text-orange-600 dark:text-orange-400 active:scale-95 transition-transform disabled:opacity-50"
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <h1 className="font-headline font-bold text-lg text-yellow-600 dark:text-yellow-400">
+          <h1 className="font-headline font-bold text-lg text-orange-600 dark:text-orange-400">
             Secure Payment
           </h1>
         </header>
 
         {showFakeBank && (
-            <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-[#16213E] rounded-xl shadow-2xl mx-auto w-full max-w-md md:max-w-lg lg:max-w-xl">
+            <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-[#1a2542] rounded-3xl border border-slate-100 dark:border-[#2e4374]/60 shadow-2xl mx-auto w-full max-w-5xl">
               <h3 className="font-headline text-xl font-bold mb-4 text-center text-on-surface dark:text-white">
                 Demo UPI Payment
               </h3>
-              {/* Placeholder for QR code */}
-              <div className="w-48 h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-md mb-4">
-                <span className="material-symbols-outlined text-4xl text-gray-500 dark:text-gray-300">qr_code</span>
+              {/* Actual QR code image */}
+              <div className="w-48 h-48 bg-white flex items-center justify-center rounded-2xl mb-4 overflow-hidden p-2 shadow-md border border-slate-100 dark:border-slate-800/40">
+                <img src="/images/qr_code.png" alt="Payment QR Code" className="w-full h-full object-contain" />
               </div>
               <p className="text-sm text-center text-zinc-500 dark:text-zinc-400">
                 This is a simulated bank detail screen. The QR code is for demo purposes only and will disappear after 5 seconds.
@@ -329,135 +341,172 @@ export default function PaymentScreen() {
 
             <form onSubmit={triggerPayment} className="space-y-6">
               
-              {/* UPI PANEL */}
-              {paymentMethod === 'UPI' && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-3 gap-2">
-                    {['GPay', 'PhonePe', 'Custom'].map(app => (
-                      <button
-                        key={app}
-                        type="button"
-                        onClick={() => setUpiProvider(app)}
-                        className={`py-3 text-xs font-semibold border rounded-xl flex items-center justify-center gap-1.5 transition-all ${upiProvider === app ? 'border-primary bg-primary/5 text-primary font-bold' : 'border-slate-200 dark:border-[#2E2E5E]/40 text-zinc-500 dark:text-zinc-400'}`}
-                      >
-                        <span className="material-symbols-outlined text-sm">
-                          {app === 'Custom' ? 'badge' : 'bolt'}
-                        </span>
-                        {app}
-                      </button>
-                    ))}
-                  </div>
-
-                  {upiProvider === 'Custom' ? (
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">UPI ID</label>
-                      <input
-                        type="text"
-                        required
-                        value={upiId}
-                        onChange={(e) => setUpiId(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-primary/50"
-                        placeholder="username@upi"
-                      />
-                    </div>
-                  ) : (
-                    <div className="bg-slate-50 dark:bg-[#0D0D1A] p-4 rounded-2xl text-center text-sm text-zinc-500 dark:text-zinc-400">
-                      Will redirect to your preferred <span className="font-bold text-on-surface dark:text-white">{upiProvider}</span> application.
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* CARD PANEL */}
-              {paymentMethod === 'Card' && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Cardholder Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={cardName}
-                      onChange={(e) => setCardName(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50"
-                      placeholder="Alex Johnson"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Card Number</label>
-                    <input
-                      type="text"
-                      required
-                      value={cardNumber}
-                      onChange={handleCardNumberChange}
-                      maxLength="19"
-                      className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
-                      placeholder="4000 1234 5678 9010"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Expiry (MM/YY)</label>
-                      <input
-                        type="text"
-                        required
-                        value={cardExpiry}
-                        onChange={handleExpiryChange}
-                        maxLength="5"
-                        className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
-                        placeholder="08/29"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">CVV</label>
-                      <input
-                        type="password"
-                        required
-                        value={cardCvv}
-                        onChange={(e) => setCardCvv(e.target.value.replace(/[^0-9]/g, ''))}
-                        maxLength="4"
-                        className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
-                        placeholder="•••"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* WALLET PANEL */}
-              {paymentMethod === 'Wallet' && (
-                <div className="space-y-4">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Select Wallet</label>
-                  <select
-                    value={walletProvider}
-                    onChange={(e) => setWalletProvider(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-semibold"
+              <AnimatePresence mode="wait">
+                {/* UPI PANEL */}
+                {paymentMethod === 'UPI' && (
+                  <motion.div
+                    key="upi"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-4"
                   >
-                    <option>Paytm Wallet</option>
-                    <option>PhonePe Wallet</option>
-                    <option>Amazon Pay</option>
-                  </select>
-                </div>
-              )}
+                    <div className="grid grid-cols-3 gap-2">
+                      {['GPay', 'PhonePe', 'Custom'].map(app => (
+                        <button
+                          key={app}
+                          type="button"
+                          onClick={() => setUpiProvider(app)}
+                          className={`py-3 text-xs font-semibold border rounded-xl flex items-center justify-center gap-1.5 transition-all ${upiProvider === app ? 'border-primary bg-primary/5 text-primary font-bold' : 'border-slate-200 dark:border-[#2E2E5E]/40 text-zinc-500 dark:text-zinc-400'}`}
+                        >
+                          <span className="material-symbols-outlined text-sm">
+                            {app === 'Custom' ? 'badge' : 'bolt'}
+                          </span>
+                          {app}
+                        </button>
+                      ))}
+                    </div>
 
-              {/* CASH ON PICKUP PANEL */}
-              {paymentMethod === 'Cash' && (
-                <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/40 p-5 rounded-2xl text-center space-y-2">
-                  <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-3xl">payments</span>
-                  <h4 className="font-headline font-bold text-yellow-800 dark:text-yellow-300">Cash On Pickup</h4>
-                  <p className="text-xs text-yellow-800/80 dark:text-yellow-400/80 leading-relaxed">
-                    Confirm your order now. You will pay in cash or via QR code directly at the cafeteria counter during pickup.
-                  </p>
-                </div>
-              )}
+                    {upiProvider === 'Custom' ? (
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">UPI ID</label>
+                        <input
+                          type="text"
+                          required
+                          value={upiId}
+                          onChange={(e) => setUpiId(e.target.value)}
+                          className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-primary/50"
+                          placeholder="username@upi"
+                        />
+                      </div>
+                    ) : (
+                      <div className="bg-slate-50 dark:bg-[#0D0D1A] p-4 rounded-2xl text-center text-sm text-zinc-500 dark:text-zinc-400">
+                        Will redirect to your preferred <span className="font-bold text-on-surface dark:text-white">{upiProvider}</span> application.
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* CARD PANEL */}
+                {paymentMethod === 'Card' && (
+                  <motion.div
+                    key="card"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Cardholder Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={cardName}
+                        onChange={(e) => setCardName(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50"
+                        placeholder="Alex Johnson"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Card Number</label>
+                      <input
+                        type="text"
+                        required
+                        value={cardNumber}
+                        onChange={handleCardNumberChange}
+                        maxLength="19"
+                        className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
+                        placeholder="4000 1234 5678 9010"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">Expiry (MM/YY)</label>
+                        <input
+                          type="text"
+                          required
+                          value={cardExpiry}
+                          onChange={handleExpiryChange}
+                          maxLength="5"
+                          className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
+                          placeholder="08/29"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5">CVV</label>
+                        <input
+                          type="password"
+                          required
+                          value={cardCvv}
+                          onChange={(e) => setCardCvv(e.target.value.replace(/[^0-9]/g, ''))}
+                          maxLength="4"
+                          className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-mono"
+                          placeholder="•••"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* WALLET PANEL */}
+                {paymentMethod === 'Wallet' && (
+                  <motion.div
+                    key="wallet"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-4"
+                  >
+                    <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Select Wallet</label>
+                    <select
+                      value={walletProvider}
+                      onChange={(e) => setWalletProvider(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-[#0D0D1A] border-none rounded-xl px-4 py-3.5 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 font-semibold"
+                    >
+                      <option>Paytm Wallet</option>
+                      <option>PhonePe Wallet</option>
+                      <option>Amazon Pay</option>
+                    </select>
+                  </motion.div>
+                )}
+
+                {/* CASH ON PICKUP PANEL */}
+                {paymentMethod === 'Cash' && (
+                  <motion.div
+                    key="cash"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 p-5 rounded-2xl text-center space-y-2"
+                  >
+                    <span className="material-symbols-outlined text-orange-600 dark:text-orange-400 text-3xl">payments</span>
+                    <h4 className="font-headline font-bold text-orange-800 dark:text-orange-300">Cash On Pickup</h4>
+                    <p className="text-xs text-orange-800/80 dark:text-orange-400/80 leading-relaxed">
+                      Confirm your order now. You will pay in cash or via QR code directly at the cafeteria counter during pickup.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* BOTTOM PAYMENT BUTTON */}
               <button
                 type="submit"
-                className="w-full bg-primary-gradient text-white font-headline text-base font-extrabold py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all mt-6"
+                disabled={paymentStatus !== 'editing'}
+                className={`w-full text-white font-headline text-base font-extrabold py-4 rounded-xl shadow-lg active:scale-95 transition-all mt-6 ${
+                  paymentStatus !== 'editing' 
+                    ? 'bg-zinc-300 dark:bg-zinc-700 cursor-not-allowed opacity-60 shadow-none' 
+                    : 'bg-primary-gradient shadow-primary/20 cursor-pointer'
+                }`}
               >
-                {paymentMethod === 'Cash' ? 'Confirm Order' : `Pay ₹${total}`}
+                {paymentStatus !== 'editing' 
+                  ? 'Processing...' 
+                  : (paymentMethod === 'Cash' ? 'Confirm Order' : `Pay ₹${total}`)}
               </button>
 
             </form>
@@ -466,7 +515,7 @@ export default function PaymentScreen() {
 
         {/* PROCESSING ANIMATION OVERLAY */}
         {paymentStatus === 'processing' && (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white dark:bg-[#16213E]">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white dark:bg-[#1a2542]">
             <div className="relative w-28 h-28 mb-8">
               <div className="absolute inset-0 border-4 border-primary/20 rounded-full" />
               <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -479,7 +528,7 @@ export default function PaymentScreen() {
           </div>
         )}
         {paymentStatus === 'awaiting' && (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white dark:bg-[#16213E]">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white dark:bg-[#1a2542]">
             <div className="w-12 h-12 border-4 border-primary rounded-full animate-spin mb-4" />
             <h3 className="font-headline text-xl font-bold mb-2 text-on-surface dark:text-white">Waiting for vendor to accept...</h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">Your order is being reviewed by the vendor.</p>
@@ -488,7 +537,7 @@ export default function PaymentScreen() {
 
         {/* PAYMENT SUCCESS CONFIRMATION */}
         {paymentStatus === 'success' && (
-          <div className="flex-1 flex flex-col justify-between p-6 bg-white dark:bg-[#16213E]">
+          <div className="flex-1 flex flex-col justify-between p-6 bg-white dark:bg-[#1a2542]">
             <div className="space-y-6 pt-8 text-center flex-1 flex flex-col justify-center">
               
               {/* SUCCESS ICON */}
@@ -500,9 +549,9 @@ export default function PaymentScreen() {
                 <h3 className="font-headline text-2xl font-black text-green-600">Payment Successful</h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Thank you! Your order has been placed.</p>
                 {/* Awaiting Acceptance indicator */}
-                <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/40 rounded-xl inline-flex items-center gap-2">
-                  <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-lg animate-pulse">hourglass_empty</span>
-                  <span className="text-xs font-semibold text-yellow-800 dark:text-yellow-300">
+                <div className="mt-3 p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 rounded-xl inline-flex items-center gap-2">
+                  <span className="material-symbols-outlined text-orange-600 dark:text-orange-400 text-lg animate-pulse">hourglass_empty</span>
+                  <span className="text-xs font-semibold text-orange-800 dark:text-orange-300">
                     Awaiting vendor acceptance...
                   </span>
                 </div>
@@ -578,7 +627,7 @@ export default function PaymentScreen() {
 
         {/* PAYMENT FAILURE */}
         {paymentStatus === 'failed' && (
-          <div className="flex-1 flex flex-col justify-center p-6 text-center space-y-6 bg-white dark:bg-[#16213E]">
+          <div className="flex-1 flex flex-col justify-center p-6 text-center space-y-6 bg-white dark:bg-[#1a2542]">
             <div className="mx-auto w-20 h-20 bg-red-500 rounded-full flex items-center justify-center shadow-lg shadow-red-500/20">
               <span className="material-symbols-outlined text-white text-5xl font-black">close</span>
             </div>
@@ -596,7 +645,7 @@ export default function PaymentScreen() {
             </button>
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

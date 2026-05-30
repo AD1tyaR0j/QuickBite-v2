@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AppProvider, useApp } from './store/AppContext.jsx';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Customer screens
 import CustomerLayout from './customer/CustomerLayout.jsx';
@@ -63,80 +64,119 @@ function VendorProtectedRoute({ children }) {
   return children;
 }
 
-export default function App() {
+function AppContent() {
+  const { toasts, removeToast } = useApp();
+
   return (
-    <AppProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Auth Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+    <BrowserRouter>
+      {/* ── Global Animated Toasts Container ─────────────────── */}
+      <div className="fixed top-4 right-4 left-4 md:left-auto md:w-96 z-[9999] flex flex-col gap-2 pointer-events-none">
+        <AnimatePresence>
+          {toasts.map((toast) => (
+            <motion.div
+              key={toast.id}
+              initial={{ opacity: 0, y: -20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.85, y: -10, transition: { duration: 0.2 } }}
+              layout
+              onClick={() => removeToast(toast.id)}
+              className={`p-4 rounded-2xl shadow-xl border cursor-pointer pointer-events-auto flex items-start gap-3.5 backdrop-blur-md transition-all active:scale-[0.98] ${
+                toast.type === 'success'
+                  ? 'bg-green-500/90 text-white border-green-400/50 shadow-green-500/10'
+                  : toast.type === 'error'
+                  ? 'bg-red-500/90 text-white border-red-400/50 shadow-red-500/10'
+                  : 'bg-white/95 dark:bg-[#1a2542]/95 text-slate-800 dark:text-white border-slate-100 dark:border-[#2e4374]/60 shadow-slate-900/10'
+              }`}
+            >
+              <span className={`material-symbols-outlined shrink-0 ${toast.type === 'success' || toast.type === 'error' ? 'text-white' : 'text-orange-500'}`}>
+                {toast.type === 'success' ? 'check_circle' : toast.type === 'error' ? 'warning' : 'info'}
+              </span>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-headline font-bold text-xs tracking-tight">{toast.title}</h4>
+                <p className="text-[11px] opacity-90 mt-0.5 leading-relaxed font-medium">{toast.message}</p>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
 
-          {/* Root redirect */}
-          <Route path="/" element={<Navigate to="/customer/home" replace />} />
+      <Routes>
+        {/* Auth Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
 
-          {/* Customer routes — has persistent bottom nav */}
-          <Route path="/customer" element={<CustomerLayout />}>
-            <Route path="home" element={<Dashboard />} />
-            <Route path="orders" element={
-              <CustomerProtectedRoute>
-                <OrderTracking />
-              </CustomerProtectedRoute>
-            } />
-            <Route path="profile" element={
-              <CustomerProtectedRoute>
-                <CustomerProfile />
-              </CustomerProtectedRoute>
-            } />
-          </Route>
+        {/* Root redirect */}
+        <Route path="/" element={<Navigate to="/customer/home" replace />} />
 
-          {/* Customer flow routes — full-screen, no bottom nav from layout */}
-          <Route path="/customer/menu/:shopId" element={<Menu />} />
-          <Route path="/customer/confirm/:shopId/:itemId" element={
-            <CustomerProtectedRoute>
-              <OrderConfirmation />
-            </CustomerProtectedRoute>
-          } />
-          <Route path="/customer/payment/:shopId/:itemId" element={
-            <CustomerProtectedRoute>
-              <PaymentScreen />
-            </CustomerProtectedRoute>
-          } />
-          <Route path="/customer/track/:orderId" element={
+        {/* Customer routes — has persistent bottom nav */}
+        <Route path="/customer" element={<CustomerLayout />}>
+          <Route path="home" element={<Dashboard />} />
+          <Route path="orders" element={
             <CustomerProtectedRoute>
               <OrderTracking />
             </CustomerProtectedRoute>
           } />
-          <Route path="/orders/history" element={
+          <Route path="profile" element={
             <CustomerProtectedRoute>
-              <CustomerOrderHistory />
+              <CustomerProfile />
             </CustomerProtectedRoute>
           } />
-          <Route path="/about" element={<AboutQuickBite />} />
+        </Route>
 
-          {/* Vendor default redirect */}
-          <Route path="/vendor" element={
-            <VendorProtectedRoute>
-              <OutletDummy />
-            </VendorProtectedRoute>
-          } />
+        {/* Customer flow routes — full-screen, no bottom nav from layout */}
+        <Route path="/customer/menu/:shopId" element={<Menu />} />
+        <Route path="/customer/confirm/:shopId/:itemId" element={
+          <CustomerProtectedRoute>
+            <OrderConfirmation />
+          </CustomerProtectedRoute>
+        } />
+        <Route path="/customer/payment/:shopId/:itemId" element={
+          <CustomerProtectedRoute>
+            <PaymentScreen />
+          </CustomerProtectedRoute>
+        } />
+        <Route path="/customer/track/:orderId" element={
+          <CustomerProtectedRoute>
+            <OrderTracking />
+          </CustomerProtectedRoute>
+        } />
+        <Route path="/orders/history" element={
+          <CustomerProtectedRoute>
+            <CustomerOrderHistory />
+          </CustomerProtectedRoute>
+        } />
+        <Route path="/about" element={<AboutQuickBite />} />
 
-          {/* Vendor routes — has persistent vendor bottom nav */}
-          <Route path="/vendor/:shopId" element={
-            <VendorProtectedRoute>
-              <VendorLayout />
-            </VendorProtectedRoute>
-          }>
-            <Route path="live" element={<LiveDashboard />} />
-            <Route path="orders" element={<VendorOrders />} />
-            <Route path="menu" element={<MenuManagement />} />
-            <Route path="profile" element={<VendorProfile />} />
-          </Route>
+        {/* Vendor default redirect */}
+        <Route path="/vendor" element={
+          <VendorProtectedRoute>
+            <OutletDummy />
+          </VendorProtectedRoute>
+        } />
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/customer/home" replace />} />
-        </Routes>
-      </BrowserRouter>
+        {/* Vendor routes — has persistent vendor bottom nav */}
+        <Route path="/vendor/:shopId" element={
+          <VendorProtectedRoute>
+            <VendorLayout />
+          </VendorProtectedRoute>
+        }>
+          <Route path="live" element={<LiveDashboard />} />
+          <Route path="orders" element={<VendorOrders />} />
+          <Route path="menu" element={<MenuManagement />} />
+          <Route path="profile" element={<VendorProfile />} />
+        </Route>
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/customer/home" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default function App() {
+  return (
+    <AppProvider>
+      <AppContent />
     </AppProvider>
   );
 }

@@ -116,8 +116,8 @@ export default function MenuManagement() {
       {/* ── Top Bar ──────────────────────────────────────────── */}
       <header className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm h-16 flex items-center justify-between px-6">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-yellow-600">restaurant_menu</span>
-          <h1 className="text-xl font-extrabold text-yellow-600 tracking-tight font-headline">Menu Management</h1>
+          <span className="material-symbols-outlined text-orange-600">restaurant_menu</span>
+          <h1 className="text-xl font-extrabold text-orange-600 tracking-tight font-headline">Menu Management</h1>
         </div>
         <button
           id="add-item-btn"
