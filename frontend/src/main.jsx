@@ -2,7 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { API_BASE_URL } from './config.js';
-// Clean up any cached tunnel API URLs if running in a local desktop browser
+// Clean up any cached tunnel or local API URLs if they are outdated, temporary tunnels, or if running in a local desktop browser
+const cachedApiUrl = localStorage.getItem('quickbite-api-base-url');
+if (cachedApiUrl && (
+  cachedApiUrl.includes('lhr.life') || 
+  cachedApiUrl.includes('ngrok') || 
+  cachedApiUrl.includes('localtunnel') || 
+  cachedApiUrl.includes('192.168.') || 
+  cachedApiUrl.includes('10.') || 
+  cachedApiUrl.includes('127.0.0.1') || 
+  cachedApiUrl.includes('localhost')
+)) {
+  localStorage.removeItem('quickbite-api-base-url');
+}
+
 if (!window.Capacitor && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   localStorage.removeItem('quickbite-api-base-url');
 }
