@@ -5,7 +5,7 @@ export const DEV_API_URL = '';
 
 // Production API URL for Render deployment
 // Set this VITE_API_URL environment variable during build, or modify this string directly.
-export const PROD_API_URL = import.meta.env.VITE_API_URL || 'https://quickbite-v2-backend.onrender.com';
+export const PROD_API_URL = import.meta.env.VITE_API_URL || 'https://quickbite-v2.onrender.com';
 
 // Determine environment
 export const IS_DEV = import.meta.env.DEV;
