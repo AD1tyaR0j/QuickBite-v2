@@ -21,6 +21,12 @@ export default function VendorProfile() {
   const [editBannerUrl, setEditBannerUrl] = useState('');
   const [editIsOpen, setEditIsOpen] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [apiUrlInput, setApiUrlInput] = useState(() => localStorage.getItem('quickbite-api-base-url') || '');
+
+  const handleSaveApiUrl = () => {
+    localStorage.setItem('quickbite-api-base-url', apiUrlInput.trim());
+    addToast('API Config Saved', 'API base URL has been successfully updated.', 'success');
+  };
 
   const fetchShop = async () => {
     try {
@@ -116,8 +122,8 @@ export default function VendorProfile() {
       
       {/* ── Top Custom Bar ───────────────────────────────────── */}
       <header className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-[#16213E]/80 backdrop-blur-xl shadow-sm border-b border-slate-100 dark:border-slate-800/40 h-16 flex items-center justify-between px-6">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant_menu</span>
+        <div className="flex items-center gap-2.5">
+          <img src="/quickbite_logo.png" alt="QuickBite Logo" className="w-8 h-8 object-contain rounded-full shadow-sm" />
           <h1 className="font-headline font-black text-lg text-orange-600 dark:text-orange-400">
             QuickBite Vendor
           </h1>
@@ -239,7 +245,7 @@ export default function VendorProfile() {
                 {appSettings.map((s, i) => (
                   <div
                     key={s.label}
-                    className={`p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer ${i < appSettings.length - 1 ? 'border-b border-slate-100 dark:border-slate-800/40' : ''}`}
+                    className="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer border-b border-slate-100 dark:border-slate-800/40"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-[#0D0D1A] flex items-center justify-center">
@@ -253,6 +259,39 @@ export default function VendorProfile() {
                     <span className="material-symbols-outlined text-zinc-400 group-hover:translate-x-1 transition-transform">chevron_right</span>
                   </div>
                 ))}
+
+                {/* API SERVER CONFIGURATION */}
+                <div className="p-4 bg-slate-50/50 dark:bg-[#0D0D1A]/50">
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-950/20 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">dns</span>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-xs text-on-surface dark:text-white">API Server URL</span>
+                      <p className="text-[10px] text-zinc-400">Point mobile app to backend</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="e.g. http://192.168.1.100:3001"
+                      value={apiUrlInput}
+                      onChange={(e) => setApiUrlInput(e.target.value)}
+                      className="flex-1 bg-white dark:bg-[#16213E] border border-slate-100 dark:border-slate-800/40 rounded-xl px-3 py-2 text-xs dark:text-white focus:ring-2 focus:ring-primary/50 placeholder-zinc-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSaveApiUrl}
+                      className="px-4 py-2 bg-primary text-slate-900 font-extrabold rounded-xl text-xs shadow-md shadow-primary/20 active:scale-95 transition-transform"
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <p className="text-[9px] text-zinc-400 mt-1.5 leading-normal">
+                    For mobile builds, input your machine's local IP address. Leave empty to use local host defaults.
+                  </p>
+                </div>
+
               </div>
             </section>
 

@@ -20,8 +20,8 @@ export default function OrderTracking() {
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [submittingReview, setSubmittingReview] = useState(false);
 
-  const [activeOrdersCount, setActiveOrdersCount] = useState(0);
-  const [activeOrderIds, setActiveOrderIds] = useState([]);
+  const [activeOrders, setActiveOrders] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState(orderId || activeOrder?.id || null);
 
   // Cancel Modal states
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -49,8 +49,6 @@ export default function OrderTracking() {
   const isHidden = useRef(false);
   const deadlineRef = useRef(null);
   const lastStatusRef = useRef(null);
-
-  const resolvedOrderId = orderId || activeOrder?.id;
 
   // Setup SEO Headers
   useEffect(() => {
@@ -121,16 +119,24 @@ export default function OrderTracking() {
   }, [addToast, addNotification]);
 
   useEffect(() => {
-    if (!resolvedOrderId) {
+    if (orderId) {
+      setSelectedOrderId(orderId);
+    } else if (activeOrder) {
+      setSelectedOrderId(activeOrder.id);
+    }
+  }, [orderId, activeOrder]);
+
+  useEffect(() => {
+    if (!selectedOrderId) {
       setLoading(false);
       return;
     }
 
-    fetchOrder(resolvedOrderId).then(() => setLoading(false));
+    fetchOrder(selectedOrderId).then(() => setLoading(false));
 
     // Poll every 5 seconds for fast response
     pollRef.current = setInterval(() => {
-      fetchOrder(resolvedOrderId);
+      fetchOrder(selectedOrderId);
     }, 5000);
 
     const handleVisibility = () => {
@@ -143,29 +149,46 @@ export default function OrderTracking() {
       clearInterval(timerRef.current);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [resolvedOrderId, fetchOrder]);
+  }, [selectedOrderId, fetchOrder]);
 
   useEffect(() => {
-    const fetchActiveOrdersCount = async () => {
+    const fetchActiveOrders = async () => {
       try {
         const res = await fetchApi('/api/orders');
         const json = await res.json();
         if (json.success) {
-          const active = json.data.filter(o => !['Cancelled', 'Completed', 'Ready', 'Almost Ready'].includes(o.status));
-          setActiveOrdersCount(active.length);
-          setActiveOrderIds(active.map(o => o.id));
+          const active = json.data.filter(o => !['Cancelled', 'Completed'].includes(o.status));
+          setActiveOrders(active);
+          
+          if (!selectedOrderId && active.length > 0) {
+            setSelectedOrderId(active[0].id);
+          }
         }
       } catch (e) {
-        console.error("Failed to load active orders count:", e);
+        console.error("Failed to load active orders:", e);
       }
     };
-    fetchActiveOrdersCount();
-  }, [fetchApi, order]);
+    fetchActiveOrders();
+    const interval = setInterval(fetchActiveOrders, 10000); // refresh list every 10s
+    return () => clearInterval(interval);
+  }, [fetchApi, selectedOrderId]);
 
-  // Countdown timer clock
+  // Countdown timer clock — only starts AFTER vendor accepts (status != Pending)
   useEffect(() => {
-    if (!order || !order.ept || order.status === 'Ready' || order.status === 'Completed' || order.status === 'Cancelled') return;
-    if (!deadlineRef.current) return;
+    if (!order || !order.ept) return;
+    // Don't run timer while waiting for vendor to accept
+    if (order.status === 'Pending' || order.status === 'Ready' || order.status === 'Completed' || order.status === 'Cancelled') {
+      clearInterval(timerRef.current);
+      return;
+    }
+
+    // Compute deadline from when prep started (set once)
+    if (!deadlineRef.current) {
+      const start = order.prepStartedAt
+        ? new Date(order.prepStartedAt).getTime()
+        : new Date(order.createdAt).getTime();
+      deadlineRef.current = start + order.ept * 60000;
+    }
 
     timerRef.current = setInterval(() => {
       if (!isHidden.current) {
@@ -230,9 +253,9 @@ export default function OrderTracking() {
     }
   };
 
-  if (!resolvedOrderId && !loading) {
+  if (!selectedOrderId && !loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body flex flex-col items-center justify-center px-6 pb-32 text-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body flex flex-col items-center justify-center px-6 pb-32 text-center animate-fade-in">
         <span className="material-symbols-outlined text-6xl text-zinc-300 dark:text-zinc-700 mb-6">receipt_long</span>
         <h2 className="font-headline text-2xl font-extrabold text-on-surface dark:text-white mb-2">No Active Orders</h2>
         <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-8">Your current active orders will track here.</p>
@@ -291,6 +314,30 @@ export default function OrderTracking() {
           )}
         </header>
 
+        {/* Horizontal Active Orders Switcher Bar */}
+        {activeOrders.length > 1 && (
+          <div className="bg-slate-100 dark:bg-[#0D0D1A] p-2.5 flex gap-2.5 overflow-x-auto no-scrollbar border-b border-slate-100 dark:border-slate-800/40 z-40">
+            {activeOrders.map(actOrder => {
+              const isActive = actOrder.id === selectedOrderId;
+              return (
+                <button
+                  key={actOrder.id}
+                  onClick={() => setSelectedOrderId(actOrder.id)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all whitespace-nowrap active:scale-95 duration-150 ${
+                    isActive
+                      ? 'bg-primary text-slate-900 font-black shadow-md shadow-primary/10'
+                      : 'bg-white dark:bg-[#16213E] text-zinc-500 dark:text-zinc-400 border border-slate-100 dark:border-slate-800/40'
+                  }`}
+                >
+                  <span className={`w-2 h-2 rounded-full ${actOrder.status === 'Ready' ? 'bg-green-500 animate-ping' : 'bg-primary animate-pulse'}`} />
+                  <span>{actOrder.shopName || 'Kitchen'} ({actOrder.displayId})</span>
+                  <span className="text-[10px] opacity-75 font-semibold">· {actOrder.status}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* LOADING STATE */}
         {loading && (
           <div className="flex-grow flex items-center justify-center">
@@ -335,7 +382,22 @@ export default function OrderTracking() {
                       <p className="text-xs opacity-90 mb-1">Hot & Ready to Collect!</p>
                       <h2 className="text-3xl font-black font-headline animate-bounce">At Counter</h2>
                     </div>
+                  ) : order.status === 'Pending' ? (
+                    // Vendor hasn't accepted yet — show static waiting state
+                    <div className="flex items-center gap-5">
+                      <div className="relative w-20 h-20 flex-shrink-0 flex items-center justify-center bg-white/20 rounded-full">
+                        <span className="material-symbols-outlined text-5xl text-white animate-pulse">hourglass_empty</span>
+                      </div>
+                      <div className="flex-grow">
+                        <p className="text-xs opacity-90 mb-0.5 font-bold uppercase tracking-wider">Awaiting Acceptance</p>
+                        <p className="text-2xl font-black font-headline">Waiting for Vendor</p>
+                        <p className="text-[11px] opacity-75 mt-1">
+                          Est. ~{order.ept || 15} min prep once accepted
+                        </p>
+                      </div>
+                    </div>
                   ) : (
+                    // Vendor accepted — show live countdown
                     <div className="flex items-center gap-6">
                       {/* Circular SVG Timer Gauge */}
                       <div className="relative w-20 h-20 flex-shrink-0">
@@ -375,9 +437,7 @@ export default function OrderTracking() {
                       </div>
                       
                       <div className="flex-grow">
-                        <p className="text-xs opacity-90 mb-0.5">
-                          {order.status === 'Pending' ? 'Prep Time (Awaiting Acceptance)' : 'Estimated Prep Wait'}
-                        </p>
+                        <p className="text-xs opacity-90 mb-0.5">Estimated Prep Wait</p>
                         <p id="countdown-timer" className="text-3xl font-black font-headline">
                           {formatTime(timeLeft)}
                         </p>
@@ -491,13 +551,13 @@ export default function OrderTracking() {
               </button>
             )}
 
-            {activeOrdersCount > 1 && (
+            {activeOrders.length > 1 && (
               <button
                 onClick={openCancelModal}
                 className="w-full mt-3 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-headline font-extrabold active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-red-500/10 text-xs"
               >
                 <span className="material-symbols-outlined text-[16px]">cancel</span>
-                Cancel All Active Orders ({activeOrdersCount})
+                Cancel All Active Orders ({activeOrders.length})
               </button>
             )}
 
@@ -691,7 +751,7 @@ export default function OrderTracking() {
                         if (currentUpdated) {
                           setOrder(currentUpdated);
                         } else {
-                          fetchOrder(resolvedOrderId);
+                          fetchOrder(selectedOrderId);
                         }
                         addToast('Orders Updated', `${checkedIds.length} order(s) cancelled successfully.`, 'success');
                         setShowCancelModal(false);

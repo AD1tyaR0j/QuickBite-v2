@@ -168,9 +168,12 @@ export default function Dashboard() {
       <header className="fixed top-0 left-0 right-0 max-w-5xl mx-auto w-full flex justify-between items-center px-6 py-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/40 z-50">
         <div className="flex flex-col">
           <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Welcome to Campus Hub</span>
-          <h1 className="font-headline font-black text-xl text-orange-500 dark:text-orange-400 italic">
-            QuickBite
-          </h1>
+          <div className="flex items-center gap-2.5">
+            <img src="/quickbite_logo.png" alt="QuickBite Logo" className="w-8 h-8 object-contain rounded-full shadow-sm" />
+            <h1 className="font-headline font-black text-xl text-orange-500 dark:text-orange-400 italic">
+              QuickBite
+            </h1>
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <button 

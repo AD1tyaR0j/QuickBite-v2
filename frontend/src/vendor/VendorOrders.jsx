@@ -62,8 +62,8 @@ export default function VendorOrders() {
       
       {/* ── Top Custom Bar ───────────────────────────────────── */}
       <header className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-xl shadow-sm border-b border-slate-100 dark:border-slate-800/40 h-16 flex items-center justify-between px-6">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant_menu</span>
+        <div className="flex items-center gap-2.5">
+          <img src="/quickbite_logo.png" alt="QuickBite Logo" className="w-8 h-8 object-contain rounded-full shadow-sm" />
           <h1 className="text-lg font-black text-orange-600 dark:text-orange-400 tracking-tight font-headline">QuickBite Vendor</h1>
         </div>
         <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 duration-200">

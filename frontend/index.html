@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="description" content="QuickBite — Queue-Aware Predictive Food Ordering. Order ahead, skip the queue, get accurate pickup times." />
     <title>QuickBite — Order Smarter</title>
     <!-- Tailwind CSS -->
@@ -156,6 +156,60 @@
       .dark .text-on-background { color: #E8E8FF !important; }
       .dark .text-on-surface-variant { color: #6666AA !important; }
       .dark .border-outline-variant { border-color: #2E2E5E !important; }
+      
+      /* Safe area spacing utilities for native notch screens */
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px) !important;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+      }
+      .mt-safe {
+        margin-top: env(safe-area-inset-top, 0px) !important;
+      }
+      .mb-safe {
+        margin-bottom: env(safe-area-inset-bottom, 0px) !important;
+      }
+      
+      /* Global Mobile Scaling & Safe Area Fixes */
+      header:first-child, nav:first-child,
+      header.fixed.top-0, nav.fixed.top-0 {
+        padding-top: env(safe-area-inset-top, 0px) !important;
+      }
+      header:first-child.h-16, nav:first-child.h-16,
+      header.fixed.top-0.h-16, nav.fixed.top-0.h-16 {
+        height: calc(4rem + env(safe-area-inset-top, 0px)) !important;
+        padding-top: env(safe-area-inset-top, 0px) !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        padding-bottom: 0.75rem !important;
+      }
+      header:first-child.py-4, nav:first-child.py-4,
+      header.fixed.top-0.py-4, nav.fixed.top-0.py-4 {
+        padding-top: calc(1rem + env(safe-area-inset-top, 0px)) !important;
+      }
+      main.pt-28, .pt-28 {
+        padding-top: calc(7rem + env(safe-area-inset-top, 0px)) !important;
+      }
+      main.pt-24, .pt-24 {
+        padding-top: calc(6rem + env(safe-area-inset-top, 0px)) !important;
+      }
+      main.pt-20, .pt-20 {
+        padding-top: calc(5rem + env(safe-area-inset-top, 0px)) !important;
+      }
+      main.pb-32, .pb-32 {
+        padding-bottom: calc(8rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      main.pb-28, .pb-28 {
+        padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      nav.fixed.bottom-0 {
+        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      nav.fixed.bottom-0.h-20 {
+        height: calc(5rem + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+      }
     </style>
   </head>
   <body class="bg-slate-100 dark:bg-slate-950 font-body text-on-background min-h-screen">

@@ -31,6 +31,8 @@ export default function PaymentScreen() {
   const [processingStep, setProcessingStep] = useState(0);
   const [txnId, setTxnId] = useState('');
   const [placedOrder, setPlacedOrder] = useState(null);
+  const [placedOrders, setPlacedOrders] = useState([]);
+  const [frozenTotal, setFrozenTotal] = useState(null); // locked before cart clear
 
   const isCartMode = itemId === 'cart';
 
@@ -44,6 +46,61 @@ export default function PaymentScreen() {
   useEffect(() => {
     const loadDetails = async () => {
       try {
+        if (shopId === 'all') {
+          setShop({ name: 'Multiple Cafeterias', imageUrl: '/quickbite_logo.png' });
+          
+          let shopsList = [];
+          try {
+            const res = await fetch('/api/shops');
+            const json = await res.json();
+            if (json.success) shopsList = json.data;
+          } catch (e) {
+            console.error('Failed to load shops:', e);
+          }
+
+          const activeShops = Object.keys(cartByShop).filter(sId => {
+            const cart = cartByShop[sId];
+            return cart && Object.keys(cart.items || {}).length > 0;
+          });
+
+          const allEntries = [];
+          activeShops.forEach(sId => {
+            const cart = cartByShop[sId];
+            const shopObj = shopsList.find(s => s.id === sId) || { name: sId };
+            Object.values(cart.items).forEach(entry => {
+              allEntries.push({ ...entry, shopId: sId, shopName: shopObj.name });
+            });
+          });
+          setCartItems(allEntries);
+
+          // Fetch EPTs in parallel and take the maximum
+          const eptPromises = activeShops.map(async (sId) => {
+            const cart = cartByShop[sId];
+            const itemsPayload = Object.values(cart.items).map(entry => ({
+              menuItemId: entry.item.id,
+              qty: entry.qty,
+            }));
+            try {
+              const res = await fetch('/api/ept-cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ shopId: sId, items: itemsPayload }),
+              });
+              const json = await res.json();
+              return json.success ? json.data.ept : 15;
+            } catch {
+              return 15;
+            }
+          });
+
+          const epts = await Promise.all(eptPromises);
+          const maxEpt = Math.max(...epts, 15);
+          setEpt(maxEpt);
+          setPrepTimeLeft(maxEpt);
+          setLoadingDetails(false);
+          return;
+        }
+
         const shopRes = await fetch(`/api/shops/${shopId}`);
         const shopJson = await shopRes.json();
         if (shopJson.success) setShop(shopJson.data);
@@ -114,7 +171,11 @@ export default function PaymentScreen() {
     return () => clearInterval(interval);
   }, [paymentStatus]);
 
-  const platformFee = 5;
+  // Platform fee: ₹5 per vendor for multi-vendor checkout, flat ₹5 for single
+  const vendorCount = shopId === 'all'
+    ? Object.keys(cartByShop).filter(sId => cartByShop[sId] && Object.keys(cartByShop[sId].items || {}).length > 0).length
+    : 1;
+  const platformFee = 5 * Math.max(1, vendorCount);
   const totalBase = isCartMode
     ? cartItems.reduce((sum, entry) => sum + entry.item.price * entry.qty, 0)
     : menuItem
@@ -206,8 +267,58 @@ export default function PaymentScreen() {
   const finalizeOrder = async () => {
     const generatedTxnId = 'TXN-' + Math.floor(10000000 + Math.random() * 90000000) + '-QB';
     setTxnId(generatedTxnId);
+    // Freeze the total NOW before carts get cleared
+    const capturedTotal = total;
 
     try {
+      if (shopId === 'all') {
+        const activeShops = Object.keys(cartByShop).filter(sId => {
+          const cart = cartByShop[sId];
+          return cart && Object.keys(cart.items || {}).length > 0;
+        });
+
+        let successCount = 0;
+        const ordersPlacedList = [];
+
+        for (const sId of activeShops) {
+          const cart = cartByShop[sId];
+          const itemsPayload = Object.values(cart.items).map(entry => ({
+            menuItemId: entry.item.id,
+            qty: entry.qty,
+          }));
+
+          const res = await fetchApi('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              shopId: sId,
+              items: itemsPayload,
+              paymentMethod,
+              paymentStatus: paymentMethod === 'Cash' ? 'Pending' : 'Paid',
+              transactionId: paymentMethod === 'Cash' ? null : generatedTxnId
+            }),
+          });
+
+          const json = await res.json();
+          if (json.success) {
+            successCount++;
+            ordersPlacedList.push(json.data);
+            clearCart(sId);
+          }
+        }
+
+        if (successCount > 0) {
+          setFrozenTotal(capturedTotal); // lock total before carts are cleared from state
+          setPlacedOrder(ordersPlacedList[0]);
+          setPlacedOrders(ordersPlacedList);
+          setPaymentStatus('success');
+          setPrepTimeLeft(ept);
+        } else {
+          setPaymentStatus('failed');
+        }
+        return;
+      }
+
       const orderPayload = isCartMode
         ? {
             shopId,
@@ -257,8 +368,10 @@ export default function PaymentScreen() {
   };
 
   const trackOrder = () => {
-    if (placedOrder) {
-          setActiveOrder(placedOrder);
+    if (shopId === 'all') {
+      navigate('/customer/orders');
+    } else if (placedOrder) {
+      setActiveOrder(placedOrder);
       navigate(`/customer/track/${placedOrder.id}`);
     }
   };
@@ -269,13 +382,13 @@ export default function PaymentScreen() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="flex flex-col items-center justify-center flex-1 w-full min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background p-4 overflow-y-auto"
+      className="flex flex-col items-center justify-center flex-1 w-full min-h-screen bg-slate-50 dark:bg-[#0D0D1A] font-body text-on-background p-0 md:p-4 overflow-y-auto"
     >
       <motion.div
         initial={{ scale: 0.96, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className="w-full max-w-5xl bg-white dark:bg-[#1a2542] rounded-3xl border border-slate-100 dark:border-[#2e4374]/60 shadow-2xl flex flex-col p-6 mx-auto"
+        className="w-full max-w-5xl min-h-screen md:min-h-0 bg-white dark:bg-[#1a2542] rounded-none md:rounded-3xl border-0 md:border border-slate-100 dark:border-[#2e4374]/60 shadow-none md:shadow-2xl flex flex-col p-4 md:p-6 mx-auto"
       >
 
         
@@ -568,7 +681,11 @@ export default function PaymentScreen() {
                 </div>
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-zinc-500 dark:text-zinc-400">Order ID</span>
-                  <span className="font-bold text-on-surface dark:text-white">{placedOrder?.displayId || '#0000'}</span>
+                  <span className="font-bold text-on-surface dark:text-white">
+                    {shopId === 'all' 
+                      ? placedOrders.map(o => o.displayId).join(', ') 
+                      : (placedOrder?.displayId || '#0000')}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-zinc-500 dark:text-zinc-400">Estimated Prep Time</span>
@@ -582,7 +699,10 @@ export default function PaymentScreen() {
                     {isCartMode ? (
                       cartItems.map((entry, idx) => (
                         <div key={idx} className="flex justify-between text-xs font-medium">
-                          <span className="text-zinc-500 dark:text-zinc-400">{entry.qty}x {entry.item.name}</span>
+                          <span className="text-zinc-500 dark:text-zinc-400">
+                            {entry.qty}x {entry.item.name}
+                            {entry.shopName ? ` (${entry.shopName})` : ''}
+                          </span>
                           <span className="text-on-surface dark:text-white">₹{entry.item.price * entry.qty}</span>
                         </div>
                       ))
@@ -600,7 +720,7 @@ export default function PaymentScreen() {
                     </div>
                     <div className="flex justify-between text-sm font-extrabold border-t border-slate-200 dark:border-slate-800 pt-2 text-primary">
                       <span>Total Paid</span>
-                      <span>₹{total}</span>
+                      <span>₹{frozenTotal ?? total}</span>
                     </div>
                   </div>
                 </div>

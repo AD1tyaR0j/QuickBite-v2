@@ -69,6 +69,36 @@
       "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80",
       "collegeId": null,
       "createdAt": "2026-05-30T09:09:05.806Z"
+    },
+    {
+      "id": "usr-1780236440081",
+      "name": "Yatharth",
+      "email": "yatharthback@gmail.com",
+      "phone": "7704833769",
+      "password": "$2a$08$wd.1Gg2bY/JZySCTTcs8ve0kahvZDKAzv5HMP9Xu6khFW6CDCsI2i",
+      "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80",
+      "collegeId": null,
+      "createdAt": "2026-05-31T14:07:20.081Z"
+    },
+    {
+      "id": "usr-1780236965864",
+      "name": "Shikha",
+      "email": "www.shikha@gmail.com",
+      "phone": "9794759567",
+      "password": "$2a$08$xKQrsChPvwWn.vCTd2Tn4.yh/jtK3H3tEMljUQuWyUuCwYR6yVfBy",
+      "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80",
+      "collegeId": null,
+      "createdAt": "2026-05-31T14:16:05.864Z"
+    },
+    {
+      "id": "usr-yatharth-saxena",
+      "name": "Yatharth Saxena",
+      "email": "yatharth.saxena@quickbite.com",
+      "phone": "9876543219",
+      "password": "$2a$08$cNF2Ts8OzFbOyuGSnVIucuSaJ7aJNm09zMQQwB7C0BzXjz1FTt7mK",
+      "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80",
+      "collegeId": "COL-2026-099",
+      "createdAt": "2026-05-31T15:05:00.000Z"
     }
   ],
   "vendors": [
@@ -126,7 +156,7 @@
     {
       "id": "kitchen-kukkries",
       "name": "Kitchen Kukkries",
-      "rating": 4.6,
+      "rating": 4.7,
       "tags": [
         "Momos",
         "Chinese",
@@ -2919,13 +2949,13 @@
           "qty": 3
         }
       ],
-      "status": "Pending",
+      "status": "Cancelled",
       "ept": 3,
       "paymentMethod": "UPI",
       "paymentStatus": "Paid",
       "transactionId": "TXN-91344494-QB",
       "createdAt": "2026-05-30T09:05:37.956Z",
-      "updatedAt": "2026-05-30T09:05:37.956Z",
+      "updatedAt": "2026-06-02T07:15:33.183Z",
       "prepStartedAt": null
     },
     {
@@ -2947,13 +2977,13 @@
           "qty": 3
         }
       ],
-      "status": "Pending",
+      "status": "Cancelled",
       "ept": 3,
       "paymentMethod": "UPI",
       "paymentStatus": "Paid",
       "transactionId": "TXN-30494807-QB",
       "createdAt": "2026-05-30T09:05:37.957Z",
-      "updatedAt": "2026-05-30T09:05:37.957Z",
+      "updatedAt": "2026-06-02T07:15:33.184Z",
       "prepStartedAt": null
     },
     {
@@ -3039,6 +3069,1315 @@
       "createdAt": "2026-05-30T09:11:05.946Z",
       "updatedAt": "2026-05-30T09:15:39.601Z",
       "prepStartedAt": "2026-05-30T09:14:45.602Z"
+    },
+    {
+      "id": "0a3978d6-1a73-4d3e-afac-0cf2a40a5377",
+      "displayId": "#URTS",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780132145806",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 570,
+      "qty": 9,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 35,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-50658718-QB",
+      "createdAt": "2026-05-30T17:23:53.544Z",
+      "updatedAt": "2026-05-30T17:25:03.728Z",
+      "prepStartedAt": "2026-05-30T17:24:20.568Z"
+    },
+    {
+      "id": "c96e50af-3a62-4f59-98c6-65c6abb4e2ea",
+      "displayId": "#1HFU",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780132145806",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 570,
+      "qty": 9,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 3
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 35,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-94143605-QB",
+      "createdAt": "2026-05-30T17:23:53.548Z",
+      "updatedAt": "2026-05-30T17:24:34.743Z",
+      "prepStartedAt": "2026-05-30T17:24:21.129Z"
+    },
+    {
+      "id": "02b016de-6e4c-4f9b-895f-8ed25c9400fa",
+      "displayId": "#VSP9",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780132145806",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 210,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 18,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-24514688-QB",
+      "createdAt": "2026-05-30T17:25:38.438Z",
+      "updatedAt": "2026-05-30T17:26:02.905Z",
+      "prepStartedAt": "2026-05-30T17:25:49.436Z"
+    },
+    {
+      "id": "2230df87-24c6-47cc-a65c-411b718580f0",
+      "displayId": "#YQAQ",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780132145806",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 210,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 18,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-69365927-QB",
+      "createdAt": "2026-05-30T17:25:38.441Z",
+      "updatedAt": "2026-05-30T17:26:03.717Z",
+      "prepStartedAt": "2026-05-30T17:25:50.257Z"
+    },
+    {
+      "id": "f80e1641-1bf1-4808-9469-ababad25b244",
+      "displayId": "#G7EV",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780236440081",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 3 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 260,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 30,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-98713260-QB",
+      "createdAt": "2026-05-31T14:08:00.129Z",
+      "updatedAt": "2026-05-31T14:09:59.732Z",
+      "prepStartedAt": "2026-05-31T14:09:50.043Z"
+    },
+    {
+      "id": "18639f2e-8a70-4417-a4ae-f1756933db68",
+      "displayId": "#1SWK",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-1780236965864",
+      "menuItemId": "mi001",
+      "itemName": "Veg Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "itemPrice": 40,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi001",
+          "itemName": "Veg Momos",
+          "itemPrice": 40,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 6,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-79106922-QB",
+      "createdAt": "2026-05-31T14:48:44.347Z",
+      "updatedAt": "2026-05-31T14:50:04.220Z",
+      "prepStartedAt": "2026-05-31T14:49:31.261Z"
+    },
+    {
+      "id": "a12a760e-8ac6-4f63-8730-60c462ff3e89",
+      "displayId": "#2CJN",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 570,
+      "qty": 9,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 35,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-80426482-QB",
+      "createdAt": "2026-05-31T14:49:20.993Z",
+      "updatedAt": "2026-05-31T14:50:28.801Z",
+      "prepStartedAt": "2026-05-31T14:49:38.117Z"
+    },
+    {
+      "id": "09ed5dce-66de-4185-9d9d-54c7311e3a08",
+      "displayId": "#UWRO",
+      "shopId": "kunj-burger-point",
+      "userId": "usr-aditya",
+      "menuItemId": "mi011",
+      "itemName": "Cheese Burger + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80",
+      "itemPrice": 340,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi011",
+          "itemName": "Cheese Burger",
+          "itemPrice": 80,
+          "prepTime": 12,
+          "qty": 2
+        },
+        {
+          "menuItemId": "mi012",
+          "itemName": "Paneer Burger",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 2
+        }
+      ],
+      "status": "Completed",
+      "ept": 13,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-78761098-QB",
+      "createdAt": "2026-05-31T14:50:39.522Z",
+      "updatedAt": "2026-05-31T14:52:28.120Z",
+      "prepStartedAt": "2026-05-31T14:52:08.642Z"
+    },
+    {
+      "id": "75492005-c39e-45b9-9052-96cf78f2d6dd",
+      "displayId": "#VJGR",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-smriti",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 50,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 7,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-48757869-QB",
+      "createdAt": "2026-05-31T14:52:19.264Z",
+      "updatedAt": "2026-05-31T14:54:06.487Z",
+      "prepStartedAt": "2026-05-31T14:53:24.325Z"
+    },
+    {
+      "id": "97e95667-4550-494d-99b8-9fe3b2100315",
+      "displayId": "#K4EY",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 150,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:14:28.692Z",
+      "updatedAt": "2026-05-31T17:50:12.597Z",
+      "prepStartedAt": "2026-05-31T17:49:32.309Z"
+    },
+    {
+      "id": "36755d37-b12b-4a42-8d73-056eefe10d82",
+      "displayId": "#VPV9",
+      "shopId": "kunj-burger-point",
+      "userId": "usr-aditya",
+      "menuItemId": "mi012",
+      "itemName": "Paneer Burger",
+      "imageUrl": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300&q=80",
+      "itemPrice": 270,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi012",
+          "itemName": "Paneer Burger",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:14:29.338Z",
+      "updatedAt": "2026-05-31T17:50:58.725Z",
+      "prepStartedAt": "2026-05-31T17:50:52.101Z"
+    },
+    {
+      "id": "4ff34f13-3132-467d-a931-bd5022e7dc96",
+      "displayId": "#4Q9U",
+      "shopId": "shree-balaji",
+      "userId": "usr-aditya",
+      "menuItemId": "mi053",
+      "itemName": "Executive Veg Thali",
+      "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&q=80",
+      "itemPrice": 540,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi053",
+          "itemName": "Executive Veg Thali",
+          "itemPrice": 180,
+          "prepTime": 15,
+          "qty": 3
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 6,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:14:30.513Z",
+      "updatedAt": "2026-06-02T07:15:33.184Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "9b374f80-09ce-4640-9bd8-643f1d8d118d",
+      "displayId": "#HUKJ",
+      "shopId": "kunj-burger-point",
+      "userId": "usr-aditya",
+      "menuItemId": "mi011",
+      "itemName": "Cheese Burger + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80",
+      "itemPrice": 380,
+      "qty": 5,
+      "items": [
+        {
+          "menuItemId": "mi011",
+          "itemName": "Cheese Burger",
+          "itemPrice": 80,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi014",
+          "itemName": "Cold Coffee",
+          "itemPrice": 70,
+          "prepTime": 5,
+          "qty": 2
+        }
+      ],
+      "status": "Completed",
+      "ept": 13,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:15:39.734Z",
+      "updatedAt": "2026-05-31T17:50:59.225Z",
+      "prepStartedAt": "2026-05-31T17:50:52.208Z"
+    },
+    {
+      "id": "5e1c2405-ece5-4a89-a6a8-ae8c48ff1ebe",
+      "displayId": "#ML4V",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 150,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        }
+      ],
+      "status": "Completed",
+      "ept": 10,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:15:40.413Z",
+      "updatedAt": "2026-05-31T17:50:13.044Z",
+      "prepStartedAt": "2026-05-31T17:49:34.835Z"
+    },
+    {
+      "id": "b24c1355-b580-45a6-9287-cac037af756a",
+      "displayId": "#PTDJ",
+      "shopId": "kathi-roll-co",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi063",
+      "itemName": "Cheese Corn Wrap",
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "itemPrice": 180,
+      "qty": 2,
+      "items": [
+        {
+          "menuItemId": "mi063",
+          "itemName": "Cheese Corn Wrap",
+          "itemPrice": 90,
+          "prepTime": 10,
+          "qty": 2
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 6,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:25:13.302Z",
+      "updatedAt": "2026-05-31T15:44:00.883Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "864e52c7-c536-450a-8527-1b7c1be0a02b",
+      "displayId": "#3S3M",
+      "shopId": "doctor-dosa",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi021",
+      "itemName": "Butter Dosa + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300&q=80",
+      "itemPrice": 550,
+      "qty": 7,
+      "items": [
+        {
+          "menuItemId": "mi021",
+          "itemName": "Butter Dosa",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 3
+        },
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 4
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 21,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:25:13.953Z",
+      "updatedAt": "2026-05-31T15:44:00.884Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "ad9eaf8b-89fb-4bbe-911b-4719c66cdf00",
+      "displayId": "#W5SN",
+      "shopId": "momo-shakes-corner",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi044",
+      "itemName": "French Fries",
+      "imageUrl": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80",
+      "itemPrice": 210,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi044",
+          "itemName": "French Fries",
+          "itemPrice": 70,
+          "prepTime": 8,
+          "qty": 3
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 7,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T15:25:14.802Z",
+      "updatedAt": "2026-05-31T15:44:00.884Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "6c9b4d78-1252-4b20-8168-f3eaa477512a",
+      "displayId": "#8QWU",
+      "shopId": "momo-shakes-corner",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi042",
+      "itemName": "Chocolate Shake",
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "itemPrice": 140,
+      "qty": 2,
+      "items": [
+        {
+          "menuItemId": "mi042",
+          "itemName": "Chocolate Shake",
+          "itemPrice": 70,
+          "prepTime": 5,
+          "qty": 2
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 3,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-48557227-QB",
+      "createdAt": "2026-05-31T15:33:12.114Z",
+      "updatedAt": "2026-05-31T15:44:00.885Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "0fabd7c5-b14f-41be-afc7-51c905777892",
+      "displayId": "#4GL5",
+      "shopId": "kunj-burger-point",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi011",
+      "itemName": "Cheese Burger",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80",
+      "itemPrice": 240,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi011",
+          "itemName": "Cheese Burger",
+          "itemPrice": 80,
+          "prepTime": 12,
+          "qty": 3
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 10,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-48557227-QB",
+      "createdAt": "2026-05-31T15:33:12.633Z",
+      "updatedAt": "2026-05-31T15:44:00.885Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "98402047-a18a-4b5e-a14d-ecf998107ac6",
+      "displayId": "#QTXT",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 150,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 3
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 10,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-82830105-QB",
+      "createdAt": "2026-05-31T15:43:14.894Z",
+      "updatedAt": "2026-05-31T15:44:00.886Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "719320ed-967e-405a-b67f-e502ec78d4b3",
+      "displayId": "#XQSE",
+      "shopId": "momo-shakes-corner",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi046",
+      "itemName": "Oreo Shake",
+      "imageUrl": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80",
+      "itemPrice": 180,
+      "qty": 2,
+      "items": [
+        {
+          "menuItemId": "mi046",
+          "itemName": "Oreo Shake",
+          "itemPrice": 90,
+          "prepTime": 6,
+          "qty": 2
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 3,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-82830105-QB",
+      "createdAt": "2026-05-31T15:43:15.490Z",
+      "updatedAt": "2026-05-31T15:44:00.886Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "f1acaf1e-5249-4356-a537-925bc25a9b42",
+      "displayId": "#VA0P",
+      "shopId": "kathi-roll-co",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi064",
+      "itemName": "Paneer Bhurji Roll",
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "itemPrice": 400,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi064",
+          "itemName": "Paneer Bhurji Roll",
+          "itemPrice": 100,
+          "prepTime": 10,
+          "qty": 4
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 11,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-82830105-QB",
+      "createdAt": "2026-05-31T15:43:16.208Z",
+      "updatedAt": "2026-05-31T15:44:00.886Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "2698f576-d3ad-45d0-a908-47e92d4e0922",
+      "displayId": "#Z9U3",
+      "shopId": "momo-shakes-corner",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi040",
+      "itemName": "Veg Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "itemPrice": 40,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi040",
+          "itemName": "Veg Momos",
+          "itemPrice": 40,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Pending",
+      "ept": 6,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-89459652-QB",
+      "createdAt": "2026-05-31T15:46:55.134Z",
+      "updatedAt": "2026-05-31T15:46:55.134Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "e5da2566-a14c-4d51-9a5d-7c76f10de1ef",
+      "displayId": "#62YZ",
+      "shopId": "millennials-cafe",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi036",
+      "itemName": "Paneer Tikka Pizza",
+      "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&q=80",
+      "itemPrice": 120,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi036",
+          "itemName": "Paneer Tikka Pizza",
+          "itemPrice": 120,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 8,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-89459652-QB",
+      "createdAt": "2026-05-31T15:46:55.720Z",
+      "updatedAt": "2026-05-31T17:52:48.363Z",
+      "prepStartedAt": "2026-05-31T17:52:13.226Z"
+    },
+    {
+      "id": "d020c03f-d26e-4cf4-9089-ad217c5720e4",
+      "displayId": "#EPZO",
+      "shopId": "kathi-roll-co",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi060",
+      "itemName": "Double Paneer Tikka Roll",
+      "imageUrl": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=300&q=80",
+      "itemPrice": 90,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi060",
+          "itemName": "Double Paneer Tikka Roll",
+          "itemPrice": 90,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Pending",
+      "ept": 6,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-90107859-QB",
+      "createdAt": "2026-05-31T15:50:09.632Z",
+      "updatedAt": "2026-05-31T15:50:09.632Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "4310f054-15f3-4159-8082-cfb9367e9933",
+      "displayId": "#0HKG",
+      "shopId": "doctor-dosa",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi022",
+      "itemName": "Plain Dosa + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?w=300&q=80",
+      "itemPrice": 140,
+      "qty": 2,
+      "items": [
+        {
+          "menuItemId": "mi022",
+          "itemName": "Plain Dosa",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi023",
+          "itemName": "Idli Sambhar",
+          "itemPrice": 70,
+          "prepTime": 10,
+          "qty": 1
+        }
+      ],
+      "status": "Pending",
+      "ept": 11,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-90107859-QB",
+      "createdAt": "2026-05-31T15:50:10.147Z",
+      "updatedAt": "2026-05-31T15:50:10.147Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "7767fc6d-eb37-44f8-a11c-0bfd26d669ae",
+      "displayId": "#IUTQ",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 240,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 2
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-36484116-QB",
+      "createdAt": "2026-05-31T17:49:32.863Z",
+      "updatedAt": "2026-05-31T17:50:13.042Z",
+      "prepStartedAt": "2026-05-31T17:49:38.627Z"
+    },
+    {
+      "id": "81df00cd-d215-4d12-83cd-f6987a8a6c3d",
+      "displayId": "#X5Z6",
+      "shopId": "millennials-cafe",
+      "userId": "usr-yatharth-saxena",
+      "menuItemId": "mi032",
+      "itemName": "Pasta + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=300&q=80",
+      "itemPrice": 205,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi032",
+          "itemName": "Pasta",
+          "itemPrice": 55,
+          "prepTime": 12,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi031",
+          "itemName": "Cheese Sandwich",
+          "itemPrice": 90,
+          "prepTime": 8,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi033",
+          "itemName": "Pizza",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 19,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-45324191-QB",
+      "createdAt": "2026-05-31T17:50:46.218Z",
+      "updatedAt": "2026-05-31T17:52:48.825Z",
+      "prepStartedAt": "2026-05-31T17:52:10.823Z"
+    },
+    {
+      "id": "92d6aadd-76c9-45be-8ff4-e14988f307dd",
+      "displayId": "#SNL7",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi004",
+      "itemName": "Paneer Fried Rice + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1536489885071-87983c3e2859?w=300&q=80",
+      "itemPrice": 280,
+      "qty": 4,
+      "items": [
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 2
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 2
+        }
+      ],
+      "status": "Completed",
+      "ept": 17,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-64837420-QB",
+      "createdAt": "2026-05-31T17:52:14.120Z",
+      "updatedAt": "2026-05-31T17:53:23.327Z",
+      "prepStartedAt": "2026-05-31T17:53:17.475Z"
+    },
+    {
+      "id": "bf2e8052-46bb-4f15-88f2-a4a3fa655801",
+      "displayId": "#H1HY",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos + 1 more",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 720,
+      "qty": 13,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 6
+        },
+        {
+          "menuItemId": "mi003",
+          "itemName": "Veg Fried Rice",
+          "itemPrice": 60,
+          "prepTime": 15,
+          "qty": 7
+        }
+      ],
+      "status": "Completed",
+      "ept": 49,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-67049008-QB",
+      "createdAt": "2026-05-31T17:53:27.838Z",
+      "updatedAt": "2026-05-31T17:55:19.664Z",
+      "prepStartedAt": "2026-05-31T17:54:02.346Z"
+    },
+    {
+      "id": "e4feb7ba-5815-4983-a42e-378aa7fd926f",
+      "displayId": "#3882",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi004",
+      "itemName": "Paneer Fried Rice",
+      "imageUrl": "https://images.unsplash.com/photo-1536489885071-87983c3e2859?w=300&q=80",
+      "itemPrice": 80,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 30,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:16.670Z",
+      "updatedAt": "2026-05-31T17:58:25.180Z",
+      "prepStartedAt": "2026-05-31T17:55:24.500Z"
+    },
+    {
+      "id": "820b9e40-ed7b-443b-9c13-0b09220521e6",
+      "displayId": "#49TX",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi005",
+      "itemName": "Veg Noodles",
+      "imageUrl": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:20.145Z",
+      "updatedAt": "2026-05-31T17:58:23.158Z",
+      "prepStartedAt": "2026-05-31T17:55:26.284Z"
+    },
+    {
+      "id": "278cb5a4-1f60-43ba-b8f8-b8bae7355fc6",
+      "displayId": "#E2HI",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi005",
+      "itemName": "Veg Noodles",
+      "imageUrl": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:22.632Z",
+      "updatedAt": "2026-05-31T17:58:19.366Z",
+      "prepStartedAt": "2026-05-31T17:55:30.933Z"
+    },
+    {
+      "id": "26eea735-631a-483e-bf2e-e421215d34d5",
+      "displayId": "#I4HF",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi008",
+      "itemName": "Veg Manchurian",
+      "imageUrl": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80",
+      "itemPrice": 90,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi008",
+          "itemName": "Veg Manchurian",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:25.970Z",
+      "updatedAt": "2026-05-31T17:58:17.204Z",
+      "prepStartedAt": "2026-05-31T17:55:27.219Z"
+    },
+    {
+      "id": "26e72d3f-34c7-4067-ac81-9e73a8780b53",
+      "displayId": "#MDE5",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi008",
+      "itemName": "Veg Manchurian",
+      "imageUrl": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80",
+      "itemPrice": 90,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi008",
+          "itemName": "Veg Manchurian",
+          "itemPrice": 90,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:28.424Z",
+      "updatedAt": "2026-05-31T17:58:16.587Z",
+      "prepStartedAt": "2026-05-31T17:55:27.709Z"
+    },
+    {
+      "id": "1ab75009-ee91-4b50-8505-e39d73fa2d97",
+      "displayId": "#ORYV",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi005",
+      "itemName": "Veg Noodles",
+      "imageUrl": "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80",
+      "itemPrice": 70,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:30.360Z",
+      "updatedAt": "2026-05-31T17:58:16.107Z",
+      "prepStartedAt": "2026-05-31T17:55:28.882Z"
+    },
+    {
+      "id": "c7dcb686-aede-4c99-a39d-2b17b70393b6",
+      "displayId": "#EK3P",
+      "shopId": "kitchen-kukkries",
+      "userId": null,
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 50,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 28,
+      "paymentMethod": "Cash On Pickup",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-05-31T17:54:34.044Z",
+      "updatedAt": "2026-05-31T17:58:18.552Z",
+      "prepStartedAt": "2026-05-31T17:55:28.490Z"
+    },
+    {
+      "id": "52be708e-a751-4947-805f-709d704f76af",
+      "displayId": "#8BQC",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 100,
+      "qty": 2,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 2
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 7,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-97914484-QB",
+      "createdAt": "2026-05-31T17:59:04.531Z",
+      "updatedAt": "2026-06-02T07:15:33.185Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "381e3da7-b828-44bf-9fb8-6775e26b01ad",
+      "displayId": "#DG9G",
+      "shopId": "doctor-dosa",
+      "userId": "usr-aditya",
+      "menuItemId": "mi020",
+      "itemName": "Masala Dosa",
+      "imageUrl": "/images/masala_dosa.png",
+      "itemPrice": 80,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi020",
+          "itemName": "Masala Dosa",
+          "itemPrice": 80,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Cancelled",
+      "ept": 7,
+      "paymentMethod": "Cash",
+      "paymentStatus": "Pending",
+      "transactionId": null,
+      "createdAt": "2026-06-02T07:31:51.215Z",
+      "updatedAt": "2026-06-02T07:34:48.561Z",
+      "prepStartedAt": null
+    },
+    {
+      "id": "e53a3811-7fe3-4374-83d2-7c91f3cdb07e",
+      "displayId": "#ZL0K",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi002",
+      "itemName": "Paneer Momos",
+      "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80",
+      "itemPrice": 50,
+      "qty": 1,
+      "items": [
+        {
+          "menuItemId": "mi002",
+          "itemName": "Paneer Momos",
+          "itemPrice": 50,
+          "prepTime": 12,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 7,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-32215080-QB",
+      "createdAt": "2026-06-02T07:35:16.057Z",
+      "updatedAt": "2026-06-02T07:49:10.883Z",
+      "prepStartedAt": "2026-06-02T07:47:29.640Z"
+    },
+    {
+      "id": "df045af5-7498-4bda-b951-43122787300c",
+      "displayId": "#2BXJ",
+      "shopId": "kitchen-kukkries",
+      "userId": "usr-aditya",
+      "menuItemId": "mi006",
+      "itemName": "Chilli Paneer + 2 more",
+      "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80",
+      "itemPrice": 250,
+      "qty": 3,
+      "items": [
+        {
+          "menuItemId": "mi006",
+          "itemName": "Chilli Paneer",
+          "itemPrice": 100,
+          "prepTime": 15,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi005",
+          "itemName": "Veg Noodles",
+          "itemPrice": 70,
+          "prepTime": 12,
+          "qty": 1
+        },
+        {
+          "menuItemId": "mi004",
+          "itemName": "Paneer Fried Rice",
+          "itemPrice": 80,
+          "prepTime": 15,
+          "qty": 1
+        }
+      ],
+      "status": "Completed",
+      "ept": 23,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid",
+      "transactionId": "TXN-68087265-QB",
+      "createdAt": "2026-06-02T07:48:53.454Z",
+      "updatedAt": "2026-06-02T07:51:44.661Z",
+      "prepStartedAt": "2026-06-02T07:49:15.521Z"
     }
   ],
   "favorites": [],
@@ -3141,6 +4480,26 @@
       "ratingShop": 5,
       "reviewText": "",
       "createdAt": "2026-05-30T09:15:41.741Z"
+    },
+    {
+      "id": "rev-1780239252214",
+      "userId": "usr-smriti",
+      "shopId": "kitchen-kukkries",
+      "menuItemId": "mi002",
+      "ratingFood": 5,
+      "ratingShop": 5,
+      "reviewText": "",
+      "createdAt": "2026-05-31T14:54:12.214Z"
+    },
+    {
+      "id": "rev-1780386714427",
+      "userId": "usr-aditya",
+      "shopId": "kitchen-kukkries",
+      "menuItemId": "mi006",
+      "ratingFood": 5,
+      "ratingShop": 5,
+      "reviewText": "",
+      "createdAt": "2026-06-02T07:51:54.427Z"
     }
   ]
 }

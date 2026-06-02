@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../store/AppContext.jsx';
 
-// ── Customer Bottom Navigation (3 tabs: Explore / Orders / Profile) ──
+// ── Customer Bottom Navigation (4 tabs: Explore / Cart / Orders / Profile) ──
 export default function CustomerLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { activeOrder } = useApp();
+  const { activeOrder, cartByShop } = useApp();
+
+  const totalCartCount = useMemo(() => {
+    return Object.values(cartByShop).reduce((sum, shopCart) => {
+      const entries = shopCart && shopCart.items ? Object.values(shopCart.items) : [];
+      return sum + entries.reduce((s, it) => s + (it.qty || 0), 0);
+    }, 0);
+  }, [cartByShop]);
 
   const tabs = [
     { to: '/customer/home', icon: 'explore', label: 'Explore' },
+    { to: '/customer/cart', icon: 'shopping_basket', label: 'Cart', badge: totalCartCount },
     { to: activeOrder ? `/customer/track/${activeOrder.id}` : '/customer/orders', icon: 'receipt_long', label: 'Orders' },
     { to: '/customer/profile', icon: 'person', label: 'Profile' },
   ];
@@ -44,12 +52,19 @@ export default function CustomerLayout() {
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-orange-500'
               }`}
             >
-              <span
-                className="material-symbols-outlined"
-                style={active ? { fontVariationSettings: "'FILL' 1" } : {}}
-              >
-                {tab.icon}
-              </span>
+              <div className="relative flex items-center justify-center">
+                <span
+                  className="material-symbols-outlined"
+                  style={active ? { fontVariationSettings: "'FILL' 1" } : {}}
+                >
+                  {tab.icon}
+                </span>
+                {tab.badge > 0 && (
+                  <span className="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md animate-bounce">
+                    {tab.badge}
+                  </span>
+                )}
+              </div>
               <span className="text-[10px] font-medium font-['Inter'] tracking-wider uppercase mt-1">
                 {tab.label}
               </span>

@@ -1,7 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { AppProvider, useApp } from './store/AppContext.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
+import { App as CapApp } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 // Customer screens
 import CustomerLayout from './customer/CustomerLayout.jsx';
@@ -15,6 +17,7 @@ import AboutQuickBite from './customer/AboutQuickBite.jsx';
 import Login from './customer/Login.jsx';
 import SignUp from './customer/SignUp.jsx';
 import PaymentScreen from './customer/PaymentScreen.jsx';
+import MultiCart from './customer/MultiCart.jsx';
 
 // Vendor screens
 import VendorLayout from './vendor/VendorLayout.jsx';
@@ -65,10 +68,63 @@ function VendorProtectedRoute({ children }) {
 }
 
 function AppContent() {
-  const { toasts, removeToast } = useApp();
+  const { toasts, removeToast, darkMode } = useApp();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Connection error states
+  const [showConnectionError, setShowConnectionError] = useState(false);
+  const [failedUrl, setFailedUrl] = useState('');
+  const [apiInput, setApiInput] = useState(() => localStorage.getItem('quickbite-api-base-url') || 'https://79c42791aa6526.lhr.life');
+
+  useEffect(() => {
+    const handleFailed = (e) => {
+      setFailedUrl(e.detail.url);
+      setShowConnectionError(true);
+    };
+    window.addEventListener('quickbite-connection-failed', handleFailed);
+    return () => window.removeEventListener('quickbite-connection-failed', handleFailed);
+  }, []);
+
+  // Dynamic Status Bar Style & Colors depending on Dark Mode state
+  useEffect(() => {
+    if (window.Capacitor) {
+      StatusBar.setStyle({
+        style: darkMode ? Style.Dark : Style.Light
+      }).catch(console.error);
+
+      StatusBar.setBackgroundColor({
+        color: darkMode ? '#0a1128' : '#f0f5fa'
+      }).catch(console.error);
+    }
+  }, [darkMode]);
+
+  // Handle hardware Android back button
+  useEffect(() => {
+    if (window.Capacitor) {
+      const backListener = CapApp.addListener('backButton', () => {
+        const rootPaths = ['/customer/home', '/login', '/signup', '/vendor/'];
+        const currentPath = location.pathname;
+
+        // If on home/landing or login pages, exit the app. Otherwise, pop history
+        if (
+          rootPaths.some(p => currentPath === p || (p === '/vendor/' && currentPath.includes('/live'))) ||
+          currentPath === '/'
+        ) {
+          CapApp.exitApp();
+        } else {
+          navigate(-1);
+        }
+      });
+
+      return () => {
+        backListener.then(h => h.remove());
+      };
+    }
+  }, [navigate, location]);
 
   return (
-    <BrowserRouter>
+    <>
       {/* ── Global Animated Toasts Container ─────────────────── */}
       <div className="fixed top-4 right-4 left-4 md:left-auto md:w-96 z-[9999] flex flex-col gap-2 pointer-events-none">
         <AnimatePresence>
@@ -121,9 +177,14 @@ function AppContent() {
               <CustomerProfile />
             </CustomerProtectedRoute>
           } />
+          <Route path="cart" element={
+            <CustomerProtectedRoute>
+              <MultiCart />
+            </CustomerProtectedRoute>
+          } />
         </Route>
 
-        {/* Customer flow routes — full-screen, no bottom nav from layout */}
+        {/* Customer flow routes — has full-screen, no bottom nav from layout */}
         <Route path="/customer/menu/:shopId" element={<Menu />} />
         <Route path="/customer/confirm/:shopId/:itemId" element={
           <CustomerProtectedRoute>
@@ -169,14 +230,79 @@ function AppContent() {
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/customer/home" replace />} />
       </Routes>
-    </BrowserRouter>
+
+      {/* ── Universal Connection Error Dialog ───────────────── */}
+      <AnimatePresence>
+        {showConnectionError && (
+          <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 animate-fade-in">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-950/70 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white dark:bg-[#16213E] rounded-3xl p-6 w-full max-w-md relative z-10 border border-slate-100 dark:border-slate-800/40 shadow-2xl flex flex-col gap-4 text-center"
+            >
+              <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/30 text-red-500 flex items-center justify-center mx-auto">
+                <span className="material-symbols-outlined text-2xl animate-pulse">wifi_off</span>
+              </div>
+              <div>
+                <h3 className="font-headline font-black text-xl text-on-surface dark:text-white">Connection Failed</h3>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+                  Unable to connect to the backend server. The public proxy tunnel address may have changed.
+                </p>
+              </div>
+
+              <div className="space-y-3 text-left">
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
+                    Backend API URL
+                  </label>
+                  <input
+                    type="url"
+                    value={apiInput}
+                    onChange={(e) => setApiInput(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-[#0D0D1A] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs dark:text-white focus:ring-2 focus:ring-primary/50 transition-all font-semibold"
+                    placeholder="https://your-tunnel.lhr.life"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-2">
+                <button
+                  onClick={() => {
+                    localStorage.setItem('quickbite-api-base-url', apiInput.trim());
+                    window.location.reload();
+                  }}
+                  className="flex-1 bg-primary-gradient text-slate-900 font-headline font-black py-3.5 rounded-xl shadow-md active:scale-95 transition-all text-xs"
+                >
+                  Save & Reconnect
+                </button>
+                <button
+                  onClick={() => setShowConnectionError(false)}
+                  className="px-4 bg-slate-100 dark:bg-slate-800 text-zinc-500 dark:text-zinc-300 font-bold rounded-xl text-xs active:scale-95 transition-all"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
 export default function App() {
   return (
     <AppProvider>
-      <AppContent />
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </AppProvider>
   );
 }

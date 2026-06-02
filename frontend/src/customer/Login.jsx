@@ -109,9 +109,9 @@ export default function Login() {
       <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="flex justify-center items-center gap-2 mb-3">
-          <span className="material-symbols-outlined text-4xl text-primary pulse-indicator" style={{ fontVariationSettings: "'FILL' 1" }}>restaurant</span>
-          <h2 className="text-3xl font-extrabold tracking-tighter text-gradient font-headline italic">
+        <div className="flex flex-col items-center gap-3 mb-4">
+          <img src="/quickbite_logo.png" alt="QuickBite Logo" className="w-16 h-16 object-contain rounded-full shadow-md pulse-indicator" />
+          <h2 className="text-3xl font-black tracking-tighter text-gradient font-headline italic">
             QuickBite
           </h2>
         </div>

@@ -118,8 +118,8 @@ export default function LiveDashboard() {
     <div className="min-h-screen bg-surface dark:bg-dark-bg font-body text-on-surface">
       {/* ── Top Bar ──────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 max-w-7xl mx-auto w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant</span>
+        <div className="flex items-center gap-2.5">
+          <img src="/quickbite_logo.png" alt="QuickBite Logo" className="w-8 h-8 object-contain rounded-full shadow-sm" />
           <span className="text-xl font-extrabold text-orange-600 dark:text-orange-400 font-['Plus_Jakarta_Sans']">
             QuickBite Vendor
           </span>

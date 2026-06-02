@@ -18,6 +18,10 @@ const JWT_SECRET = 'quickbite-super-secret-key-college-cafeteria';
 // ─────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`[API Request] ${req.method} ${req.url}`);
+  next();
+});
 
 // Standard response wrapper
 const ok = (data) => ({ success: true, data });
@@ -301,7 +305,8 @@ app.post('/api/orders', (req, res) => {
 app.get('/api/orders/:id', (req, res) => {
   const order = db.getOrderById(req.params.id);
   if (!order) return res.status(404).json(err('Order not found', 404));
-  res.json(ok(order));
+  const shop = db.getShopById(order.shopId);
+  res.json(ok({ ...order, shopName: shop ? shop.name : order.shopId }));
 });
 
 // PATCH /api/orders/:id/status — Update order status (Vendor Route protection)
@@ -388,23 +393,29 @@ app.patch('/api/orders/cancel-all', requireAuth, requireRole('customer'), (req, 
 app.get('/api/orders', (req, res) => {
   const { shopId } = req.query;
   
+  let orders;
   if (shopId) {
     // If vendor login present, verify they own this shop
     if (req.user && req.user.role === 'vendor' && req.user.shopId !== shopId) {
       return res.status(403).json(err('Access denied: Unauthorized to view orders for this shop.'));
     }
-    const orders = db.getOrdersByShopId(shopId);
-    res.json(ok(orders));
+    orders = db.getOrdersByShopId(shopId);
   } else {
     // Customer profile lists own order history, otherwise fall back to all
     if (req.user && req.user.role === 'customer') {
-      const orders = db.getOrdersByUserId(req.user.id);
-      res.json(ok(orders));
+      orders = db.getOrdersByUserId(req.user.id);
     } else {
-      const orders = db.getAllOrders();
-      res.json(ok(orders));
+      orders = db.getAllOrders();
     }
   }
+
+  // Enrich orders with shopName
+  const enriched = orders.map(o => {
+    const shop = db.getShopById(o.shopId);
+    return { ...o, shopName: shop ? shop.name : o.shopId };
+  });
+
+  res.json(ok(enriched));
 });
 
 // ─────────────────────────────────────────────────────────────
