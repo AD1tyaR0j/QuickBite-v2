@@ -2,6 +2,18 @@
 // QuickBite — Express REST API Server
 // ============================================================
 
+require('dotenv').config();
+
+// Production-ready Process Event Listeners
+process.on('uncaughtException', (err) => {
+  console.error('[CRITICAL] Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[CRITICAL] Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -11,17 +23,29 @@ const { calculateEPT, calculateShopEPT, calculateCartEPT } = require('./ept');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const JWT_SECRET = 'quickbite-super-secret-key-college-cafeteria';
+const JWT_SECRET = process.env.JWT_SECRET || 'quickbite-super-secret-key-college-cafeteria';
+const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // ─────────────────────────────────────────────────────────────
 // Middleware
 // ─────────────────────────────────────────────────────────────
-app.use(cors());
+const corsOrigin = process.env.CORS_ORIGIN || '*';
+app.use(cors({
+  origin: corsOrigin === '*' ? '*' : corsOrigin.split(','),
+  credentials: true
+}));
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log(`[API Request] ${req.method} ${req.url}`);
+  console.log(`[API Request] [${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
+
+// Top-level Health Check Endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ success: true, status: 'OK', timestamp: new Date().toISOString() });
+});
+
 
 // Standard response wrapper
 const ok = (data) => ({ success: true, data });
@@ -557,17 +581,17 @@ app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml');
   const shops = db.getAllShops();
   let shopUrls = shops
-    .map(s => `  <url>\n    <loc>http://localhost:5173/customer/menu/${s.id}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>`)
+    .map(s => `  <url>\n    <loc>${FRONTEND_URL}/customer/menu/${s.id}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>`)
     .join('\n');
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:5173/customer/home</loc>
+    <loc>${FRONTEND_URL}/customer/home</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://localhost:5173/about</loc>
+    <loc>${FRONTEND_URL}/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -581,7 +605,7 @@ app.get('/robots.txt', (req, res) => {
   res.header('Content-Type', 'text/plain');
   res.send(`User-agent: *
 Allow: /
-Sitemap: http://localhost:3001/sitemap.xml`);
+Sitemap: ${BACKEND_URL}/sitemap.xml`);
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -604,12 +628,26 @@ app.get('*', (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────
+// Express Error Handling Middleware
+// ─────────────────────────────────────────────────────────────
+app.use((err, req, res, next) => {
+  console.error(`[Express Error] [${new Date().toISOString()}] Handler caught error:`, err);
+  const status = err.status || 500;
+  res.status(status).json({
+    success: false,
+    error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
 // Start Server
 // ─────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n🍔 QuickBite API running on http://localhost:${PORT}`);
-  console.log(`   Health: http://localhost:${PORT}/api/health`);
-  console.log(`   Shops:  http://localhost:${PORT}/api/shops\n`);
+  console.log(`\n🚀 QuickBite API running in [${process.env.NODE_ENV || 'development'}] mode`);
+  console.log(`🍔 Server listening on ${BACKEND_URL}`);
+  console.log(`   Health API:  ${BACKEND_URL}/api/health`);
+  console.log(`   Health Check: ${BACKEND_URL}/health`);
+  console.log(`   Sitemap:      ${BACKEND_URL}/sitemap.xml\n`);
 });
 
 module.exports = app;

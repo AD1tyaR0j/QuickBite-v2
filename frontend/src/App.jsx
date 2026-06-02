@@ -4,6 +4,7 @@ import { AppProvider, useApp } from './store/AppContext.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { App as CapApp } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { API_BASE_URL } from './config.js';
 
 // Customer screens
 import CustomerLayout from './customer/CustomerLayout.jsx';
@@ -75,7 +76,7 @@ function AppContent() {
   // Connection error states
   const [showConnectionError, setShowConnectionError] = useState(false);
   const [failedUrl, setFailedUrl] = useState('');
-  const [apiInput, setApiInput] = useState(() => localStorage.getItem('quickbite-api-base-url') || 'https://79c42791aa6526.lhr.life');
+  const [apiInput, setApiInput] = useState(() => localStorage.getItem('quickbite-api-base-url') || API_BASE_URL);
 
   useEffect(() => {
     const handleFailed = (e) => {
@@ -267,7 +268,7 @@ function AppContent() {
                     value={apiInput}
                     onChange={(e) => setApiInput(e.target.value)}
                     className="w-full bg-slate-50 dark:bg-[#0D0D1A] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs dark:text-white focus:ring-2 focus:ring-primary/50 transition-all font-semibold"
-                    placeholder="https://your-tunnel.lhr.life"
+                    placeholder="https://your-backend.onrender.com"
                   />
                 </div>
               </div>

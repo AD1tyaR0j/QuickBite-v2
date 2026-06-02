@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-
+import { API_BASE_URL } from './config.js';
 // Clean up any cached tunnel API URLs if running in a local desktop browser
 if (!window.Capacitor && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   localStorage.removeItem('quickbite-api-base-url');
@@ -16,7 +16,7 @@ window.fetch = async function (resource, options) {
     if (apiBase) {
       url = `${apiBase}${resource}`;
     } else if (window.Capacitor) {
-      url = `https://79c42791aa6526.lhr.life${resource}`;
+      url = `${API_BASE_URL}${resource}`;
     }
   }
   try {
